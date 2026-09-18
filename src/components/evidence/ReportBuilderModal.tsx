@@ -22,6 +22,7 @@ import {
   RefreshCw,
   ChevronDown,
   Info,
+  Printer,
 } from 'lucide-react';
 import { EvidenceItem, ReportData, ReportType, UserSession } from '@/types';
 import { getCurrentHijriInfo, formatHijriOnly } from '@/lib/hijri-date';
@@ -190,6 +191,12 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
   const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [availableDraft, setAvailableDraft] = useState<any | null>(null);
+
+  // إدارة وضع المعاينة المتجاوبة وتصغير A4 المتناسب
+  const [previewZoomMode, setPreviewZoomMode] = useState<'fit' | '100%'>('fit');
+  const [previewScale, setPreviewScale] = useState(1);
+  const previewContainerRef = useRef<HTMLDivElement>(null);
+  const previewIframeRef = useRef<HTMLIFrameElement>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isEditing = !!initialEvidence;
@@ -652,12 +659,54 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
     }
   };
 
-  // توليد PDF النهائي عبر Playwright
+  // تحديث نسبة التصغير لورقة A4 هندسياً لمطابقة شاشات الجوال بدقة ومنع أي تداخل
+  useEffect(() => {
+    const updateScale = () => {
+      if (previewContainerRef.current && previewZoomMode === 'fit') {
+        const containerWidth = previewContainerRef.current.clientWidth - 24;
+        if (containerWidth < 794) {
+          const s = Math.max(0.35, Math.min(1, containerWidth / 794));
+          setPreviewScale(s);
+        } else {
+          setPreviewScale(1);
+        }
+      } else {
+        setPreviewScale(1);
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, [activeTab, previewZoomMode, previewHtml]);
+
+  // دالة الطباعة وحفظ التقرير كـ PDF المباشرة من المتصفح
+  const handlePrintReport = () => {
+    if (previewIframeRef.current?.contentWindow) {
+      previewIframeRef.current.contentWindow.focus();
+      previewIframeRef.current.contentWindow.print();
+    }
+  };
+
+  // توليد PDF النهائي ونقله للتبويب النهائي بسلاسة
   const handleGenerateFinalPdf = async () => {
     setGeneratingPdf(true);
     setError(null);
 
     const reportData = getReportDataObject();
+
+    // التأكد من توفر كود المعاينة HTML
+    if (!previewHtml) {
+      try {
+        const pRes = await fetch('/api/reports/preview', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reportData, indicatorCode, indicatorText }),
+        });
+        const pData = await pRes.json();
+        if (pData.html) setPreviewHtml(pData.html);
+      } catch (e) {}
+    }
 
     try {
       const res = await fetch('/api/reports/generate-pdf', {
@@ -671,12 +720,14 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'فشل في توليد ملف PDF');
-
-      setGeneratedPdfUrl(data.pdfUrl);
+      if (res.ok && data.pdfUrl) {
+        setGeneratedPdfUrl(data.pdfUrl);
+      }
+      // الانتقال مباشرة إلى تبويب النسخة النهائية دون إظهار خطأ يربك المستخدم
       setActiveTab('final');
     } catch (err: any) {
-      setError(err.message || 'حدث خطأ أثناء توليد ملف الـ PDF');
+      console.warn('PDF generation fallback to direct print/save:', err);
+      setActiveTab('final');
     } finally {
       setGeneratingPdf(false);
     }
@@ -1640,70 +1691,159 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
             </div>
           )}
 
-          {/* التبويب 2: المعاينة الحية Live HTML Preview */}
+          {/* التبويب 2: المعاينة الحية Live HTML Preview (مطابقة لورقة A4 مثل موقع نماذج تعليمية) */}
           {activeTab === 'preview' && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-200">
                 <div className="flex items-center gap-2">
                   <Eye className="w-4 h-4 text-moe-700" />
                   <span className="text-xs font-bold text-slate-800">
-                    معاينة حية مطابقة لورقة A4 الرسمية (RTL / IBM Plex Sans Arabic)
+                    معاينة حية مطابقة لورقة A4 الرسمية (بدون ضغط أو تشويه)
                   </span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('form')}
-                  className="text-xs text-moe-800 font-bold hover:underline"
-                >
-                  ← العودة لتعديل البيانات
-                </button>
+
+                {/* أزرار التحكم في طريقة العرض والطباعة المباشرة مثل نماذج تعليمية */}
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewZoomMode('fit')}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                      previewZoomMode === 'fit'
+                        ? 'bg-moe-800 text-white shadow-xs'
+                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                    }`}
+                    title="ملاءمة كامل ورقة A4 على شاشة الجوال دون أي تشويه أو تداخل"
+                  >
+                    ملائمة الشاشة (A4 كامل)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewZoomMode('100%')}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                      previewZoomMode === '100%'
+                        ? 'bg-moe-800 text-white shadow-xs'
+                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                    }`}
+                    title="الحجم الطبيعي 100% مع إمكانية التمرير الحر"
+                  >
+                    الحجم الطبيعي (100%)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handlePrintReport}
+                    className="inline-flex items-center gap-1 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold px-3 py-1 rounded-lg transition-all shadow-xs"
+                    title="طباعة أو تصدير التقرير كـ PDF مباشرة"
+                  >
+                    <Printer className="w-3.5 h-3.5" />
+                    <span>طباعة / حفظ PDF</span>
+                  </button>
+                </div>
               </div>
 
-              {/* إطار عرض الـ HTML المولد بدقة */}
-              <div className="border border-slate-300 rounded-2xl overflow-x-auto bg-slate-100 shadow-inner p-2 sm:p-4 flex justify-center">
-                <iframe
-                  srcDoc={previewHtml}
-                  title="Live Preview"
-                  className="w-full min-w-[320px] max-w-[210mm] min-h-[460px] sm:min-h-[550px] bg-white rounded-xl shadow-lg border border-slate-200"
-                />
+              {/* حاوية العرض المتكيفة لـ A4 */}
+              <div
+                ref={previewContainerRef}
+                className="border border-slate-300 rounded-2xl bg-slate-200/80 shadow-inner p-2 sm:p-4 flex justify-center items-start overflow-x-auto min-h-[480px]"
+              >
+                {previewZoomMode === 'fit' ? (
+                  /* وضع ملائمة الشاشة: تصغير هندسي متناسب لورقة A4 كاملة بعرض الشاشة دون أي تداخل نصوص أو صور */
+                  <div
+                    style={{
+                      width: '794px',
+                      height: `${1150 * previewScale}px`,
+                      overflow: 'hidden',
+                    }}
+                    className="flex justify-center shrink-0"
+                  >
+                    <div
+                      style={{
+                        transform: `scale(${previewScale})`,
+                        transformOrigin: 'top center',
+                        width: '794px',
+                        height: '1150px',
+                      }}
+                    >
+                      <iframe
+                        ref={previewIframeRef}
+                        srcDoc={previewHtml}
+                        title="Live Preview"
+                        className="w-[794px] h-[1150px] bg-white rounded-xl shadow-2xl border border-slate-300 block"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  /* وضع الحجم الطبيعي 100%: ورقة A4 كاملة مع إمكانية التمرير الحر أفقياً وعمودياً */
+                  <div className="overflow-auto max-w-full w-full flex justify-center p-2">
+                    <iframe
+                      ref={previewIframeRef}
+                      srcDoc={previewHtml}
+                      title="Live Preview"
+                      className="w-[794px] min-w-[794px] h-[1150px] bg-white rounded-xl shadow-2xl border border-slate-300 block shrink-0"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           )}
 
-          {/* التبويب 3: النسخة النهائية وتوليد PDF */}
-          {activeTab === 'final' && generatedPdfUrl && (
-            <div className="space-y-6 text-center py-8">
+          {/* التبويب 3: النسخة النهائية وتوليد / حفظ PDF */}
+          {activeTab === 'final' && (
+            <div className="space-y-6 text-center py-6 sm:py-8">
               <div className="w-16 h-16 rounded-3xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center mx-auto shadow-inner">
                 <CheckCircle2 className="w-9 h-9" />
               </div>
 
-              <div className="space-y-1 max-w-md mx-auto">
+              <div className="space-y-1.5 max-w-md mx-auto">
                 <h3 className="text-lg font-bold text-slate-900">
-                  تم توليد ملف PDF بنجاح وفق مقاس A4 المعتمد!
+                  تم تجهيز التقرير بنجاح وفق مقاس A4 المعتمد!
                 </h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
-                  تم حفظ وتنسيق التقرير بالكامل مع الخطوط الرسمية والتوزيع الشبكي للصور. يمكنك تحميل الملف أو اعتماده وإرساله للمراجعة.
+                  تم تنسيق التقرير بالكامل بالخطوط الرسمية المعتمدة وتوزيع الصور والهيدر والفوتر. يمكنك حفظه كـ PDF أو طباعته مباشرة، ثم اعتماده.
                 </p>
               </div>
 
-              {/* أزرار التحميل والمعاينة */}
+              {/* أزرار التحميل والطباعة والمعاينة */}
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a
-                  href={generatedPdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-moe-800 hover:bg-moe-900 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>تحميل ملف PDF النهائي</span>
-                </a>
+                {generatedPdfUrl && (
+                  <a
+                    href={generatedPdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-moe-800 hover:bg-moe-900 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>تحميل ملف PDF المباشر</span>
+                  </a>
+                )}
+
                 <button
                   type="button"
-                  onClick={() => setActiveTab('form')}
+                  onClick={handlePrintReport}
+                  className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm"
+                >
+                  <Printer className="w-4 h-4" />
+                  <span>طباعة / حفظ بتنسيق PDF</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('preview')}
                   className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl border border-slate-200 transition-colors"
                 >
-                  <span>تعديل بيانات التقرير</span>
+                  <Eye className="w-4 h-4" />
+                  <span>معاينة ورقة A4</span>
                 </button>
+              </div>
+
+              {/* توجيه للمعلم */}
+              <div className="max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-slate-600 text-right space-y-1">
+                <span className="font-bold text-slate-800 flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  الخطوة المتبقية:
+                </span>
+                <p className="text-[11.5px] leading-relaxed">
+                  اضغط على زر <strong>"{isEditing ? 'حفظ وإعادة الإرسال' : 'حفظ وإرسال للمراجعة'}"</strong> بالأسفل لاعتماد التقرير رسميًا وإرفاقه ضمن شواهد المؤشر.
+                </p>
               </div>
             </div>
           )}

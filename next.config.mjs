@@ -8,6 +8,9 @@ const nextConfig = {
       'playwright',
       'sharp',
     ],
+    outputFileTracingIncludes: {
+      '/api/**/*': ['./node_modules/@sparticuz/chromium/bin/**'],
+    },
   },
 };
 

@@ -6,6 +6,7 @@ import { getCurrentUser } from '@/lib/auth';
 import { generateReportHtml } from '@/lib/report-html';
 import { Download, ArrowLeft, FileText, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { StatusBadge } from '@/components/common/Badge';
+import { ReportPrintButton } from '@/components/evidence/ReportPrintButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -87,6 +88,8 @@ export default async function ReportViewPage({ params }: PageProps) {
         <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
           <StatusBadge status={evidence.status} />
 
+          <ReportPrintButton />
+
           {evidence.pdfUrl && (
             <a
               href={evidence.pdfUrl}
@@ -101,15 +104,13 @@ export default async function ReportViewPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* عرض التقرير المنسق داخل حاوية A4 الرسمية */}
-      <div className="bg-slate-100 p-2 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-inner flex justify-center overflow-x-auto">
-        <div className="w-full min-w-[320px] max-w-[210mm] bg-white rounded-xl sm:rounded-2xl shadow-xl border border-slate-200 p-1.5 sm:p-6 min-h-[600px] sm:min-h-[297mm]">
-          <iframe
-            srcDoc={htmlContent}
-            title={evidence.title}
-            className="w-full min-h-[850px] sm:min-h-[1100px] border-0 rounded-xl bg-white"
-          />
-        </div>
+      {/* عرض التقرير المنسق داخل حاوية A4 الرسمية بمقاس 210mm ثابت دون أي ضغط */}
+      <div className="bg-slate-200/80 p-2 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-300 shadow-inner flex justify-center overflow-x-auto">
+        <iframe
+          srcDoc={htmlContent}
+          title={evidence.title}
+          className="w-[794px] min-w-[794px] min-h-[1150px] bg-white rounded-xl shadow-2xl border border-slate-300 block shrink-0"
+        />
       </div>
     </div>
   );

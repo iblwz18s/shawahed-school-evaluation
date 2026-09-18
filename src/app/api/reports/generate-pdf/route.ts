@@ -5,6 +5,7 @@ import { generateReportHtml } from '@/lib/report-html';
 import { generatePdfFromHtml } from '@/lib/pdf-generator';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   try {
@@ -46,8 +47,8 @@ export async function POST(req: NextRequest) {
       pdfUrl: pdfResult.relativeUrl,
       size: pdfResult.size,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Generate PDF error:', error);
-    return NextResponse.json({ error: 'فشل في توليد ملف الـ PDF' }, { status: 500 });
+    return NextResponse.json({ error: error?.message || 'فشل في توليد ملف الـ PDF' }, { status: 500 });
   }
 }

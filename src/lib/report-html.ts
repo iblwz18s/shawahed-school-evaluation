@@ -239,7 +239,7 @@ export function generateReportHtml({
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=794, initial-scale=1.0" />
   <title>تقرير توثيق ${reportData.type} - ${reportData.title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -254,7 +254,12 @@ export function generateReportHtml({
       margin: 0;
       padding: 0;
     }
-    body {
+    html, body {
+      width: 210mm;
+      min-width: 210mm;
+      margin: 0 auto;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
       direction: rtl;
       text-align: right;
@@ -265,13 +270,18 @@ export function generateReportHtml({
       -webkit-font-smoothing: antialiased;
     }
     .report-document {
-      width: 100%;
+      width: 210mm;
+      min-width: 210mm;
       max-width: 210mm;
       margin: 0 auto;
+      box-sizing: border-box;
     }
     .report-page {
       width: 210mm;
+      min-width: 210mm;
+      max-width: 210mm;
       height: 297mm;
+      min-height: 297mm;
       box-sizing: border-box;
       margin: 0 auto 24px auto;
       padding: 10mm 14mm 12mm 14mm;
@@ -283,6 +293,25 @@ export function generateReportHtml({
       page-break-after: always;
       break-after: page;
       position: relative;
+    }
+    @media print {
+      body {
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .report-document {
+        width: 210mm !important;
+        max-width: 210mm !important;
+      }
+      .report-page {
+        box-shadow: none !important;
+        margin: 0 !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
     }
     .report-page:last-child {
       page-break-after: avoid;

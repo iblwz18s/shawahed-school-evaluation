@@ -24,9 +24,42 @@ export async function generatePdfFromHtml(
       const chromium = (await import('@sparticuz/chromium')).default;
       const { chromium: playwrightCore } = await import('playwright-core');
 
-      // إعداد خطوط عربية وتجاوز بيئة التشفير
+      // إعداد بيئة Chromium الخفيفة
       chromium.setGraphicsMode = false;
-      const executablePath = await chromium.executablePath();
+
+      let executablePath: string | undefined;
+
+      // 1. فحص مجلد bin المحلي إذا كان متاحاً في بيئة التشغيل
+      const localBin = path.join(process.cwd(), 'node_modules', '@sparticuz', 'chromium', 'bin');
+      try {
+        const fsSync = await import('fs');
+        if (fsSync.existsSync(localBin)) {
+          executablePath = await chromium.executablePath(localBin);
+        }
+      } catch (binErr) {
+        console.warn('Local bin check failed:', binErr);
+      }
+
+      // 2. إذا لم يتوفر، استدعاء executablePath() القياسي
+      if (!executablePath) {
+        try {
+          executablePath = await chromium.executablePath();
+        } catch (defErr) {
+          console.warn('Default chromium.executablePath() failed, trying remote pack:', defErr);
+          // 3. رابط حزمة Chromium البديل عند الحاجة
+          try {
+            executablePath = await chromium.executablePath(
+              'https://github.com/Sparticuz/chromium/releases/download/v131.0.1/chromium-v131.0.1-pack.tar'
+            );
+          } catch (urlErr) {
+            console.error('Remote executablePath failed:', urlErr);
+          }
+        }
+      }
+
+      if (!executablePath) {
+        throw new Error('تعذر العثور على محرك تشغيل Chromium في بيئة السيرفر');
+      }
 
       browser = await playwrightCore.launch({
         args: [...chromium.args, '--font-render-hinting=none', '--no-sandbox', '--disable-setuid-sandbox'],
@@ -50,10 +83,10 @@ export async function generatePdfFromHtml(
     const context = await browser.newContext();
     const page = await context.newPage();
 
-    // إدخال محتوى الـ HTML والانتظار حتى تحميل الشبكة والخطوط
+    // إدخال محتوى الـ HTML والانتظار حتى تحميل الصفحة
     await page.setContent(htmlContent, {
-      waitUntil: 'networkidle',
-      timeout: 30000,
+      waitUntil: 'load',
+      timeout: 25000,
     });
 
     // توليد PDF وفق المواصفات المحددة في الوثيقة:
