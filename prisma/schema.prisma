@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id                 String     @id @default(cuid())
+  name               String
+  email              String     @unique
+  passwordHash       String
+  role               String     @default("teacher") // "admin" | "teacher"
+  isActive           Boolean    @default(true)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  submittedEvidences Evidence[] @relation("SubmittedBy")
+  reviewedEvidences  Evidence[] @relation("ReviewedBy")
+  auditLogs          AuditLog[]
+}
+
+model Domain {
+  id          String     @id @default(cuid())
+  code        String     @unique
+  name        String
+  description String?
+  sortOrder   Int        @default(0)
+  iconName    String?
+  standards   Standard[]
+}
+
+model Standard {
+  id          String      @id @default(cuid())
+  domainId    String
+  domain      Domain      @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  code        String      @unique
+  name        String
+  description String?
+  sortOrder   Int         @default(0)
+  indicators  Indicator[]
+}
+
+model Indicator {
+  id                  String     @id @default(cuid())
+  standardId          String
+  standard            Standard   @relation(fields: [standardId], references: [id], onDelete: Cascade)
+  code                String     @unique
+  text                String
+  appliesToGovernment Boolean    @default(true)
+  appliesToPrivate    Boolean    @default(true)
+  schoolGuidance      String?
+  sortOrder           Int        @default(0)
+  isActive            Boolean    @default(true)
+  evidences           Evidence[]
+}
+
+model Evidence {
+  id              String    @id @default(cuid())
+  indicatorId     String
+  indicator       Indicator @relation(fields: [indicatorId], references: [id], onDelete: Cascade)
+  title           String
+  evidenceType    String    @default("external_link") // "external_link" | "report"
+  subType         String?   // "video" | "file" | "folder" | "presentation" | "other" | "program_activity"
+  url             String?
+  reportData      String?   // JSON string of structured report
+  pdfUrl          String?
+  description     String?
+  academicYear    String    @default("1447-1448هـ / 2026م")
+  semester        String?
+  submittedById   String
+  submittedBy     User      @relation("SubmittedBy", fields: [submittedById], references: [id])
+  status          String    @default("pending") // "pending" | "approved" | "rejected"
+  rejectionReason String?
+  reviewedById    String?
+  reviewedBy      User?     @relation("ReviewedBy", fields: [reviewedById], references: [id])
+  reviewedAt      DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userName   String?
+  action     String
+  entityType String
+  entityId   String?
+  metadata   String?
+  createdAt  DateTime @default(now())
+}
+
+model SchoolSetting {
+  id                  String   @id @default(cuid())
+  schoolName          String   @default("ابتدائية سعد بن أبي وقاص")
+  educationDepartment String   @default("إدارة التعليم بمنطقة الحدود الشمالية")
+  schoolLogoUrl       String?
+  ministryLogoUrl     String?  @default("/images/moe-logo.png")
+  academicYear        String   @default("١٤٤٧-١٤٤٨هـ")
+  schoolType          String   @default("government") // "government" | "private"
+  publicPortalEnabled Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
