@@ -111,41 +111,43 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* أزرار الإجراءات السريعة */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        {/* أزرار الإجراءات السريعة */}
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full md:w-auto">
           <Link
             href="/admin/reviews"
-            className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-sm"
+            className="inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition-all shadow-sm"
           >
-            <Clock className="w-4 h-4" />
-            <span>قائمة المراجعة ({stats?.pendingEvidencesCount || 0})</span>
+            <Clock className="w-4 h-4 shrink-0" />
+            <span>المراجعة ({stats?.pendingEvidencesCount || 0})</span>
           </Link>
           <Link
             href="/admin/evidences"
-            className="inline-flex items-center gap-2 bg-moe-800 hover:bg-moe-900 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all shadow-sm"
+            className="inline-flex items-center justify-center gap-2 bg-moe-800 hover:bg-moe-900 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition-all shadow-sm"
           >
-            <FileCheck2 className="w-4 h-4" />
+            <FileCheck2 className="w-4 h-4 shrink-0" />
             <span>مستودع الشواهد</span>
           </Link>
           <Link
             href="/admin/users"
-            className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all border border-slate-200"
+            className="inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-2.5 rounded-xl transition-all border border-slate-200"
           >
-            <Users className="w-4 h-4" />
+            <Users className="w-4 h-4 shrink-0" />
             <span>المستخدمين</span>
           </Link>
           <Link
             href="/admin/audit"
-            className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3.5 py-2.5 rounded-xl transition-all border border-slate-200"
+            className="inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-2.5 rounded-xl transition-all border border-slate-200"
           >
-            <History className="w-4 h-4" />
+            <History className="w-4 h-4 shrink-0" />
             <span>سجل العمليات</span>
           </Link>
           <Link
             href="/admin/settings"
-            className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl border border-slate-200 transition-colors"
+            className="col-span-2 sm:col-span-1 p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl border border-slate-200 transition-colors flex items-center justify-center gap-2"
             title="إعدادات المدرسة"
           >
             <Settings className="w-4 h-4" />
+            <span className="sm:hidden text-xs font-bold">إعدادات المدرسة</span>
           </Link>
         </div>
       </div>

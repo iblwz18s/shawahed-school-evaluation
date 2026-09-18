@@ -727,11 +727,11 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-4xl w-full border border-slate-200 overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh]">
         {/* رأس النافذة والتبويبات */}
-        <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
-          <div>
+        <div className="p-4 sm:px-6 sm:py-4 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0 relative">
+          <div className="pl-8 sm:pl-0">
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-moe-700 bg-moe-50 px-2.5 py-0.5 rounded border border-moe-200">
                 توثيق مدرسي A4
@@ -742,17 +742,17 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                 </span>
               )}
             </div>
-            <h2 className="text-base font-bold text-slate-900 mt-0.5">
+            <h2 className="text-sm sm:text-base font-bold text-slate-900 mt-0.5">
               {isEditing ? 'تعديل تقرير التوثيق' : `إنشاء تقرير: ${currentTypeConfig.label}`}
             </h2>
           </div>
 
           {/* تبويبات الانتقال */}
-          <div className="flex items-center gap-1.5 bg-slate-200/70 p-1 rounded-xl self-start sm:self-center">
+          <div className="flex items-center gap-1.5 bg-slate-200/70 p-1 rounded-xl self-stretch sm:self-center overflow-x-auto">
             <button
               type="button"
               onClick={() => setActiveTab('form')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              className={`flex-1 sm:flex-initial text-center px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
                 activeTab === 'form' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -761,7 +761,7 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
             <button
               type="button"
               onClick={handleSwitchToPreview}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+              className={`flex-1 sm:flex-initial text-center px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 whitespace-nowrap ${
                 activeTab === 'preview' ? 'bg-white text-moe-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -772,7 +772,7 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveTab('final')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+                className={`flex-1 sm:flex-initial text-center px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 whitespace-nowrap ${
                   activeTab === 'final' ? 'bg-white text-emerald-800 shadow-sm' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -784,21 +784,21 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
 
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-200/60 transition-colors absolute top-4 left-4 sm:static"
+            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-200/60 transition-colors absolute top-3 left-3 sm:static"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mx-6 mt-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl flex items-center gap-2 shrink-0">
+          <div className="mx-4 sm:mx-6 mt-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl flex items-center gap-2 shrink-0">
             <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
 
         {/* جسم النافذة: حسب التبويب النشط */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
           {/* التبويب 1: نموذج إدخال البيانات */}
           {activeTab === 'form' && (
             <div className="space-y-5">
@@ -1355,7 +1355,7 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
               )}
 
               {/* زر الذكاء الاصطناعي لإعداد التقرير */}
-              <div className="flex items-center justify-between p-3.5 bg-gradient-to-r from-moe-50 via-emerald-50 to-teal-50 border border-moe-200/90 rounded-2xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-gradient-to-r from-moe-50 via-emerald-50 to-teal-50 border border-moe-200/90 rounded-2xl">
                 <div className="space-y-0.5">
                   <span className="text-xs font-extrabold text-moe-950 flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-moe-700" />
@@ -1369,7 +1369,7 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                   type="button"
                   disabled={enhancingAi}
                   onClick={handleAiEnhance}
-                  className="flex items-center gap-1.5 bg-moe-700 hover:bg-moe-800 text-white text-xs font-bold px-3.5 py-2 rounded-xl border border-moe-600 transition-all shadow-xs disabled:opacity-50 shrink-0 active:scale-98"
+                  className="flex items-center justify-center gap-1.5 bg-moe-700 hover:bg-moe-800 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl border border-moe-600 transition-all shadow-xs disabled:opacity-50 shrink-0 w-full sm:w-auto active:scale-98"
                 >
                   {enhancingAi ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 text-emerald-200" />}
                   <span>{enhancingAi ? 'جاري إعداد التقرير...' : 'إعداد التقرير بالذكاء الاصطناعي'}</span>
@@ -1660,11 +1660,11 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
               </div>
 
               {/* إطار عرض الـ HTML المولد بدقة */}
-              <div className="border border-slate-300 rounded-2xl overflow-hidden bg-slate-100 shadow-inner p-4 flex justify-center">
+              <div className="border border-slate-300 rounded-2xl overflow-x-auto bg-slate-100 shadow-inner p-2 sm:p-4 flex justify-center">
                 <iframe
                   srcDoc={previewHtml}
                   title="Live Preview"
-                  className="w-full max-w-[210mm] min-h-[550px] bg-white rounded-xl shadow-lg border border-slate-200"
+                  className="w-full min-w-[320px] max-w-[210mm] min-h-[460px] sm:min-h-[550px] bg-white rounded-xl shadow-lg border border-slate-200"
                 />
               </div>
             </div>
@@ -1710,21 +1710,33 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
         </div>
 
         {/* شريط الإجراءات السفلي */}
-        <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-200/60 rounded-xl transition-colors"
-          >
-            إلغاء
-          </button>
-
-          <div className="flex items-center gap-2.5">
+        <div className="p-3 sm:px-6 sm:py-4 border-t border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 shrink-0">
+          <div className="flex items-center justify-between sm:justify-start gap-2 order-2 sm:order-1">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-200/60 rounded-xl transition-colors"
+            >
+              إلغاء
+            </button>
             {activeTab === 'preview' && (
               <button
                 type="button"
                 onClick={() => setActiveTab('form')}
-                className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2.5 rounded-xl transition-colors border border-slate-300"
+                className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 py-2 rounded-xl transition-colors border border-slate-300 sm:hidden"
+              >
+                <ArrowRight className="w-4 h-4" />
+                <span>العودة للبيانات</span>
+              </button>
+            )}
+          </div>
+
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 order-1 sm:order-2">
+            {activeTab === 'preview' && (
+              <button
+                type="button"
+                onClick={() => setActiveTab('form')}
+                className="hidden sm:inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2.5 rounded-xl transition-colors border border-slate-300"
               >
                 <ArrowRight className="w-4 h-4" />
                 <span>العودة لتعديل البيانات</span>
@@ -1736,7 +1748,7 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                 type="button"
                 disabled={loadingPreview}
                 onClick={handleSwitchToPreview}
-                className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2.5 rounded-xl transition-colors border border-slate-300 disabled:opacity-50"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 sm:px-4 py-2.5 rounded-xl transition-colors border border-slate-300 disabled:opacity-50"
               >
                 {loadingPreview ? <Loader2 className="w-4 h-4 animate-spin" /> : <Eye className="w-4 h-4" />}
                 <span>{loadingPreview ? 'جاري المعاينة...' : 'معاينة حية'}</span>
@@ -1749,10 +1761,10 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                 type="button"
                 disabled={generatingPdf || !title.trim()}
                 onClick={handleGenerateFinalPdf}
-                className="inline-flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm disabled:opacity-50"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold px-3 sm:px-5 py-2.5 rounded-xl transition-all shadow-sm disabled:opacity-50"
               >
                 {generatingPdf ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
-                <span>{generatingPdf ? 'جاري توليد PDF عبر Playwright...' : 'إنشاء النسخة النهائية (PDF)'}</span>
+                <span>{generatingPdf ? 'جاري التوليد...' : 'إنشاء PDF'}</span>
               </button>
             )}
 
@@ -1761,7 +1773,7 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
               type="button"
               disabled={submitting || !title.trim()}
               onClick={handleSaveAndSubmit}
-              className="inline-flex items-center gap-1.5 bg-moe-800 hover:bg-moe-900 text-white text-xs font-bold px-6 py-2.5 rounded-xl transition-all shadow-md disabled:opacity-50"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-moe-800 hover:bg-moe-900 text-white text-xs font-bold px-4 sm:px-6 py-2.5 rounded-xl transition-all shadow-md disabled:opacity-50"
             >
               {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
               <span>{isEditing ? 'حفظ وإعادة الإرسال' : 'حفظ وإرسال للمراجعة'}</span>

@@ -60,11 +60,11 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[90vh]">
         {/* رأس النافذة */}
-        <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
+        <div className="px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-slate-900 font-bold text-sm sm:text-base">
             <FileCheck className="w-5 h-5 text-moe-700" />
             <span>مراجعة الشاهد واعتماده</span>
           </div>
@@ -77,7 +77,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
         </div>
 
         {/* جسم النافذة */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto">
           {error && (
             <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
@@ -229,18 +229,18 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
           )}
 
           {/* أزرار الحفظ */}
-          <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-2.5">
+          <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+              className="order-2 sm:order-1 px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors text-center"
             >
               إلغاء
             </button>
             <button
               type="submit"
               disabled={loading}
-              className={`flex items-center gap-2 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-colors disabled:opacity-50 shadow-sm ${
+              className={`order-1 sm:order-2 flex items-center justify-center gap-2 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-colors disabled:opacity-50 shadow-sm w-full sm:w-auto ${
                 action === 'approve'
                   ? 'bg-emerald-600 hover:bg-emerald-700'
                   : 'bg-rose-600 hover:bg-rose-700'

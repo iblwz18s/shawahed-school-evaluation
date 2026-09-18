@@ -66,25 +66,25 @@ export default async function ReportViewPage({ params }: PageProps) {
   });
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8 space-y-6">
+    <div className="max-w-5xl mx-auto px-3 sm:px-8 py-4 sm:py-8 space-y-4 sm:space-y-6">
       {/* شريط الإجراءات والمسار */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
-        <nav className="flex items-center gap-2 text-xs text-slate-500">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+        <nav className="flex flex-wrap items-center gap-1.5 text-xs text-slate-500">
           <Link href="/" className="hover:text-moe-800">
             الرئيسية
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 rotate-180 text-slate-400" />
+          <ChevronRight className="w-3.5 h-3.5 rotate-180 text-slate-400 shrink-0" />
           <Link
             href={`/indicators/${encodeURIComponent(evidence.indicator.code)}`}
-            className="hover:text-moe-800 font-mono dir-ltr inline-block font-bold"
+            className="hover:text-moe-800 font-mono dir-ltr inline-block font-bold shrink-0"
           >
             {evidence.indicator.code}
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 rotate-180 text-slate-400" />
-          <span className="text-slate-800 font-semibold truncate max-w-xs">{evidence.title}</span>
+          <ChevronRight className="w-3.5 h-3.5 rotate-180 text-slate-400 shrink-0" />
+          <span className="text-slate-800 font-semibold truncate max-w-[180px] sm:max-w-xs">{evidence.title}</span>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
           <StatusBadge status={evidence.status} />
 
           {evidence.pdfUrl && (
@@ -102,12 +102,12 @@ export default async function ReportViewPage({ params }: PageProps) {
       </div>
 
       {/* عرض التقرير المنسق داخل حاوية A4 الرسمية */}
-      <div className="bg-slate-100 p-4 sm:p-8 rounded-3xl border border-slate-200 shadow-inner flex justify-center overflow-x-auto">
-        <div className="w-full max-w-[210mm] bg-white rounded-2xl shadow-xl border border-slate-200 p-2 sm:p-6 min-h-[297mm]">
+      <div className="bg-slate-100 p-2 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-inner flex justify-center overflow-x-auto">
+        <div className="w-full min-w-[320px] max-w-[210mm] bg-white rounded-xl sm:rounded-2xl shadow-xl border border-slate-200 p-1.5 sm:p-6 min-h-[600px] sm:min-h-[297mm]">
           <iframe
             srcDoc={htmlContent}
             title={evidence.title}
-            className="w-full min-h-[1100px] border-0 rounded-xl bg-white"
+            className="w-full min-h-[850px] sm:min-h-[1100px] border-0 rounded-xl bg-white"
           />
         </div>
       </div>

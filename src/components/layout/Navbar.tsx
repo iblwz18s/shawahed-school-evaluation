@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  GraduationCap,
   LogIn,
   LogOut,
   User,
@@ -14,6 +13,7 @@ import {
   Menu,
   X,
   ExternalLink,
+  ChevronLeft,
 } from 'lucide-react';
 import { UserSession, SchoolSettingItem } from '@/types';
 
@@ -61,60 +61,69 @@ export const Navbar: React.FC = () => {
     }
   };
 
-  const schoolName = schoolSetting?.schoolName || 'ثانوية رواد المعرفة';
+  const schoolName = schoolSetting?.schoolName || 'ابتدائية سعد بن أبي وقاص';
   const educationDept =
-    schoolSetting?.educationDepartment || 'الإدارة العامة للتعليم بمنطقة الرياض';
+    schoolSetting?.educationDepartment || 'إدارة التعليم بمنطقة الحدود الشمالية';
+  const ministryLogo = schoolSetting?.ministryLogoUrl || '/images/moe-logo.png';
 
   return (
-    <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-      {/* الشريط العلوي الرسمي لهوية وزارة التعليم */}
-      <div className="bg-moe-950 text-white text-xs py-1.5 px-4 sm:px-8 border-b border-moe-800">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+    <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+      {/* الشريط العلوي الرسمي لهوية وزارة التعليم - متجاوب تماماً مع الجوال */}
+      <div className="bg-moe-950 text-white text-[11px] sm:text-xs py-1.5 px-3 sm:px-8 border-b border-moe-800">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1 sm:gap-4 text-center sm:text-right">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-center sm:justify-start">
+            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
             <span className="text-slate-300">المملكة العربية السعودية</span>
             <span className="text-slate-500">•</span>
-            <span className="text-slate-200 font-medium">{educationDept}</span>
+            <span className="text-slate-200 font-medium truncate max-w-[240px] sm:max-w-none">{educationDept}</span>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="hidden sm:inline-block text-slate-300">
-              العام الدراسي: {schoolSetting?.academicYear || '1447-1448هـ / 2026م'}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="hidden md:inline-block text-slate-300">
+              العام الدراسي: {schoolSetting?.academicYear || '١٤٤٧-١٤٤٨هـ'}
             </span>
-            <span className="text-slate-400 text-[11px] bg-moe-900 px-2 py-0.5 rounded border border-moe-800">
+            <span className="text-emerald-300 text-[10px] sm:text-[11px] bg-moe-900/90 px-2 py-0.5 rounded border border-moe-800 font-medium">
               معايير الإصدار الثاني 2026م
             </span>
           </div>
         </div>
       </div>
 
-      {/* الهيدر الرئيسي */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
-        {/* هوية المدرسة وشعار الوزارة */}
-        <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-3.5 group">
-            {/* الشعار الرسمي لوزارة التعليم */}
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-moe-800 to-moe-950 flex items-center justify-center text-white shadow-md border border-moe-700/50 group-hover:scale-[1.02] transition-transform">
-              <GraduationCap className="w-7 h-7 text-emerald-300" />
+      {/* الهيدر الرئيسي - حماية كاملة من تداخل العناصر على الشاشات الصغيرة */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-8 min-h-[4.5rem] sm:h-20 py-2 flex items-center justify-between gap-2 sm:gap-4">
+        {/* هوية المدرسة مع الشعار الرسمي لوزارة التعليم */}
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 group min-w-0">
+            {/* الشعار الرسمي لوزارة التعليم بدلاً من الأيقونة */}
+            <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-white p-1 sm:p-1.5 shadow-xs border border-slate-200/90 flex items-center justify-center shrink-0 group-hover:scale-105 transition-all overflow-hidden">
+              <img
+                src={ministryLogo}
+                alt="شعار وزارة التعليم"
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  // في حال تعذر المسار الخارجي يتم الرجوع للصورة المحلية
+                  (e.target as HTMLImageElement).src = '/images/moe-logo.png';
+                }}
+              />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold tracking-wider text-moe-700 bg-moe-50 px-2 py-0.5 rounded border border-moe-200/60">
-                  منصة شواهد التقويم المدرسي
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] sm:text-xs font-bold text-moe-700 bg-moe-50 px-2 py-0.5 rounded border border-moe-200/60 whitespace-nowrap">
+                  شواهد التقويم المدرسي
                 </span>
               </div>
-              <h1 className="text-lg font-bold text-slate-900 tracking-tight mt-0.5">
+              <h1 className="text-xs sm:text-base md:text-lg font-black text-slate-900 tracking-tight mt-0.5 truncate">
                 {schoolName}
               </h1>
             </div>
           </Link>
         </div>
 
-        {/* الروابط للكمبيوتر */}
-        <nav className="hidden md:flex items-center gap-6">
+        {/* روابط سطح المكتب */}
+        <nav className="hidden md:flex items-center gap-6 shrink-0">
           <Link
             href="/"
             className={`text-sm font-medium transition-colors ${
-              pathname === '/' ? 'text-moe-800 font-semibold' : 'text-slate-600 hover:text-slate-900'
+              pathname === '/' ? 'text-moe-800 font-bold' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             الرئيسية
@@ -129,7 +138,7 @@ export const Navbar: React.FC = () => {
             href="/about-evaluation"
             className={`text-sm font-medium transition-colors ${
               pathname === '/about-evaluation'
-                ? 'text-moe-800 font-semibold'
+                ? 'text-moe-800 font-bold'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -137,35 +146,35 @@ export const Navbar: React.FC = () => {
           </Link>
         </nav>
 
-        {/* أزرار الدخول والحساب - زر غير مشتت للزائر كما طلبت الوثيقة */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* أزرار الحساب لشاشات الكمبيوتر */}
+        <div className="hidden md:flex items-center gap-3 shrink-0">
           {currentUser ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               <Link
                 href={currentUser.role === 'admin' ? '/admin' : '/staff'}
-                className="flex items-center gap-2 bg-moe-50 hover:bg-moe-100 text-moe-900 px-3.5 py-2 rounded-lg text-sm font-medium border border-moe-200 transition-colors shadow-sm"
+                className="flex items-center gap-2 bg-moe-50 hover:bg-moe-100 text-moe-900 px-3.5 py-2 rounded-xl text-sm font-bold border border-moe-200 transition-colors shadow-xs"
               >
                 <LayoutDashboard className="w-4 h-4 text-moe-700" />
                 <span>
                   {currentUser.role === 'admin' ? 'لوحة تحكم المدير' : 'لوحة المعلم'}
                 </span>
-                <span className="text-xs bg-moe-700 text-white px-2 py-0.5 rounded-full font-semibold">
+                <span className="text-[11px] bg-moe-700 text-white px-2 py-0.5 rounded-full font-semibold">
                   {currentUser.role === 'admin' ? 'مدير' : 'معلم'}
                 </span>
               </Link>
               <button
                 onClick={handleLogout}
                 title="تسجيل الخروج"
-                className="flex items-center gap-1.5 text-slate-500 hover:text-rose-600 text-sm px-2.5 py-2 rounded-lg hover:bg-rose-50 transition-colors"
+                className="flex items-center gap-1.5 text-slate-500 hover:text-rose-600 text-sm px-2.5 py-2 rounded-xl hover:bg-rose-50 transition-colors"
               >
                 <LogOut className="w-4 h-4" />
-                <span className="text-xs">خروج</span>
+                <span className="text-xs font-semibold">خروج</span>
               </button>
             </div>
           ) : (
             <Link
               href="/login"
-              className="flex items-center gap-2 text-slate-600 hover:text-moe-800 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shadow-sm"
+              className="flex items-center gap-2 text-slate-700 hover:text-moe-900 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3.5 py-2 rounded-xl text-sm font-bold transition-all shadow-xs"
             >
               <LogIn className="w-4 h-4 text-slate-500" />
               <span>دخول المنسوبين</span>
@@ -173,26 +182,29 @@ export const Navbar: React.FC = () => {
           )}
         </div>
 
-        {/* زر القائمة للشاشات الصغيرة */}
-        <div className="flex md:hidden items-center gap-2">
+        {/* أزرار الجوال: تم ضبط التباعد وتجنب التداخل التام */}
+        <div className="flex md:hidden items-center gap-1.5 sm:gap-2 shrink-0">
           {currentUser ? (
             <Link
               href={currentUser.role === 'admin' ? '/admin' : '/staff'}
-              className="text-xs bg-moe-800 text-white px-2.5 py-1.5 rounded-md font-medium"
+              className="text-xs bg-moe-800 hover:bg-moe-900 text-white px-2.5 py-2 rounded-xl font-bold transition-colors whitespace-nowrap shadow-xs flex items-center gap-1"
             >
-              لوحة التحكم
+              <LayoutDashboard className="w-3.5 h-3.5" />
+              <span>لوحة التحكم</span>
             </Link>
           ) : (
             <Link
               href="/login"
-              className="text-xs text-slate-700 bg-slate-100 border border-slate-200 px-2.5 py-1.5 rounded-md font-medium"
+              className="text-xs text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-2.5 py-2 rounded-xl font-bold transition-colors whitespace-nowrap flex items-center gap-1"
             >
-              دخول المنسوبين
+              <LogIn className="w-3.5 h-3.5 text-slate-600" />
+              <span>دخول</span>
             </Link>
           )}
+
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+            className="p-2 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200 transition-colors"
             aria-label="القائمة"
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -200,39 +212,64 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* قائمة الموبايل المنسدلة */}
+      {/* قائمة الجوال المنسدلة بتصميم عصري وأزرار لمس مريحة */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-5 space-y-3">
+        <div className="md:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-5 space-y-2.5 animate-in slide-in-from-top-2 duration-150 shadow-lg">
           <Link
             href="/"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+              pathname === '/' ? 'bg-moe-50 text-moe-900' : 'text-slate-700 hover:bg-slate-50'
+            }`}
           >
-            الرئيسية
+            <span>الصفحة الرئيسية</span>
+            <ChevronLeft className="w-4 h-4 text-slate-400" />
           </Link>
           <Link
             href="/#domains-section"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
           >
-            المجالات والمعايير
+            <span>المجالات والمعايير الـ 4</span>
+            <ChevronLeft className="w-4 h-4 text-slate-400" />
           </Link>
           <Link
             href="/about-evaluation"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+              pathname === '/about-evaluation' ? 'bg-moe-50 text-moe-900' : 'text-slate-700 hover:bg-slate-50'
+            }`}
           >
-            أدوات التقويم المدرسي الـ 12
+            <span>أدوات التقويم المدرسي (12)</span>
+            <ChevronLeft className="w-4 h-4 text-slate-400" />
           </Link>
-          {currentUser && (
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-              <span className="text-xs text-slate-600">{currentUser.name}</span>
+
+          {currentUser ? (
+            <div className="pt-3 border-t border-slate-100 space-y-2">
+              <div className="px-3.5 py-2 bg-slate-50 rounded-xl flex items-center justify-between text-xs">
+                <span className="font-bold text-slate-800">{currentUser.name}</span>
+                <span className="bg-moe-100 text-moe-800 font-bold px-2 py-0.5 rounded-md">
+                  {currentUser.role === 'admin' ? 'مدير المدرسة' : 'معلم'}
+                </span>
+              </div>
               <button
                 onClick={handleLogout}
-                className="text-xs text-rose-600 font-medium flex items-center gap-1"
+                className="w-full text-right px-3.5 py-2.5 rounded-xl text-xs text-rose-600 hover:bg-rose-50 font-bold flex items-center gap-2 transition-colors"
               >
-                <LogOut className="w-3.5 h-3.5" /> تسجيل الخروج
+                <LogOut className="w-4 h-4" />
+                <span>تسجيل الخروج من الحساب</span>
               </button>
+            </div>
+          ) : (
+            <div className="pt-2 border-t border-slate-100">
+              <Link
+                href="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 bg-moe-800 text-white py-2.5 rounded-xl text-xs font-bold shadow-xs"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>تسجيل دخول المعلمين والإدارة</span>
+              </Link>
             </div>
           )}
         </div>

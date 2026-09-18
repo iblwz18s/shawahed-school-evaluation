@@ -21,12 +21,12 @@ export const EvidenceChoiceModal: React.FC<EvidenceChoiceModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full border border-slate-200 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-md w-full border border-slate-200 overflow-hidden">
         {/* الرأس */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="px-5 py-4 sm:px-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
           <div>
-            <h2 className="text-base font-bold text-slate-900">كيف تريد إضافة الشاهد؟</h2>
+            <h2 className="text-sm sm:text-base font-bold text-slate-900">كيف تريد إضافة الشاهد؟</h2>
             {indicatorCode && (
               <span className="text-xs text-slate-500 font-mono dir-ltr block text-right">
                 المؤشر: {indicatorCode}
@@ -42,7 +42,7 @@ export const EvidenceChoiceModal: React.FC<EvidenceChoiceModalProps> = ({
         </div>
 
         {/* الخيارين */}
-        <div className="p-6 space-y-4">
+        <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
           {/* الخيار الأول: إنشاء تقرير */}
           <button
             type="button"

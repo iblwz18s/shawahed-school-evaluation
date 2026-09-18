@@ -68,9 +68,13 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-6">
         {/* بطاقة الدخول */}
         <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-xl space-y-6">
-          <div className="text-center space-y-2">
-            <div className="w-14 h-14 rounded-2xl bg-moe-50 border border-moe-200/80 flex items-center justify-center mx-auto text-moe-800 shadow-inner">
-              <GraduationCap className="w-8 h-8" />
+          <div className="text-center space-y-3">
+            <div className="w-20 h-20 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex items-center justify-center mx-auto p-2">
+              <img
+                src="/images/moe-logo.png"
+                alt="شعار وزارة التعليم"
+                className="w-full h-full object-contain"
+              />
             </div>
             <h1 className="text-2xl font-black text-slate-900">دخول المنسوبين</h1>
             <p className="text-xs text-slate-500">

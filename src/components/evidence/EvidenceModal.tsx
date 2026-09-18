@@ -109,16 +109,16 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-xl w-full border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-xl w-full border border-slate-200 overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[90vh]">
         {/* رأس النافذة */}
-        <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+        <div className="px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-slate-900">
+            <h2 className="text-sm sm:text-base font-bold text-slate-900">
               {isEditing ? 'تعديل الشاهد وإعادة الإرسال' : 'إضافة شاهد جديد للمؤشر'}
             </h2>
             {indicatorCode && (
-              <p className="text-xs text-slate-500 font-mono mt-0.5 dir-ltr text-right">
+              <p className="text-[11px] sm:text-xs text-slate-500 font-mono mt-0.5 dir-ltr text-right">
                 مؤشر: {indicatorCode}
               </p>
             )}
@@ -132,7 +132,7 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({
         </div>
 
         {/* جسم النافذة */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto">
           {error && (
             <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
@@ -239,18 +239,18 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({
           </div>
 
           {/* أزرار الإجراءات */}
-          <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-2.5">
+          <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+              className="order-2 sm:order-1 px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors text-center"
             >
               إلغاء
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center gap-2 bg-moe-800 hover:bg-moe-900 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition-colors disabled:opacity-50 shadow-sm"
+              className="order-1 sm:order-2 flex items-center justify-center gap-2 bg-moe-800 hover:bg-moe-900 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition-colors disabled:opacity-50 shadow-sm w-full sm:w-auto"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
               <span>{isEditing ? 'حفظ وإعادة الإرسال' : 'إرسال الشاهد للمراجعة'}</span>
