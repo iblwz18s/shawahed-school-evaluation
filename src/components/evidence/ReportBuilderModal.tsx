@@ -360,6 +360,29 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
     notes,
   ]);
 
+  // تحديث نسبة التصغير لورقة A4 هندسياً لمطابقة شاشات الجوال بدقة ومنع أي تداخل
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const updateScale = () => {
+      if (previewContainerRef.current && previewZoomMode === 'fit') {
+        const containerWidth = previewContainerRef.current.clientWidth - 24;
+        if (containerWidth < 794) {
+          const s = Math.max(0.35, Math.min(1, containerWidth / 794));
+          setPreviewScale(s);
+        } else {
+          setPreviewScale(1);
+        }
+      } else {
+        setPreviewScale(1);
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, [isOpen, activeTab, previewZoomMode, previewHtml]);
+
   const handleRestoreDraft = () => {
     if (!availableDraft) return;
     try {
@@ -397,8 +420,6 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
     } catch (e) {}
     setAvailableDraft(null);
   };
-
-  if (!isOpen) return null;
 
   // إدارة قوائم النصوص الديناميكية
   const updateItem = (list: string[], setList: (v: string[]) => void, idx: number, val: string) => {
@@ -659,27 +680,6 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
     }
   };
 
-  // تحديث نسبة التصغير لورقة A4 هندسياً لمطابقة شاشات الجوال بدقة ومنع أي تداخل
-  useEffect(() => {
-    const updateScale = () => {
-      if (previewContainerRef.current && previewZoomMode === 'fit') {
-        const containerWidth = previewContainerRef.current.clientWidth - 24;
-        if (containerWidth < 794) {
-          const s = Math.max(0.35, Math.min(1, containerWidth / 794));
-          setPreviewScale(s);
-        } else {
-          setPreviewScale(1);
-        }
-      } else {
-        setPreviewScale(1);
-      }
-    };
-
-    updateScale();
-    window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
-  }, [activeTab, previewZoomMode, previewHtml]);
-
   // دالة الطباعة وحفظ التقرير كـ PDF المباشرة من المتصفح
   const handlePrintReport = () => {
     if (previewIframeRef.current?.contentWindow) {
@@ -776,6 +776,8 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
       setSubmitting(false);
     }
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
