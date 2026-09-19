@@ -534,33 +534,61 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // دمج آمن وغير هدام (Non-Destructive) يحافظ تماماً على مدخلات المستخدم اليدوية
-  const mergeListItems = (userList: string[], aiList?: string[]): string[] => {
-    const cleanedUser = (userList || []).map((s) => s.trim()).filter(Boolean);
+  // النصوص الافتراضية الأولية التي يتم استبدالها بصياغة الذكاء الاصطناعي المخصصة للعنوان
+  const DEFAULT_BOILERPLATES = [
+    'تنمية المهارات المعرفية والتطبيقية للمتعلمين',
+    'التخطيط للنشاط وإعداد الموارد اللازمة',
+    'تنفيذ الفعاليات بمشاركة الطلاب المستهدفين',
+    'تحقيق أثر إيجابي ودافعية مرتفعة نحو التعلم',
+    'صعوبة في مهارات التفكير الناقد وحل المشكلات',
+    'أوراق عمل تفاعلية',
+    'شاشة العرض الذكية',
+  ];
+
+  // دمج ذكي يلتقط العنوان ويملأ الحقول المضافة من المستخدم أو يستبدل النصوص العامة الافتراضية
+  const fillListWithAi = (
+    userList: string[],
+    aiList?: string[],
+    boilerplates: string[] = DEFAULT_BOILERPLATES
+  ): string[] => {
     if (!aiList || aiList.length === 0) {
-      return cleanedUser.length > 0 ? cleanedUser : [''];
+      return userList.length > 0 ? userList : [''];
     }
-    const result = [...cleanedUser];
-    for (const item of aiList) {
-      const trimmed = (item || '').trim();
-      if (!trimmed) continue;
-      const isDuplicate = result.some(
-        (existing) =>
-          existing.toLowerCase() === trimmed.toLowerCase() ||
-          existing.includes(trimmed) ||
-          trimmed.includes(existing)
-      );
-      if (!isDuplicate) {
-        result.push(trimmed);
+
+    const result = [...userList];
+    const aiQueue = [...aiList];
+
+    // الخطوة 1: استبدال الخانات الفارغة أو الخانات التي تحوي نصاً عاماً قديماً بصياغة الذكاء الاصطناعي
+    for (let i = 0; i < result.length; i++) {
+      const currentVal = (result[i] || '').trim();
+      const isBoilerplate = boilerplates.some((b) => b.trim() === currentVal);
+      if (!currentVal || isBoilerplate) {
+        if (aiQueue.length > 0) {
+          result[i] = aiQueue.shift()!;
+        }
       }
     }
+
+    // الخطوة 2: إذا بقيت عناصر من الذكاء الاصطناعي لم تُدرج بعد، ندرج المتبقي
+    while (aiQueue.length > 0) {
+      const nextItem = aiQueue.shift()!;
+      if (!result.includes(nextItem)) {
+        result.push(nextItem);
+      }
+    }
+
     return result.length > 0 ? result : [''];
   };
 
-  // إعداد التقرير بالذكاء الاصطناعي بأسلوب تربوي سعودي مهني ومباشر وبطريقة غير هدامة
+  // إعداد التقرير بالذكاء الاصطناعي بأسلوب تربوي سعودي مهني ومباشر يلتقط العنوان الفعلي ويملأ جميع البنود
   const handleAiEnhance = async () => {
     setEnhancingAi(true);
     setError(null);
+
+    const effectiveTitle = title.trim() || currentTypeConfig.defaultTitle;
+    if (!title.trim()) {
+      setTitle(effectiveTitle);
+    }
 
     try {
       const res = await fetch('/api/ai/enhance-report', {
@@ -568,15 +596,24 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           reportType,
-          title: title.trim(),
+          title: effectiveTitle,
           type,
           subject: subject.trim(),
           gradeLevel: gradeLevel.trim(),
           audience: audience.trim(),
-          objectives: objectives.filter((o) => o.trim()),
-          steps: steps.filter((s) => s.trim()),
-          outcomes: outcomes.filter((o) => o.trim()),
+          objectives,
+          steps,
+          outcomes,
+          weaknesses,
+          tools,
           notes: notes.trim(),
+          requestedCounts: {
+            objectives: Math.max(objectives.length, 3),
+            steps: Math.max(steps.length, 4),
+            outcomes: Math.max(outcomes.length, 3),
+            weaknesses: Math.max(weaknesses.length, 3),
+            tools: Math.max(tools.length, 3),
+          },
         }),
       });
 
@@ -585,27 +622,27 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
 
       if (data.enhanced) {
         if (data.enhanced.objectives?.length) {
-          setObjectives((prev) => mergeListItems(prev, data.enhanced.objectives));
+          setObjectives((prev) => fillListWithAi(prev, data.enhanced.objectives));
         }
         if (data.enhanced.steps?.length) {
-          setSteps((prev) => mergeListItems(prev, data.enhanced.steps));
+          setSteps((prev) => fillListWithAi(prev, data.enhanced.steps));
         }
         if (data.enhanced.outcomes?.length) {
-          setOutcomes((prev) => mergeListItems(prev, data.enhanced.outcomes));
+          setOutcomes((prev) => fillListWithAi(prev, data.enhanced.outcomes));
         }
         if (data.enhanced.tools?.length) {
-          setTools((prev) => mergeListItems(prev, data.enhanced.tools));
+          setTools((prev) => fillListWithAi(prev, data.enhanced.tools));
         }
         if (data.enhanced.weaknesses?.length) {
-          setWeaknesses((prev) => mergeListItems(prev, data.enhanced.weaknesses));
+          setWeaknesses((prev) => fillListWithAi(prev, data.enhanced.weaknesses));
         }
-        if (data.enhanced.notes && !notes.trim()) {
+        if (data.enhanced.notes && (!notes.trim() || notes.includes('استثمار مخرجات'))) {
           setNotes(data.enhanced.notes);
         }
-        if (data.enhanced.initiativeIdea && !initiativeIdea.trim()) {
+        if (data.enhanced.initiativeIdea) {
           setInitiativeIdea(data.enhanced.initiativeIdea);
         }
-        if (data.enhanced.occasionSignificance && !occasionSignificance.trim()) {
+        if (data.enhanced.occasionSignificance) {
           setOccasionSignificance(data.enhanced.occasionSignificance);
         }
       }
@@ -893,38 +930,12 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
 
               {/* اختيار نوع التقرير عبر قائمة منسدلة أنيقة */}
               <div className="bg-gradient-to-l from-slate-50 to-emerald-50/30 p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex items-center justify-between">
                   <label className="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
                     <Layers className="w-4 h-4 text-moe-700" />
                     <span>نوع التقرير</span>
                     <span className="text-rose-500">*</span>
                   </label>
-                  {reportType === 'program_activity' && (
-                    <div className="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-slate-200 shadow-2xs">
-                      <button
-                        type="button"
-                        onClick={() => setType('برنامج')}
-                        className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                          type === 'برنامج'
-                            ? 'bg-moe-700 text-white shadow-xs'
-                            : 'text-slate-600 hover:text-slate-900'
-                        }`}
-                      >
-                        برنامج
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setType('نشاط')}
-                        className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                          type === 'نشاط'
-                            ? 'bg-moe-700 text-white shadow-xs'
-                            : 'text-slate-600 hover:text-slate-900'
-                        }`}
-                      >
-                        نشاط
-                      </button>
-                    </div>
-                  )}
                 </div>
 
                 <div className="relative">
@@ -966,14 +977,22 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                     ? 'موضوع الدرس / عنوان الزيارة'
                     : reportType === 'results_analysis'
                     ? 'اسم المادة / الاختبار'
-                    : `اسم ${type}`}{' '}
+                    : 'اسم البرنامج / النشاط'}{' '}
                   <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setTitle(val);
+                    if (val.includes('نشاط') || val.includes('فعالية')) {
+                      setType('نشاط');
+                    } else if (val.includes('برنامج')) {
+                      setType('برنامج');
+                    }
+                  }}
                   placeholder={`مثال: ${currentTypeConfig.defaultTitle}`}
                   className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:border-moe-600 font-medium"
                 />
