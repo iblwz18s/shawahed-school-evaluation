@@ -84,29 +84,29 @@ export default async function DomainPage({ params }: PageProps) {
       </nav>
 
       {/* رأس صفحة المجال */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-white rounded-2xl p-6 sm:p-8 border-2 border-slate-200 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2 max-w-2xl">
-          <div className="inline-flex items-center gap-2 bg-moe-50 text-moe-800 text-xs px-3 py-1 rounded-md font-bold border border-moe-200">
+          <div className="inline-flex items-center gap-2 bg-moe-50 text-moe-900 text-xs px-3 py-1 rounded-lg font-bold border-2 border-moe-200">
             المجال {domain.code}
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
             {domain.name}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
             {domain.description}
           </p>
         </div>
 
         {/* كارت ملخص الإنجاز */}
-        <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 min-w-[260px] space-y-3">
+        <div className="bg-slate-50 p-5 rounded-2xl border-2 border-slate-200 min-w-[260px] space-y-3 shadow-2xs">
           <div className="flex justify-between items-center text-xs">
-            <span className="text-slate-600 font-medium">اكتمال شواهد المجال:</span>
-            <span className="font-bold text-moe-800 text-sm dir-ltr inline-block">
+            <span className="text-slate-600 font-bold">اكتمال شواهد المجال:</span>
+            <span className="font-black text-moe-800 text-sm dir-ltr inline-block">
               {domainCompletionRate}%
             </span>
           </div>
-          <ProgressBar value={domainCompletionRate} showPercentage={false} size="md" />
-          <div className="flex justify-between items-center text-[11px] text-slate-500 pt-1">
+          <ProgressBar value={domainCompletionRate} showPercentage={false} size="md" colorClass="bg-moe-700" />
+          <div className="flex justify-between items-center text-[11px] text-slate-600 pt-1 font-medium">
             <span>المعايير: {standardsData.length}</span>
             <span>المؤشرات المكتملة: {completedIndicators} من {totalIndicators}</span>
           </div>
@@ -115,7 +115,7 @@ export default async function DomainPage({ params }: PageProps) {
 
       {/* استعراض معايير المجال */}
       <div className="space-y-6">
-        <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+        <h2 className="text-xl font-black text-slate-900 flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-moe-700" />
           <span>معايير {domain.name} ({standardsData.length})</span>
         </h2>
@@ -124,32 +124,32 @@ export default async function DomainPage({ params }: PageProps) {
           {standardsData.map((std) => (
             <div
               key={std.id}
-              className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden"
+              className="bg-white rounded-2xl border-2 border-slate-200 shadow-md hover:shadow-lg hover:border-moe-400 transition-all overflow-hidden"
             >
               {/* شريط رأس المعيار */}
-              <div className="p-6 bg-slate-50/70 border-b border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="p-6 bg-slate-50 border-b-2 border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-moe-800 bg-white px-2.5 py-0.5 rounded border border-moe-200 dir-ltr inline-block">
+                    <span className="font-mono text-xs font-bold text-moe-900 bg-white px-2.5 py-1 rounded-lg border-2 border-moe-200 dir-ltr inline-block shadow-2xs">
                       معيار {std.code}
                     </span>
-                    <h3 className="text-lg font-bold text-slate-900">{std.name}</h3>
+                    <h3 className="text-lg font-black text-slate-900">{std.name}</h3>
                   </div>
                   {std.description && (
-                    <p className="text-xs text-slate-500 max-w-2xl">{std.description}</p>
+                    <p className="text-xs text-slate-600 max-w-2xl font-medium">{std.description}</p>
                   )}
                 </div>
 
                 <div className="flex items-center gap-4 shrink-0">
                   <div className="text-right">
-                    <span className="text-[11px] text-slate-500 block">اكتمال الشواهد:</span>
-                    <span className="text-xs font-bold text-slate-800">
+                    <span className="text-[11px] text-slate-500 font-medium block">اكتمال الشواهد:</span>
+                    <span className="text-xs font-black text-slate-900">
                       {std.completedCount} من {std.indicatorsCount} مؤشر
                     </span>
                   </div>
                   <Link
                     href={`/standards/${std.id}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-moe-800 bg-white hover:bg-moe-50 px-3 py-2 rounded-xl border border-slate-200 hover:border-moe-200 transition-colors shadow-sm"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-moe-800 hover:bg-moe-900 px-4 py-2 rounded-xl transition-all shadow-xs hover:shadow"
                   >
                     <span>عرض التفاصيل</span>
                     <ArrowLeft className="w-3.5 h-3.5" />
@@ -166,7 +166,7 @@ export default async function DomainPage({ params }: PageProps) {
                       <Link
                         key={ind.id}
                         href={`/indicators/${encodeURIComponent(ind.code)}`}
-                        className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl border border-slate-100 hover:border-moe-200 hover:bg-slate-50/80 transition-all gap-3 group"
+                        className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-moe-400 hover:bg-moe-50/40 bg-white transition-all gap-3 group shadow-2xs"
                       >
                         <div className="flex items-start gap-3">
                           <span className="font-mono text-xs font-bold text-moe-800 bg-slate-100 group-hover:bg-moe-100 px-2 py-1 rounded border border-slate-200 group-hover:border-moe-300 dir-ltr inline-block shrink-0 mt-0.5">

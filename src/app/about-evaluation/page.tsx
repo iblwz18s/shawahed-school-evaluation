@@ -120,12 +120,12 @@ export default function AboutEvaluationPage() {
       </div>
 
       {/* تنبيه دور المنصة المحدد في BRD */}
-      <div className="bg-moe-50/80 border border-moe-200/90 rounded-2xl p-6 text-xs sm:text-sm text-moe-950 space-y-2">
-        <div className="flex items-center gap-2 font-bold text-moe-900 text-sm sm:text-base">
+      <div className="bg-moe-50 border-2 border-moe-200 rounded-2xl p-6 text-xs sm:text-sm text-moe-950 space-y-2 shadow-2xs">
+        <div className="flex items-center gap-2 font-black text-moe-900 text-sm sm:text-base">
           <CheckCircle2 className="w-5 h-5 text-moe-700 shrink-0" />
           <span>دور منصة شواهد التقويم المدرسي:</span>
         </div>
-        <p className="leading-relaxed text-slate-700">
+        <p className="leading-relaxed text-slate-800 font-medium">
           تهدف هذه المنصة بالدرجة الأولى إلى رقمنة وتنظيم وتوثيق <strong>الأداة الأولى (تحليل وثائق المدرسة)</strong> وربط كل شاهد بالمؤشر الصحيح وتسهيل الوصول إليها لفريق التقويم الخارجي، ولا تدعي المنصة أنها تغطي جميع أدوات التقويم الميدانية الأخرى أو تمنح درجة التقويم الرسمية للمدرسة.
         </p>
       </div>
@@ -135,31 +135,31 @@ export default function AboutEvaluationPage() {
         {evaluationTools.map((tool) => (
           <div
             key={tool.id}
-            className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between"
+            className="bg-white rounded-2xl border-2 border-slate-200 p-5 shadow-md hover:shadow-lg hover:border-moe-400 transition-all space-y-3 flex flex-col justify-between"
           >
             <div className="space-y-2.5">
               <div className="flex items-center justify-between gap-2">
-                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-slate-50 border-2 border-slate-200 flex items-center justify-center shadow-2xs">
                   {tool.icon}
                 </div>
-                <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
+                <span className="text-[11px] font-bold text-slate-700 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
                   {tool.tag}
                 </span>
               </div>
 
-              <h3 className="text-base font-bold text-slate-900">
+              <h3 className="text-base font-black text-slate-900">
                 <span className="text-moe-700 font-mono ml-1.5">{tool.id}.</span>
                 {tool.title}
               </h3>
 
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed font-medium">
                 {tool.description}
               </p>
             </div>
 
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+            <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500 font-medium">
               <span>أداة تقويم رسمية</span>
-              <span className="font-mono">#0{tool.id}</span>
+              <span className="font-mono font-bold">#0{tool.id}</span>
             </div>
           </div>
         ))}
@@ -169,7 +169,7 @@ export default function AboutEvaluationPage() {
       <div className="pt-6 border-t border-slate-200 flex justify-center">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 bg-moe-800 hover:bg-moe-900 text-white text-xs sm:text-sm font-bold px-6 py-3 rounded-xl transition-all shadow-sm"
+          className="inline-flex items-center gap-2 bg-moe-800 hover:bg-moe-900 text-white text-xs sm:text-sm font-bold px-6 py-3.5 rounded-xl transition-all shadow-md hover:shadow-lg"
         >
           <span>العودة إلى شواهد التقويم والمجالات</span>
           <ArrowLeft className="w-4 h-4" />

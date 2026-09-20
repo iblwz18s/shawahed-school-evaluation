@@ -152,20 +152,20 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center gap-2.5">
               <Link
                 href={currentUser.role === 'admin' ? '/admin' : '/staff'}
-                className="flex items-center gap-2 bg-moe-50 hover:bg-moe-100 text-moe-900 px-3.5 py-2 rounded-xl text-sm font-bold border border-moe-200 transition-colors shadow-xs"
+                className="flex items-center gap-2 bg-moe-800 hover:bg-moe-900 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-xs hover:shadow"
               >
-                <LayoutDashboard className="w-4 h-4 text-moe-700" />
+                <LayoutDashboard className="w-4 h-4 text-emerald-300" />
                 <span>
                   {currentUser.role === 'admin' ? 'لوحة تحكم المدير' : 'لوحة المعلم'}
                 </span>
-                <span className="text-[11px] bg-moe-700 text-white px-2 py-0.5 rounded-full font-semibold">
+                <span className="text-[11px] bg-emerald-700 text-white px-2 py-0.5 rounded-full font-semibold">
                   {currentUser.role === 'admin' ? 'مدير' : 'معلم'}
                 </span>
               </Link>
               <button
                 onClick={handleLogout}
                 title="تسجيل الخروج"
-                className="flex items-center gap-1.5 text-slate-500 hover:text-rose-600 text-sm px-2.5 py-2 rounded-xl hover:bg-rose-50 transition-colors"
+                className="flex items-center gap-1.5 text-slate-600 hover:text-rose-600 text-sm px-2.5 py-2 rounded-xl hover:bg-rose-50 border border-slate-200 hover:border-rose-200 transition-colors"
               >
                 <LogOut className="w-4 h-4" />
                 <span className="text-xs font-semibold">خروج</span>
@@ -174,9 +174,9 @@ export const Navbar: React.FC = () => {
           ) : (
             <Link
               href="/login"
-              className="flex items-center gap-2 text-slate-700 hover:text-moe-900 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3.5 py-2 rounded-xl text-sm font-bold transition-all shadow-xs"
+              className="flex items-center gap-2 text-white bg-moe-800 hover:bg-moe-900 border border-moe-900 px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-xs hover:shadow"
             >
-              <LogIn className="w-4 h-4 text-slate-500" />
+              <LogIn className="w-4 h-4 text-emerald-200" />
               <span>دخول المنسوبين</span>
             </Link>
           )}
@@ -187,17 +187,17 @@ export const Navbar: React.FC = () => {
           {currentUser ? (
             <Link
               href={currentUser.role === 'admin' ? '/admin' : '/staff'}
-              className="text-xs bg-moe-800 hover:bg-moe-900 text-white px-2.5 py-2 rounded-xl font-bold transition-colors whitespace-nowrap shadow-xs flex items-center gap-1"
+              className="text-xs bg-moe-800 hover:bg-moe-900 text-white px-3 py-2 rounded-xl font-bold transition-colors whitespace-nowrap shadow-xs flex items-center gap-1"
             >
-              <LayoutDashboard className="w-3.5 h-3.5" />
+              <LayoutDashboard className="w-3.5 h-3.5 text-emerald-300" />
               <span>لوحة التحكم</span>
             </Link>
           ) : (
             <Link
               href="/login"
-              className="text-xs text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-2.5 py-2 rounded-xl font-bold transition-colors whitespace-nowrap flex items-center gap-1"
+              className="text-xs text-white bg-moe-800 hover:bg-moe-900 border border-moe-900 px-3 py-2 rounded-xl font-bold transition-colors whitespace-nowrap flex items-center gap-1 shadow-xs"
             >
-              <LogIn className="w-3.5 h-3.5 text-slate-600" />
+              <LogIn className="w-3.5 h-3.5 text-emerald-200" />
               <span>دخول</span>
             </Link>
           )}

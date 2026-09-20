@@ -57,7 +57,7 @@ export const SearchBar: React.FC = () => {
 
   return (
     <div className="relative w-full max-w-2xl mx-auto" ref={dropdownRef}>
-      <div className="relative flex items-center shadow-lg rounded-2xl overflow-hidden border border-slate-200/80 bg-white focus-within:border-moe-600 focus-within:ring-2 focus-within:ring-moe-600/20 transition-all">
+      <div className="relative flex items-center shadow-md hover:shadow-lg rounded-2xl overflow-hidden border-2 border-slate-200 focus-within:border-moe-700 focus-within:ring-2 focus-within:ring-moe-700/20 bg-white transition-all">
         <div className="pr-4.5 pl-2 text-slate-400">
           {loading ? (
             <Loader2 className="w-5 h-5 animate-spin text-moe-700" />

@@ -61,38 +61,38 @@ export default async function StandardPage({ params }: PageProps) {
       </nav>
 
       {/* رأس صفحة المعيار */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-white rounded-2xl p-6 sm:p-8 border-2 border-slate-200 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2 max-w-2xl">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-bold text-moe-800 bg-moe-50 px-2.5 py-0.5 rounded border border-moe-200 dir-ltr inline-block">
+            <span className="font-mono text-xs font-bold text-moe-900 bg-moe-50 px-3 py-1 rounded-lg border-2 border-moe-200 dir-ltr inline-block shadow-2xs">
               معيار {standard.code}
             </span>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-600 font-bold">
               تابع لـ: {standard.domain.name}
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
             {standard.name}
           </h1>
           {standard.description && (
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
               {standard.description}
             </p>
           )}
         </div>
 
         {/* كارت ملخص الإنجاز */}
-        <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 min-w-[260px] space-y-3">
+        <div className="bg-slate-50 p-5 rounded-2xl border-2 border-slate-200 min-w-[260px] space-y-3 shadow-2xs">
           <div className="flex justify-between items-center text-xs">
-            <span className="text-slate-600 font-medium">اكتمال شواهد المعيار:</span>
-            <span className="font-bold text-moe-800 text-sm dir-ltr inline-block">
+            <span className="text-slate-600 font-bold">اكتمال شواهد المعيار:</span>
+            <span className="font-black text-moe-800 text-sm dir-ltr inline-block">
               {completionRate}%
             </span>
           </div>
-          <ProgressBar value={completionRate} showPercentage={false} size="md" />
-          <div className="flex justify-between items-center text-[11px] text-slate-500 pt-1">
+          <ProgressBar value={completionRate} showPercentage={false} size="md" colorClass="bg-moe-700" />
+          <div className="flex justify-between items-center text-[11px] text-slate-600 pt-1 font-medium">
             <span>المؤشرات المكتملة:</span>
-            <span className="font-bold text-slate-700">
+            <span className="font-bold text-slate-900">
               {completedIndicators} من {totalIndicators}
             </span>
           </div>
@@ -101,7 +101,7 @@ export default async function StandardPage({ params }: PageProps) {
 
       {/* قائمة المؤشرات التابعة للمعيار */}
       <div className="space-y-4">
-        <h2 className="text-lg font-bold text-slate-900">
+        <h2 className="text-lg font-black text-slate-900">
           مؤشرات المعيار ({totalIndicators})
         </h2>
 
@@ -111,11 +111,11 @@ export default async function StandardPage({ params }: PageProps) {
             return (
               <div
                 key={ind.id}
-                className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 hover:border-moe-300 transition-all space-y-3"
+                className="bg-white rounded-2xl border-2 border-slate-200 shadow-md p-5 hover:border-moe-400 hover:shadow-lg transition-all space-y-3"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-start gap-3">
-                    <span className="font-mono text-xs font-bold text-moe-800 bg-moe-50 px-2.5 py-1 rounded-lg border border-moe-200 dir-ltr inline-block shrink-0 mt-0.5">
+                    <span className="font-mono text-xs font-bold text-moe-900 bg-moe-50 px-2.5 py-1 rounded-lg border-2 border-moe-200 dir-ltr inline-block shrink-0 mt-0.5 shadow-2xs">
                       {ind.code}
                     </span>
                     <div>
@@ -126,8 +126,8 @@ export default async function StandardPage({ params }: PageProps) {
                         {ind.text}
                       </Link>
                       {ind.schoolGuidance && (
-                        <p className="text-xs text-slate-500 mt-1 bg-amber-50/50 p-2 rounded-lg border border-amber-100">
-                          <strong className="text-amber-800">إرشادات المدرسة: </strong>
+                        <p className="text-xs text-slate-600 mt-1 bg-amber-50/70 p-2.5 rounded-xl border border-amber-200 font-medium">
+                          <strong className="text-amber-900 font-bold">إرشادات المدرسة: </strong>
                           {ind.schoolGuidance}
                         </p>
                       )}
@@ -136,18 +136,18 @@ export default async function StandardPage({ params }: PageProps) {
 
                   <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
                     {hasApproved ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-300 shadow-2xs">
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                         {ind.evidences.length} شاهد معتمد
                       </span>
                     ) : (
-                      <span className="text-xs text-slate-400 bg-slate-100 px-3 py-1 rounded-full">
+                      <span className="text-xs text-slate-500 font-bold bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
                         لا توجد شواهد معتمدة
                       </span>
                     )}
                     <Link
                       href={`/indicators/${encodeURIComponent(ind.code)}`}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-moe-800 bg-slate-50 hover:bg-moe-50 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-moe-200 transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-moe-800 hover:bg-moe-900 px-3.5 py-2 rounded-xl transition-all shadow-xs hover:shadow"
                     >
                       <span>عرض الشواهد</span>
                       <ArrowLeft className="w-3.5 h-3.5" />

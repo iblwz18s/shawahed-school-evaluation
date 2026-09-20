@@ -109,12 +109,22 @@ export default async function HomePage() {
   return (
     <div className="space-y-8 sm:space-y-12 pb-16">
       {/* القسم التعريفي الرئيسي (Hero Section) مع شعار وزارة التعليم المعتمد */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50/60 to-slate-100/50 border-b border-slate-200/80 pt-8 sm:pt-12 pb-12 sm:pb-16 px-3 sm:px-8 text-center">
-        <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
+      <section className="relative overflow-hidden bg-slate-50 border-b border-slate-200 pt-8 sm:pt-12 pb-12 sm:pb-16 px-3 sm:px-8 text-center">
+        {/* خلفية الهيرو المتموجة بتدرج وشفافية 50% */}
+        <div aria-hidden="true" className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
+          <img
+            src="/images/hero-bg.png"
+            alt=""
+            className="w-full h-full object-cover object-bottom opacity-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/30 to-slate-50/80" />
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto space-y-4 sm:space-y-6">
           
           {/* الشعار الرسمي لوزارة التعليم في مقدمة الواجهة الرئيسية */}
           <div className="flex justify-center mb-2 sm:mb-4 animate-in fade-in zoom-in-95 duration-200">
-            <div className="p-3 sm:p-4 bg-white rounded-3xl shadow-sm border border-slate-200/80 hover:shadow-md transition-all">
+            <div className="p-3.5 sm:p-4 bg-white rounded-3xl shadow-md border-2 border-slate-200 hover:border-moe-400 transition-all">
               <img
                 src={ministryLogoUrl}
                 alt="شعار وزارة التعليم بالمملكة العربية السعودية"
@@ -123,8 +133,8 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-2 bg-moe-50 text-moe-900 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-bold border border-moe-200 shadow-2xs max-w-full">
-            <span className="w-2 h-2 rounded-full bg-moe-600 animate-pulse shrink-0" />
+          <div className="inline-flex items-center gap-2 bg-moe-50 text-moe-900 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold border-2 border-moe-200 shadow-xs max-w-full">
+            <span className="w-2.5 h-2.5 rounded-full bg-moe-600 animate-pulse shrink-0" />
             <span className="truncate">وثيقة معايير التقويم والتصنيف والاعتماد المدرسي — الإصدار الثاني 2026م</span>
           </div>
 
@@ -132,7 +142,7 @@ export default async function HomePage() {
             شواهد التقويم الذاتي المدرسي
           </h1>
 
-          <p className="text-xs sm:text-sm md:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed px-2">
+          <p className="text-xs sm:text-sm md:text-base text-slate-700 max-w-2xl mx-auto leading-relaxed px-2 font-medium">
             منصة توثيق وتنظيم الشواهد الرسمية المرتبطة بمعايير ومؤشرات التقويم المدرسي المعتمدة، مهيأة لاستعراض فريق التقويم والزوار والمعلمين.
           </p>
 
@@ -142,11 +152,11 @@ export default async function HomePage() {
           </div>
 
           {/* بطاقة مؤشرات الإنجاز الإحصائية - متجاوبة 100% مع الجوال */}
-          <div className="pt-4 max-w-2xl mx-auto bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm text-right">
+          <div className="pt-4 max-w-2xl mx-auto bg-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl border-2 border-slate-200 shadow-md text-right">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-4 mb-3">
               <div className="space-y-0.5">
-                <span className="text-[11px] sm:text-xs text-slate-500 font-semibold block">مستوى جاهزية الشواهد المعتمدة بالمدرسة</span>
-                <span className="text-sm sm:text-base font-extrabold text-slate-900">
+                <span className="text-[11px] sm:text-xs text-slate-500 font-bold block">مستوى جاهزية الشواهد المعتمدة بالمدرسة</span>
+                <span className="text-sm sm:text-base font-black text-slate-900">
                   اكتمال الشواهد للمؤشرات ({indicatorsWithApproved} من {totalIndicators})
                 </span>
               </div>
@@ -162,9 +172,9 @@ export default async function HomePage() {
               size="md"
               colorClass="bg-moe-700"
             />
-            <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[11px] sm:text-xs text-slate-500 pt-2.5 border-t border-slate-100">
+            <div className="mt-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[11px] sm:text-xs text-slate-600 pt-3 border-t border-slate-200">
               <span>* الإحصائية تخص الشواهد المعتمدة رسميًا فقط</span>
-              <span>إجمالي الشواهد المعتمدة المتاحة: <strong className="text-slate-800 font-bold">{totalApprovedEvidences}</strong></span>
+              <span>إجمالي الشواهد المعتمدة المتاحة: <strong className="text-slate-900 font-bold">{totalApprovedEvidences}</strong></span>
             </div>
           </div>
         </div>
@@ -175,15 +185,15 @@ export default async function HomePage() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 border-b border-slate-200">
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-slate-900">مجالات التقويم المدرسي الرئيسية</h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            <p className="text-xs sm:text-sm text-slate-600 mt-0.5 font-medium">
               اختر المجال لاستعراض المعايير والمؤشرات والشواهد المعتمدة المرتبطة به.
             </p>
           </div>
           <Link
             href="/about-evaluation"
-            className="inline-flex items-center gap-1.5 text-xs text-moe-700 hover:text-moe-900 font-bold bg-moe-50 hover:bg-moe-100 px-3 py-2 rounded-xl border border-moe-200 transition-colors self-start sm:self-auto shrink-0 shadow-2xs"
+            className="inline-flex items-center gap-2 text-xs text-moe-900 hover:text-moe-950 font-bold bg-white hover:bg-moe-50 px-4 py-2.5 rounded-xl border-2 border-moe-300 hover:border-moe-500 transition-all self-start sm:self-auto shrink-0 shadow-xs hover:shadow-sm"
           >
-            <HelpCircle className="w-3.5 h-3.5" />
+            <HelpCircle className="w-4 h-4 text-moe-700" />
             <span>التعريف بأدوات التقويم الـ 12</span>
           </Link>
         </div>
@@ -193,13 +203,13 @@ export default async function HomePage() {
           {domainStats.map((domain) => (
             <div
               key={domain.id}
-              className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md transition-all p-5 sm:p-6 flex flex-col justify-between group"
+              className="bg-white rounded-2xl sm:rounded-3xl border-2 border-slate-200 shadow-md hover:shadow-xl hover:border-moe-400 transition-all p-5 sm:p-6 flex flex-col justify-between group"
             >
               <div>
                 {/* رأس البطاقة */}
                 <div className="flex items-start justify-between gap-3 mb-3.5">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-moe-50 border border-moe-200/70 flex items-center justify-center shrink-0 group-hover:bg-moe-100/80 transition-colors">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-moe-50 border-2 border-moe-200 flex items-center justify-center shrink-0 group-hover:bg-moe-100 transition-colors shadow-2xs">
                       {getDomainIcon(domain.code)}
                     </div>
                     <div>
@@ -212,7 +222,7 @@ export default async function HomePage() {
                     </div>
                   </div>
 
-                  <span className="text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200 shrink-0">
+                  <span className="text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-300 shrink-0 shadow-2xs">
                     {domain.totalStandards} معايير
                   </span>
                 </div>
@@ -222,7 +232,7 @@ export default async function HomePage() {
                 </p>
 
                 {/* نسبة اكتمال الشواهد للمجال */}
-                <div className="bg-slate-50/80 p-3.5 rounded-xl sm:rounded-2xl border border-slate-100 space-y-2 mb-4">
+                <div className="bg-slate-50 p-3.5 rounded-xl sm:rounded-2xl border border-slate-200 space-y-2 mb-4 shadow-2xs">
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-slate-600 font-medium">اكتمال الشواهد:</span>
                     <span className="font-bold text-slate-900 text-[11px] sm:text-xs">
@@ -239,7 +249,7 @@ export default async function HomePage() {
 
                 {/* قائمة مختصرة بالمعايير */}
                 <div className="space-y-1.5 mb-5">
-                  <span className="text-[11px] font-semibold text-slate-400 block mb-1">
+                  <span className="text-[11px] font-bold text-slate-500 block mb-1">
                     المعايير المندرجة:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -247,7 +257,7 @@ export default async function HomePage() {
                       <Link
                         key={s.id}
                         href={`/standards/${s.id}`}
-                        className="text-[11px] bg-white hover:bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200 transition-colors flex items-center gap-1 shadow-2xs"
+                        className="text-[11px] bg-white hover:bg-moe-50 text-slate-800 hover:text-moe-900 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-moe-300 transition-all flex items-center gap-1.5 shadow-2xs font-semibold"
                       >
                         <span className="font-mono text-moe-700 font-bold">{s.code}</span>
                         <span className="truncate max-w-[140px] sm:max-w-none">{s.name}</span>
@@ -257,17 +267,17 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              {/* زر الانتقال لصفحة المجال */}
-              <div className="pt-3.5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <span className="text-xs text-slate-500">
-                  إجمالي المؤشرات: <strong className="text-slate-800 font-bold">{domain.totalIndicators}</strong>
+              {/* زر الانتقال لصفحة المجال الواضح والبارز */}
+              <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <span className="text-xs text-slate-600 font-medium">
+                  إجمالي المؤشرات: <strong className="text-slate-900 font-bold">{domain.totalIndicators}</strong>
                 </span>
                 <Link
                   href={`/domains/${domain.id}`}
-                  className="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-moe-800 hover:text-moe-950 group-hover:translate-x-[-2px] transition-all bg-moe-50 hover:bg-moe-100 sm:bg-transparent sm:hover:bg-transparent py-1.5 sm:py-0 px-2 sm:px-0 rounded-lg"
+                  className="inline-flex items-center justify-center gap-2 text-xs font-bold bg-moe-800 hover:bg-moe-900 text-white py-2.5 px-4 rounded-xl shadow-xs hover:shadow-md transition-all group/btn"
                 >
                   <span>استعراض المعايير والمؤشرات</span>
-                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <ArrowLeft className="w-4 h-4 group-hover/btn:-translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
