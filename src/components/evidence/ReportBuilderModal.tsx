@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { EvidenceItem, ReportData, ReportType, UserSession } from '@/types';
 import { getCurrentHijriInfo, formatHijriOnly } from '@/lib/hijri-date';
+import { REPORT_CATALOG, getCategoryIdForReportType } from '@/lib/report-catalog';
 
 export interface ReportTypeOption {
   value: ReportType;
@@ -155,6 +156,10 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
 
   // بيانات التقرير
   const [reportType, setReportType] = useState<ReportType>('program_activity');
+  const [catalogCategoryId, setCatalogCategoryId] = useState<string>(() =>
+    getCategoryIdForReportType('program_activity')
+  );
+  const [selectedTemplate, setSelectedTemplate] = useState('');
   const [title, setTitle] = useState('');
   const [type, setType] = useState<'برنامج' | 'نشاط'>('برنامج');
   const [executor, setExecutor] = useState('');
@@ -202,6 +207,37 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
   const isEditing = !!initialEvidence;
 
   const currentTypeConfig = REPORT_TYPES.find((r) => r.value === reportType) || REPORT_TYPES[0];
+  const activeCategory =
+    REPORT_CATALOG.find((c) => c.id === catalogCategoryId) || REPORT_CATALOG[0];
+
+  // اختيار النوع (الخطوة الأولى) ثم إظهار قائمة القوالب الخاصة به
+  const handleSelectCategory = (categoryId: string) => {
+    const cat = REPORT_CATALOG.find((c) => c.id === categoryId);
+    if (!cat) return;
+    setCatalogCategoryId(cat.id);
+    setSelectedTemplate('');
+    setReportType(cat.reportType);
+  };
+
+  // اختيار القالب (الخطوة الثانية) يعبّئ عنوان التقرير فقط حالياً
+  const handleSelectTemplate = (item: string) => {
+    setSelectedTemplate(item);
+    if (!item) return;
+    setTitle(item);
+    if (item.includes('نشاط') || item.includes('فعالية')) {
+      setType('نشاط');
+    } else if (item.includes('برنامج') || item.includes('استراتيجية') || item.includes('مبادرة')) {
+      setType('برنامج');
+    }
+  };
+
+  // مزامنة النوع المختار عند تغيّر نوع التقرير (تحميل شاهد أو استعادة مسودة)
+  useEffect(() => {
+    setCatalogCategoryId((prev) => {
+      const stillValid = REPORT_CATALOG.find((c) => c.id === prev && c.reportType === reportType);
+      return stillValid ? prev : getCategoryIdForReportType(reportType);
+    });
+  }, [reportType]);
 
   const getDraftKey = (rType = reportType) => {
     const uid = currentUser?.id || 'guest';
@@ -928,8 +964,8 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                 </div>
               )}
 
-              {/* اختيار نوع التقرير عبر قائمة منسدلة أنيقة */}
-              <div className="bg-gradient-to-l from-slate-50 to-emerald-50/30 p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2">
+              {/* اختيار نوع التقرير: (1) النوع ثم (2) القالب من قائمة منسدلة */}
+              <div className="bg-gradient-to-l from-slate-50 to-emerald-50/30 p-4 rounded-2xl border border-slate-200/90 shadow-2xs space-y-3">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
                     <Layers className="w-4 h-4 text-moe-700" />
@@ -938,21 +974,43 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                   </label>
                 </div>
 
-                <div className="relative">
-                  <select
-                    value={reportType}
-                    onChange={(e) => setReportType(e.target.value as ReportType)}
-                    className="w-full appearance-none px-4 py-2.5 text-xs sm:text-sm font-bold bg-white border border-slate-300 rounded-xl focus:outline-none focus:border-moe-600 focus:ring-2 focus:ring-moe-100 text-slate-800 shadow-sm cursor-pointer pr-4 pl-10"
-                    dir="rtl"
-                  >
-                    {REPORT_TYPES.map((rt) => (
-                      <option key={rt.value} value={rt.value}>
-                        {rt.label}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
+                {/* الخطوة 1: أزرار الأنواع */}
+                <div className="flex flex-wrap gap-1.5">
+                  {REPORT_CATALOG.map((cat) => (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => handleSelectCategory(cat.id)}
+                      className={`px-3 py-1.5 rounded-xl text-[11.5px] font-bold border transition-all ${
+                        catalogCategoryId === cat.id
+                          ? 'bg-moe-700 text-white border-moe-700 shadow-xs'
+                          : 'bg-white text-slate-700 border-slate-200 hover:border-moe-300 hover:bg-moe-50'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
                 </div>
+
+                {/* الخطوة 2: القالب من قائمة منسدلة */}
+                {activeCategory.items.length > 0 && (
+                  <div className="relative">
+                    <select
+                      value={selectedTemplate}
+                      onChange={(e) => handleSelectTemplate(e.target.value)}
+                      className="w-full appearance-none px-4 py-2.5 text-xs sm:text-sm font-bold bg-white border border-slate-300 rounded-xl focus:outline-none focus:border-moe-600 focus:ring-2 focus:ring-moe-100 text-slate-800 shadow-sm cursor-pointer pr-4 pl-10"
+                      dir="rtl"
+                    >
+                      <option value="">— اختر القالب —</option>
+                      {activeCategory.items.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
+                  </div>
+                )}
 
                 <p className="text-[11.5px] text-moe-900 bg-white/80 border border-moe-200/60 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-2xs">
                   <Info className="w-3.5 h-3.5 shrink-0 text-moe-700" />
