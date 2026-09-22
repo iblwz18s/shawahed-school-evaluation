@@ -174,7 +174,7 @@ export default function AdminUsersPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="teacher@example.com"
+                placeholder="kh@saad.sa"
                 className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:outline-none focus:border-moe-600"
               />
             </div>

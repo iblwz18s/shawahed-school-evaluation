@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
+const staffData = require('../src/data/staff-accounts.json');
 
 const prisma = new PrismaClient();
 
@@ -27,30 +28,30 @@ async function main() {
   });
   console.log('تم إنشاء إعدادات المدرسة:', setting.schoolName);
 
-  // 3. المستخدمون (مدير ومعلم)
-  const passwordHashAdmin = await bcrypt.hash('admin123', 10);
-  const passwordHashTeacher = await bcrypt.hash('teacher123', 10);
+  // 3. المستخدمون (مدير المدرسة + الكادر التعليمي) بنفس مخطط الدخول السهل المعتمد
+  //    اسم الدخول: <الكود>@saad.sa   |   كلمة المرور: <الكود>2030
+  for (const account of staffData.accounts) {
+    const passwordHash = await bcrypt.hash(`${account.code}${staffData.passwordSuffix}`, 10);
 
-  const admin = await prisma.user.create({
-    data: {
-      name: 'فهيد دحام الشمري',
-      email: 'admin@example.com',
-      passwordHash: passwordHashAdmin,
-      role: 'admin',
-      isActive: true,
-    },
-  });
+    await prisma.user.create({
+      data: {
+        name: account.name,
+        email: `${account.code.toLowerCase()}@${staffData.loginDomain}`,
+        passwordHash,
+        role: account.role,
+        isActive: true,
+      },
+    });
+  }
 
-  const teacher = await prisma.user.create({
-    data: {
-      name: 'أسامــه سليمـان البلوي',
-      email: 'teacher@example.com',
-      passwordHash: passwordHashTeacher,
-      role: 'teacher',
-      isActive: true,
-    },
+  const admin = await prisma.user.findFirst({ where: { role: 'admin' } });
+  const teacher = await prisma.user.findFirst({
+    where: { role: 'teacher' },
+    orderBy: { createdAt: 'asc' },
   });
-  console.log('تم إنشاء المستخدمين: admin@example.com و teacher@example.com');
+  console.log(
+    `تم إنشاء ${staffData.accounts.length} حساباً للكادر — المدير: ${admin.name} (${admin.email})`
+  );
 
   // 4. المجالات والمعايير والمؤشرات
   const domainsData = [

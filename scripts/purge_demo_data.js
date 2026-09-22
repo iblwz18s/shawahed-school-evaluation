@@ -10,13 +10,15 @@
 const { PrismaClient } = require('@prisma/client');
 const fs = require('fs');
 const path = require('path');
+const staffData = require('../src/data/staff-accounts.json');
 
 const prisma = new PrismaClient();
 
-const RENAMES = [
-  { email: 'admin@example.com', name: 'فهيد دحام الشمري' },
-  { email: 'teacher@example.com', name: 'أسامــه سليمـان البلوي' },
-];
+/** الأسماء الرسمية لحسابات الكادر، مربوطة بمخطط الدخول المعتمد في src/data/staff-accounts.json */
+const RENAMES = staffData.accounts.map((account) => ({
+  email: `${account.code.toLowerCase()}@${staffData.loginDomain}`,
+  name: account.name,
+}));
 
 function backupDir() {
   const dir = path.join('prisma', 'backups');

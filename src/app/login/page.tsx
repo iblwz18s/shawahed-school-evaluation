@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { LogIn, Lock, Mail, AlertCircle, Loader2, GraduationCap, ShieldCheck } from 'lucide-react';
+import { LogIn, Lock, UserCircle2, AlertCircle, Loader2, Info } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -16,8 +16,8 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
 
-    if (!email || !password) {
-      setError('يرجى إدخال البريد الإلكتروني وكلمة المرور');
+    if (!identifier || !password) {
+      setError('يرجى إدخال اسم الدخول وكلمة المرور');
       return;
     }
 
@@ -27,7 +27,7 @@ export default function LoginPage() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), password }),
+        body: JSON.stringify({ email: identifier.trim(), password }),
       });
 
       const data = await res.json();
@@ -49,17 +49,6 @@ export default function LoginPage() {
       setError(err.message || 'حدث خطأ في الخادم');
     } finally {
       setLoading(false);
-    }
-  };
-
-  // تعبئة سريعة للحسابات التجريبية
-  const fillCredentials = (role: 'admin' | 'teacher') => {
-    if (role === 'admin') {
-      setEmail('admin@example.com');
-      setPassword('admin123');
-    } else {
-      setEmail('teacher@example.com');
-      setPassword('teacher123');
     }
   };
 
@@ -92,18 +81,19 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                البريد الإلكتروني
+                اسم الدخول
               </label>
               <div className="relative">
                 <input
-                  type="email"
+                  type="text"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@example.com"
+                  autoComplete="username"
+                  value={identifier}
+                  onChange={(e) => setIdentifier(e.target.value)}
+                  placeholder="مثال: Os أو Os@saad.sa"
                   className="w-full px-3.5 py-2.5 pr-10 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-moe-600/20 focus:border-moe-600 transition-colors"
                 />
-                <Mail className="w-4 h-4 text-slate-400 absolute right-3.5 top-3.5" />
+                <UserCircle2 className="w-4 h-4 text-slate-400 absolute right-3.5 top-3.5" />
               </div>
             </div>
 
@@ -140,28 +130,18 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* تعبئة تجريبية سريعة لتسهيل الفحص والتقييم */}
-          <div className="pt-4 border-t border-slate-100 space-y-2.5">
-            <span className="text-[11px] font-semibold text-slate-400 block text-center">
-              حسابات تجريبية للمعاينة السريعة (Seed Accounts):
-            </span>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => fillCredentials('admin')}
-                className="text-xs bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium py-2 px-3 rounded-lg border border-slate-200 transition-colors flex items-center justify-center gap-1.5"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-moe-700" />
-                <span>حساب المدير</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => fillCredentials('teacher')}
-                className="text-xs bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium py-2 px-3 rounded-lg border border-slate-200 transition-colors flex items-center justify-center gap-1.5"
-              >
-                <GraduationCap className="w-3.5 h-3.5 text-moe-700" />
-                <span>حساب المعلم</span>
-              </button>
+          {/* توجيه مختصر لطريقة الدخول المعتمدة لحسابات الكادر */}
+          <div className="pt-4 border-t border-slate-100">
+            <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-2.5">
+              <Info className="w-4 h-4 text-moe-700 shrink-0 mt-0.5" />
+              <div className="text-[11px] text-slate-600 leading-relaxed space-y-1">
+                <p className="font-bold text-slate-700">طريقة الدخول لحسابات الكادر:</p>
+                <p>
+                  اسم الدخول هو أول حرفين من اسمك بالإنجليزية (مثال: <strong className="text-slate-800">Os</strong>)،
+                  وكلمة المرور نفس الحرفين متبوعة بـ <strong className="text-slate-800">2030</strong> (مثال:{' '}
+                  <strong className="text-slate-800">Os2030</strong>).
+                </p>
+              </div>
             </div>
           </div>
         </div>
