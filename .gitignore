@@ -37,6 +37,10 @@ prisma/backups/
 *.tsbuildinfo
 next-env.d.ts
 
+# مخرجات مولّدة وقت التشغيل (تقارير PDF وصور مرفوعة) — ليست أصولاً مصدرية
+public/uploads/*
+!public/uploads/.gitkeep
+
 supabase/.temp/
 
 .vercel
