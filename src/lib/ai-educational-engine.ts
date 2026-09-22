@@ -470,10 +470,13 @@ export async function callGeminiIfConfigured(
 }`;
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout
+
+    // الموديل قابل للتغيير من .env عبر GEMINI_MODEL — الافتراضي الأوفر للإنتاج الكثيف
+    const model = (process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite').trim();
 
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey.trim()}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -490,7 +493,11 @@ export async function callGeminiIfConfigured(
 
     clearTimeout(timeoutId);
 
-    if (!res.ok) return null;
+    if (!res.ok) {
+      // تسجيل السبب يسهل التشخيص: 400 مفتاح غير صالح، 429 حصة منتهية، 404 موديل غير موجود
+      console.warn(`Gemini API rejected the request (status ${res.status}), falling back to local engine.`);
+      return null;
+    }
 
     const data = await res.json();
     const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
