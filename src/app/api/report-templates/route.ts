@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import contentData from '@/data/report-templates-content.json';
 import catalogData from '@/data/report-catalog.json';
 import { buildTemplatePrefill } from '@/lib/report-template-fields';
+import { toMasculine } from '@/lib/arabic-masculine';
 import { ReportType } from '@/types';
 
 export const dynamic = 'force-dynamic';
@@ -37,10 +38,10 @@ export async function GET(request: NextRequest) {
     // قوالب الأغلفة/الفهارس في المصدر لا تحتوي حقولاً جاهزة، فنعبّئ العنوان فقط.
     return NextResponse.json({
       slug,
-      title: item.title,
+      title: toMasculine(item.title),
       hasContent: false,
       prefill: {
-        title: item.title,
+        title: toMasculine(item.title),
         date: '',
         audience: 'جميع طلاب المدرسة',
         beneficiariesCount: '',

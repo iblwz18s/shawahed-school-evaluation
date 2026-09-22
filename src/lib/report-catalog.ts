@@ -1,5 +1,6 @@
 import { ReportType } from '@/types';
 import catalogData from '@/data/report-catalog.json';
+import { toMasculine } from '@/lib/arabic-masculine';
 
 /**
  * كتالوج قوالب التقارير
@@ -37,7 +38,8 @@ export const REPORT_CATALOG: ReportCatalogCategory[] = catalogData.categories.ma
   id: category.id,
   label: category.label,
   reportType: category.reportType as ReportType,
-  items: category.items,
+  // العناوين تُعرض بصيغة الطلاب حتى لو كان القالب في المصدر لمدارس البنات.
+  items: category.items.map((item) => ({ ...item, title: toMasculine(item.title) })),
 }));
 
 /** أول تصنيف مطابق لنوع تقرير معيّن (يُستخدم عند التحميل أو استعادة مسودة) */

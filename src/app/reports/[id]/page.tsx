@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/db';
-import { getCurrentUser } from '@/lib/auth';
+import { getCurrentUserFresh } from '@/lib/auth';
+import { getSchoolPrincipalName } from '@/lib/school';
 import { generateReportHtml } from '@/lib/report-html';
 import { Download, ArrowLeft, FileText, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { StatusBadge } from '@/components/common/Badge';
@@ -15,7 +16,7 @@ interface PageProps {
 }
 
 export default async function ReportViewPage({ params }: PageProps) {
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUserFresh();
 
   const evidence = await prisma.evidence.findUnique({
     where: { id: params.id },
@@ -62,6 +63,7 @@ export default async function ReportViewPage({ params }: PageProps) {
     schoolName: setting?.schoolName || 'ابتدائية سعد بن أبي وقاص',
     educationDepartment: setting?.educationDepartment || 'إدارة التعليم بمنطقة الحدود الشمالية',
     academicYear: evidence.academicYear,
+    schoolPrincipal: await getSchoolPrincipalName(),
     ministryLogoUrl: setting?.ministryLogoUrl || '/images/moe-logo.png',
     schoolStamp: (setting as any)?.schoolStampUrl || null,
   });

@@ -2,6 +2,7 @@ import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 import { UserSession } from '@/types';
+import { prisma } from '@/lib/db';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'shawahed-secret-key-2026-saudi-evaluation-secure';
 const key = new TextEncoder().encode(SECRET_KEY);
@@ -47,4 +48,23 @@ export async function getSessionFromRequest(req: NextRequest): Promise<UserSessi
   const token = req.cookies.get(COOKIE_NAME)?.value;
   if (!token) return null;
   return await verifySessionToken(token);
+}
+
+/**
+ * جلسة محدّثة من قاعدة البيانات.
+ * التوكن يحمل الاسم وقت تسجيل الدخول، فإن تغيّر الاسم لاحقاً (كما في إعادة
+ * تسمية الحسابات) تظل الجلسة القديمة تحمل الاسم السابق — لذلك نقرأ المستخدم
+ * من القاعدة عند عرض صفحات تُظهر اسمه (مثل منفّذ التقرير).
+ */
+export async function getCurrentUserFresh(): Promise<UserSession | null> {
+  const session = await getCurrentUser();
+  if (!session) return null;
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.id },
+    select: { id: true, name: true, email: true, role: true, isActive: true },
+  });
+
+  if (!user || !user.isActive) return null;
+  return user as UserSession;
 }

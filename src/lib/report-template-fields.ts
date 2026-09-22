@@ -1,4 +1,5 @@
 import { ReportType } from '@/types';
+import { toMasculine, toMasculineLines } from '@/lib/arabic-masculine';
 
 /**
  * يحوّل حقول القوالب المنقولة من الموقع المصدر (Fields[...]) إلى حقول نموذج
@@ -235,19 +236,23 @@ export function buildTemplatePrefill(
     extras.push({ label: LABELS_FOR_EXTRA[key] || key, value });
   }
 
+  // كل النصوص تمرّ على محوّل الصيغة حتى تكون التقارير بصيغة الطلاب.
   return {
-    title,
+    title: toMasculine(title),
     date,
-    audience: audience || 'جميع طلاب المدرسة',
-    beneficiariesCount,
-    subject,
-    gradeLevel,
-    initiativeIdea,
-    occasionSignificance,
-    objectives,
-    steps,
-    outcomes,
-    notes: recommendations,
-    extraFields: extras,
+    audience: toMasculine(audience || 'جميع طلاب المدرسة'),
+    beneficiariesCount: toMasculine(beneficiariesCount),
+    subject: toMasculine(subject),
+    gradeLevel: toMasculine(gradeLevel),
+    initiativeIdea: toMasculine(initiativeIdea),
+    occasionSignificance: toMasculine(occasionSignificance),
+    objectives: toMasculineLines(objectives),
+    steps: toMasculineLines(steps),
+    outcomes: toMasculineLines(outcomes),
+    notes: toMasculine(recommendations),
+    extraFields: extras.map((field) => ({
+      label: field.label,
+      value: toMasculine(field.value),
+    })),
   };
 }
