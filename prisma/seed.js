@@ -33,7 +33,7 @@ async function main() {
 
   const admin = await prisma.user.create({
     data: {
-      name: 'أ. عبدالعزيز بن فهد (مدير المدرسة)',
+      name: 'فهيد دحام الشمري',
       email: 'admin@example.com',
       passwordHash: passwordHashAdmin,
       role: 'admin',
@@ -43,7 +43,7 @@ async function main() {
 
   const teacher = await prisma.user.create({
     data: {
-      name: 'أ. محمد بن خالد الشمري (معلم)',
+      name: 'أسامــه سليمـان البلوي',
       email: 'teacher@example.com',
       passwordHash: passwordHashTeacher,
       role: 'teacher',

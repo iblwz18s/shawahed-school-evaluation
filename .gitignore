@@ -33,6 +33,7 @@ yarn-error.log*
 prisma/*.db
 prisma/*.db-journal
 prisma/sqlite_dump.json
+prisma/backups/
 *.tsbuildinfo
 next-env.d.ts
 

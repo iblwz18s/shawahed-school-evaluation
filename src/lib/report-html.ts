@@ -48,7 +48,7 @@ export function generateReportHtml({
   educationDepartment = 'إدارة التعليم بمنطقة الحدود الشمالية',
   academicYear = '١٤٤٧-١٤٤٨هـ',
   baseUrl = '',
-  schoolPrincipal = 'أ. عبد الله بن سعد الغامدي',
+  schoolPrincipal = '',
   schoolStamp = null,
   ministryLogoUrl = '/images/moe-logo.png',
 }: GenerateReportHtmlParams): string {
@@ -212,7 +212,7 @@ export function generateReportHtml({
         </div>` : ''}
         <div class="signature-block">
           <div class="signature-title">${reportType === 'classroom_visit' && reportData.visitedTeacher ? 'المعلم المزار' : 'مدير المدرسة'}</div>
-          <div class="signature-name">${reportType === 'classroom_visit' && reportData.visitedTeacher ? reportData.visitedTeacher : (schoolPrincipal || 'أ. عبد الله بن سعد الغامدي')}</div>
+          <div class="signature-name">${reportType === 'classroom_visit' && reportData.visitedTeacher ? reportData.visitedTeacher : (schoolPrincipal || '')}</div>
         </div>
       </div>
       <div class="page-number-row">
@@ -353,6 +353,11 @@ export function generateReportHtml({
     .table-meta td {
       background-color: #ffffff;
       color: #1e293b;
+    }
+    .extra-fields-table {
+      margin-top: 6px;
+      table-layout: fixed;
+      word-break: break-word;
     }
     .two-col-grid {
       display: grid;
@@ -881,6 +886,17 @@ export function generateReportHtml({
             </div>
           </div>` : ''}
         </div>` : ''}
+
+        <!-- جدول المعلومات الإضافية المنقولة مع القوالب الجاهزة -->
+        ${(reportData.extraFields && reportData.extraFields.length > 0) ? `
+        <div class="section-title">معلومات وبيانات إضافية</div>
+        <table class="table-meta extra-fields-table">
+          ${reportData.extraFields.map((f) => `
+          <tr>
+            <th style="width: 170px;">${f.label}</th>
+            <td style="white-space: pre-line; line-height: 1.7;">${f.value}</td>
+          </tr>`).join('')}
+        </table>` : ''}
 
         <!-- إذا كانت الصور قليلة (1-2 صورة) وتتسع الصفحة الأولى لعرضهما كبيرتين -->
         ${!isMultiPage && imgCount > 0 ? `

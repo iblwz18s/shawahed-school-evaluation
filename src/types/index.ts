@@ -135,6 +135,14 @@ export interface ReportData {
     caption?: string;
   }>;
   notes?: string;
+
+  /** حقول إضافية منقولة من القوالب الجاهزة (تعرض في جدول معلومات إضافية) */
+  extraFields?: Array<{
+    label: string;
+    value: string;
+  }>;
+  /** مسار القالب الجاهز الذي بُني عليه التقرير */
+  templateSlug?: string;
 }
 
 export interface EvidenceItem {
