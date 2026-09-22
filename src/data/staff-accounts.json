@@ -1,0 +1,20 @@
+{
+  "loginDomain": "saad.sa",
+  "passwordSuffix": "2030",
+  "accounts": [
+    { "code": "Fh", "name": "فهيد دحام الشمري", "role": "admin" },
+    { "code": "Os", "name": "أسامه سليمان البلوي", "role": "teacher" },
+    { "code": "Kh", "name": "خلف موفق الرويلي", "role": "teacher" },
+    { "code": "Ay", "name": "عايد بن رمضان العنزي", "role": "teacher" },
+    { "code": "Ma", "name": "ماجد زيد العنزي", "role": "teacher" },
+    { "code": "Mu", "name": "مرضي خليل العنزي", "role": "teacher" },
+    { "code": "Mi", "name": "مشعل قناص الرويلي", "role": "teacher" },
+    { "code": "Fa", "name": "فايز هدلان العنزي", "role": "teacher" },
+    { "code": "Wa", "name": "وليد عايد الرويلي", "role": "teacher" },
+    { "code": "Ab", "name": "عبدالله حسين العنزي", "role": "teacher" },
+    { "code": "Sa", "name": "سعد مهدي الحازمي", "role": "teacher" },
+    { "code": "Mo", "name": "محمد عايد العنزي", "role": "teacher" },
+    { "code": "Ma2", "name": "ماجد بطيح العنزي", "role": "teacher" },
+    { "code": "Ba", "name": "بدر حمد العتيبي", "role": "teacher" }
+  ]
+}

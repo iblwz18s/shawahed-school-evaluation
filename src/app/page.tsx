@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { prisma } from '@/lib/db';
+import { getCurrentUserFresh } from '@/lib/auth';
 import { SearchBar } from '@/components/search/SearchBar';
 import { ProgressBar } from '@/components/common/ProgressBar';
 import {
@@ -14,11 +15,13 @@ import {
   BookOpen,
   HelpCircle,
   TrendingUp,
+  UserCircle2,
 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
+  const currentUser = await getCurrentUserFresh();
   const setting = await prisma.schoolSetting.findFirst();
   const isGov = setting ? setting.schoolType === 'government' : true;
 
@@ -108,6 +111,34 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-8 sm:space-y-12 pb-16">
+      {/* ترحيب بالمستخدم المسجّل باسمه الحالي مع اختصار الوصول إلى لوحته */}
+      {currentUser && (
+        <section className="max-w-7xl mx-auto px-3 sm:px-8">
+          <div className="bg-gradient-to-l from-moe-800 to-moe-900 text-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-md border border-moe-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5">
+            <div className="flex items-center gap-3.5">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                <UserCircle2 className="w-6 h-6 text-emerald-300" />
+              </div>
+              <div className="space-y-0.5">
+                <p className="text-sm sm:text-base font-black">أهلاً بك، {currentUser.name}</p>
+                <p className="text-[11px] sm:text-xs text-emerald-100/85 leading-relaxed">
+                  {currentUser.role === 'admin'
+                    ? 'داخل بحساب مدير المدرسة — يمكنك اعتماد الشواهد ومتابعة الكادر التعليمي.'
+                    : 'اسمك يظهر تلقائياً في خانة المنفذ بكل تقرير تنشئه، ويمكنك متابعة شواهدك من لوحتك.'}
+                </p>
+              </div>
+            </div>
+            <Link
+              href={currentUser.role === 'admin' ? '/admin' : '/staff'}
+              className="inline-flex items-center gap-2 bg-white hover:bg-emerald-50 text-moe-900 text-xs font-bold py-2.5 px-4 rounded-xl transition-colors shrink-0 shadow-xs"
+            >
+              <span>{currentUser.role === 'admin' ? 'لوحة تحكم المدير' : 'لوحة المعلم'}</span>
+              <ArrowLeft className="w-4 h-4" />
+            </Link>
+          </div>
+        </section>
+      )}
+
       {/* القسم التعريفي الرئيسي (Hero Section) مع شعار وزارة التعليم المعتمد */}
       <section className="relative overflow-hidden bg-slate-50 border-b border-slate-200 pt-8 sm:pt-12 pb-12 sm:pb-16 px-3 sm:px-8 text-center">
         {/* خلفية الهيرو المتموجة بتدرج وشفافية 50% */}

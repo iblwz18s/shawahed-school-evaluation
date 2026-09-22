@@ -2,6 +2,34 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import bcrypt from 'bcryptjs';
 import { COOKIE_NAME, createSessionToken } from '@/lib/auth';
+import { STAFF_LOGIN_DOMAIN } from '@/lib/staff-accounts';
+
+/**
+ * يبحث عن المستخدم باسم دخول مرن:
+ *  - بريد كامل: Os@saad.sa
+ *  - اسم مختصر: Os  ← يُطابق os@saad.sa ثم أي بريد يبدأ بـ os@
+ */
+async function resolveUserByIdentifier(identifier: string) {
+  const value = identifier.trim().toLowerCase();
+  if (!value) return null;
+
+  if (value.includes('@')) {
+    return prisma.user.findFirst({
+      where: { email: { equals: value, mode: 'insensitive' } },
+    });
+  }
+
+  const domain = STAFF_LOGIN_DOMAIN.toLowerCase();
+
+  return (
+    (await prisma.user.findFirst({
+      where: { email: { equals: `${value}@${domain}`, mode: 'insensitive' } },
+    })) ??
+    (await prisma.user.findFirst({
+      where: { email: { startsWith: `${value}@`, mode: 'insensitive' } },
+    }))
+  );
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,14 +37,12 @@ export async function POST(req: NextRequest) {
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: 'الرجاء إدخال البريد الإلكتروني وكلمة المرور' },
+        { error: 'الرجاء إدخال اسم الدخول وكلمة المرور' },
         { status: 400 }
       );
     }
 
-    const user = await prisma.user.findUnique({
-      where: { email: email.trim().toLowerCase() },
-    });
+    const user = await resolveUserByIdentifier(String(email));
 
     if (!user) {
       return NextResponse.json(
