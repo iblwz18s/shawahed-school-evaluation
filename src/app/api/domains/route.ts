@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 
+// نسب الإكمال تُحسب من الشواهد المعتمدة الحالية — لا تُخزَّن كصفحة ثابتة.
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const setting = await prisma.schoolSetting.findFirst();

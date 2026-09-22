@@ -50,8 +50,8 @@ export default function AdminDashboardPage() {
       }
 
       const [statsRes, pendingRes] = await Promise.all([
-        fetch('/api/stats'),
-        fetch('/api/evidences?status=pending'),
+        fetch('/api/stats', { cache: 'no-store' }),
+        fetch('/api/evidences?status=pending', { cache: 'no-store' }),
       ]);
 
       if (statsRes.ok) {
@@ -152,8 +152,8 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* بطاقات المؤشرات الخمس المحددة في الوثيقة (قسم 22) */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      {/* بطاقات المؤشرات والشواهد المحددة في الوثيقة (قسم 22) */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {/* إجمالي المؤشرات المطبقة */}
         <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-1">
           <span className="text-xs font-medium text-slate-500">المؤشرات المطبقة</span>
@@ -186,6 +186,18 @@ export default function AdminDashboardPage() {
             {stats?.indicatorsWithoutEvidence || 0}
           </div>
           <span className="text-[11px] text-slate-400 block">تحتاج إلى شواهد</span>
+        </div>
+
+        {/* الشواهد المعتمدة */}
+        <div className="bg-white rounded-2xl p-5 border border-emerald-200 bg-emerald-50/20 shadow-sm space-y-1">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-emerald-800">شواهد معتمدة</span>
+            <FileCheck2 className="w-4 h-4 text-emerald-600" />
+          </div>
+          <div className="text-2xl sm:text-3xl font-black text-emerald-700">
+            {stats?.totalApprovedEvidences || 0}
+          </div>
+          <span className="text-[11px] text-emerald-600 block">معتمدة من مدير المدرسة</span>
         </div>
 
         {/* شواهد قيد المراجعة */}

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { LogIn, Lock, UserCircle2, AlertCircle, Loader2, Info } from 'lucide-react';
+import { LogIn, Lock, UserCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -90,7 +90,6 @@ export default function LoginPage() {
                   autoComplete="username"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="مثال: Os أو Os@saad.sa"
                   className="w-full px-3.5 py-2.5 pr-10 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-moe-600/20 focus:border-moe-600 transition-colors"
                 />
                 <UserCircle2 className="w-4 h-4 text-slate-400 absolute right-3.5 top-3.5" />
@@ -129,21 +128,6 @@ export default function LoginPage() {
               )}
             </button>
           </form>
-
-          {/* توجيه مختصر لطريقة الدخول المعتمدة لحسابات الكادر */}
-          <div className="pt-4 border-t border-slate-100">
-            <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-2.5">
-              <Info className="w-4 h-4 text-moe-700 shrink-0 mt-0.5" />
-              <div className="text-[11px] text-slate-600 leading-relaxed space-y-1">
-                <p className="font-bold text-slate-700">طريقة الدخول لحسابات الكادر:</p>
-                <p>
-                  اسم الدخول هو أول حرفين من اسمك بالإنجليزية (مثال: <strong className="text-slate-800">Os</strong>)،
-                  وكلمة المرور نفس الحرفين متبوعة بـ <strong className="text-slate-800">2030</strong> (مثال:{' '}
-                  <strong className="text-slate-800">Os2030</strong>).
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* رابط العودة للرئيسية */}
