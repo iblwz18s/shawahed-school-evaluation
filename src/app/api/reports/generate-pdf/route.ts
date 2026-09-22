@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSessionFromRequest } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { generateReportHtml } from '@/lib/report-html';
+import { getSchoolPrincipalName } from '@/lib/school';
 import { generatePdfFromHtml } from '@/lib/pdf-generator';
 
 export const dynamic = 'force-dynamic';
@@ -33,6 +34,7 @@ export async function POST(req: NextRequest) {
       educationDepartment: setting?.educationDepartment || 'إدارة التعليم بمنطقة الحدود الشمالية',
       academicYear: setting?.academicYear || '1447-1448هـ / 2026م',
       baseUrl: origin,
+      schoolPrincipal: await getSchoolPrincipalName(),
       ministryLogoUrl: setting?.ministryLogoUrl || '/images/moe-logo.png',
       schoolStamp: (setting as any)?.schoolStampUrl || null,
     });

@@ -1,0 +1,1716 @@
+{
+  "generatedAt": "2026-09-22T00:06:30.561Z",
+  "source": "https://edu-forms.com",
+  "totalItems": 329,
+  "categories": [
+    {
+      "id": "initiatives",
+      "label": "مبادرة مدرسية",
+      "reportType": "school_initiative",
+      "section": "initiatives",
+      "items": [
+        {
+          "title": "مبادرة الذكاء الاصطناعي في التعليم",
+          "slug": "/shawahed/initiatives/ai-in-education-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة حفظ النعمة",
+          "slug": "/shawahed/initiatives/food-blessing-preservation-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة سقيا الماء",
+          "slug": "/shawahed/initiatives/water-sabeel-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الانضباط المدرسي",
+          "slug": "/shawahed/initiatives/school-discipline-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة كسوة الشتاء",
+          "slug": "/shawahed/initiatives/winter-clothing-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة مهارات المستقبل",
+          "slug": "/shawahed/initiatives/future-skills-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة مدرستي خضراء",
+          "slug": "/shawahed/initiatives/green-school-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الخط العربي",
+          "slug": "/shawahed/initiatives/arabic-calligraphy-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة القراءة",
+          "slug": "/shawahed/initiatives/reading-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة القدرات والتحصيلي",
+          "slug": "/shawahed/initiatives/qudurat-tahsili-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة النظافة المدرسية",
+          "slug": "/shawahed/initiatives/school-cleanliness-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة كبار السن",
+          "slug": "/shawahed/initiatives/elderly-care-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة التحول الرقمي",
+          "slug": "/shawahed/initiatives/digital-transformation-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الرياضيات الممتعة",
+          "slug": "/shawahed/initiatives/fun-mathematics-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة المقصف المدرسي الصحي",
+          "slug": "/shawahed/initiatives/healthy-school-canteen-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الأمن والسلامة المدرسية",
+          "slug": "/shawahed/initiatives/school-safety-security-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الطاقة الشمسية",
+          "slug": "/shawahed/initiatives/solar-energy-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الطالبة المثالية",
+          "slug": "/shawahed/initiatives/ideal-student-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة القيم",
+          "slug": "/shawahed/initiatives/values-promotion-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الصلاة",
+          "slug": "/shawahed/initiatives/prayer-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة المسرح المدرسي",
+          "slug": "/shawahed/initiatives/school-theatre-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الحقيبة المدرسية",
+          "slug": "/shawahed/initiatives/school-bag-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة تنظيف الشواطئ",
+          "slug": "/shawahed/initiatives/beach-cleanup-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة ترشيد الكهرباء",
+          "slug": "/shawahed/initiatives/electricity-rationalization-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الطفولة المبكرة",
+          "slug": "/shawahed/initiatives/early-childhood-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تفعيل يوم مبادرة السعودية الخضراء",
+          "slug": "/shawahed/initiatives/saudi-green-initiative-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تفعيل مبادرة السلة الرمضانية للأسر المحتاجة",
+          "slug": "/shawahed/initiatives/ramadan-supermarket-vouchers-initiative-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ مبادرة التوعية بسرطان الثدي",
+          "slug": "/shawahed/initiatives/breast-cancer-awareness-school-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تفعيل مبادرة (10KSA) لرفع الوعي حول الوقاية من أمراض السرطان",
+          "slug": "/shawahed/initiatives/10ksa-school-awareness-report",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الأمن السيبراني والمواطنة الرقمية",
+          "slug": "/shawahed/initiatives/cyber-security-initiative-report",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة اليوم العالمي للعصا البيضاء",
+          "slug": "/shawahed/initiatives/white-stick-day-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة الأمن السيبراني المتقدّم",
+          "slug": "/shawahed/initiatives/advanced-cybersecurity-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة موسم التشجير الوطني",
+          "slug": "/shawahed/initiatives/national-tree-planting-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "مبادرة اليوم العالمي للتأتأة",
+          "slug": "/shawahed/initiatives/stuttering-awareness-initiative",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير مبادرة الاستعداد للاختبارات الوطنية نافس - جاهز",
+          "slug": "/shawahed/initiatives/initiative-nafs-national-exam-preparation-report",
+          "hasContent": true
+        }
+      ]
+    },
+    {
+      "id": "documentation",
+      "label": "برنامج / نشاط",
+      "reportType": "program_activity",
+      "section": "forms_and_reports",
+      "items": [
+        {
+          "title": "أفضل نموذج لتوثيق برنامج أو نشاط (المطور)",
+          "slug": "/forms-and-reports/report-moe-6",
+          "hasContent": false
+        },
+        {
+          "title": "تقرير تنفيذ برنامج (تغطية)",
+          "slug": "/forms-and-reports/program-documentation",
+          "hasContent": false
+        },
+        {
+          "title": "تقرير تنفيذ برنامج (تغطية) شاهدين",
+          "slug": "/forms-and-reports/program-documentation-2",
+          "hasContent": false
+        },
+        {
+          "title": "تقرير تنفيذ برنامج (تغطية) 4 شواهد",
+          "slug": "/forms-and-reports/report-moe-3",
+          "hasContent": false
+        },
+        {
+          "title": "تقرير تنفيذ برنامج (تغطية) 4 شواهد",
+          "slug": "/forms-and-reports/report-moe-4",
+          "hasContent": false
+        },
+        {
+          "title": "ملحق شواهد (شواهد إضافية لأي تقرير)",
+          "slug": "/forms-and-reports/appendix",
+          "hasContent": false
+        },
+        {
+          "title": "غلاف لأي تقرير أو ملف",
+          "slug": "/forms-and-reports/report-cover",
+          "hasContent": false
+        },
+        {
+          "title": "غلاف لأي تقرير أو ملف بالعرض (أفقي)",
+          "slug": "/forms-and-reports/report-cover-landscape",
+          "hasContent": false
+        },
+        {
+          "title": "غلاف فرعي داخلي لأي تقرير أو ملف",
+          "slug": "/forms-and-reports/report-sub-cover",
+          "hasContent": false
+        },
+        {
+          "title": "فهرس تفاعلي لأي تقرير أو ملف",
+          "slug": "/forms-and-reports/report-index",
+          "hasContent": false
+        },
+        {
+          "title": "فواصل لأي تقرير أو ملف",
+          "slug": "/forms-and-reports/report-divider",
+          "hasContent": false
+        },
+        {
+          "title": "تقرير جاهز لليوم العالمي للفيزياء الطبية",
+          "slug": "/forms-and-reports/international-medical-physics-day",
+          "hasContent": false
+        }
+      ]
+    },
+    {
+      "id": "teaching-strategies",
+      "label": "استراتيجية تدريس",
+      "reportType": "teaching_strategy",
+      "section": "strategies",
+      "items": [
+        {
+          "title": "تقرير تنفيذ استراتيجية تعليمية",
+          "slug": "/shawahed/strategies/strategy-implementation-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية ساعي البريد",
+          "slug": "/shawahed/strategies/strategy-postman-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية قراءة الصورة",
+          "slug": "/shawahed/strategies/strategy-picture-reading-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية البطاقات الملونة",
+          "slug": "/shawahed/strategies/strategy-colored-cards-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية سكامبر (SCAMPER)",
+          "slug": "/shawahed/strategies/strategy-scamper-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية الخرائط الذهنية",
+          "slug": "/shawahed/strategies/strategy-mind-mapping-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية التدريس التبادلي",
+          "slug": "/shawahed/strategies/strategy-reciprocal-teaching-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية مخطط فن (Venn)",
+          "slug": "/shawahed/strategies/strategy-venn-diagram-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية حبل الغسيل",
+          "slug": "/shawahed/strategies/strategy-clothesline-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية الخطوات الخمس",
+          "slug": "/shawahed/strategies/strategy-five-steps-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية فجوة المعلومات",
+          "slug": "/shawahed/strategies/strategy-information-gap-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية حوض السمك",
+          "slug": "/shawahed/strategies/strategy-fishbowl-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية التدوين البصري",
+          "slug": "/shawahed/strategies/strategy-sketchnoting-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية السبب والنتيجة",
+          "slug": "/shawahed/strategies/strategy-cause-effect-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية البطاقات المروحية",
+          "slug": "/shawahed/strategies/strategy-fan-n-pick-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية القراءة الموجهة",
+          "slug": "/shawahed/strategies/strategy-guided-reading-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية الكلمات المتقاطعة",
+          "slug": "/shawahed/strategies/strategy-crossword-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية شجرة المشكلات",
+          "slug": "/shawahed/strategies/strategy-problem-tree-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية كرة الثلج",
+          "slug": "/shawahed/strategies/strategy-snowball-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية SQ3R",
+          "slug": "/shawahed/strategies/strategy-sq3r-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية عظم السمكة (Ishikawa)",
+          "slug": "/shawahed/strategies/strategy-fishbone-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية الطالب المعلّم",
+          "slug": "/shawahed/strategies/strategy-student-teacher-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية المعلم الصغير",
+          "slug": "/shawahed/strategies/strategy-little-teacher-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية (الدقيقة الواحدة)",
+          "slug": "/shawahed/strategies/strategy-one-minute-paper-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (التعليم التعاوني)",
+          "slug": "/shawahed/strategies/strategy-cooperative-learning-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (التعليم الذاتي)",
+          "slug": "/shawahed/strategies/strategy-self-learning-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (التعلم بالتجربة والاكتشاف)",
+          "slug": "/shawahed/strategies/strategy-learning-experimentation-discovery-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية (نموذج فراير)",
+          "slug": "/shawahed/strategies/strategy-frayer-model-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية (الفصل المقلوب)",
+          "slug": "/shawahed/strategies/strategy-flipped-classroom-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام استراتيجية العجلة الدوارة عبر منصة Wordwall",
+          "slug": "/shawahed/strategies/strategy-rotating-wheel-wordwall-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (استراتيجية الجيكسو - التركيب)",
+          "slug": "/shawahed/strategies/strategy-jigsaw-learning-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (فكر - زاوج - شارك)",
+          "slug": "/shawahed/strategies/strategy-think-pair-share-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (الرؤوس المرقمة)",
+          "slug": "/shawahed/strategies/strategy-numbered-heads-together-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (الكرسي الساخن)",
+          "slug": "/shawahed/strategies/strategy-hot-seat-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (جدول التعلم K.W.L)",
+          "slug": "/shawahed/strategies/strategy-kwl-chart-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (لعب الأدوار)",
+          "slug": "/shawahed/strategies/strategy-role-playing-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (العصف الذهني)",
+          "slug": "/shawahed/strategies/strategy-brainstorming-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (جولة المعرض)",
+          "slug": "/shawahed/strategies/strategy-gallery-walk-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (القبعات الست للتفكير)",
+          "slug": "/shawahed/strategies/strategy-six-thinking-hats-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (خرائط المفاهيم)",
+          "slug": "/shawahed/strategies/strategy-concept-maps-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (التجارب العلمية)",
+          "slug": "/shawahed/strategies/strategy-scientific-experiments-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (حل المشكلات)",
+          "slug": "/shawahed/strategies/strategy-problem-solving-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (القصة التعليمية)",
+          "slug": "/shawahed/strategies/strategy-educational-storytelling-report",
+          "hasContent": true
+        },
+        {
+          "title": "تنفيذ استراتيجية تعليمية (التعلم باللعب - التلعيب)",
+          "slug": "/shawahed/strategies/strategy-gamification-report",
+          "hasContent": true
+        }
+      ]
+    },
+    {
+      "id": "events",
+      "label": "يوم عالمي / مناسبة",
+      "reportType": "occasion",
+      "section": "events",
+      "items": [
+        {
+          "title": "تقرير اليوم الوطني السعودي ٩٦ لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/saudi-national-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم التأسيس لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/saudi-founding-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم السعودية الخضراء لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/saudi-green-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم العلم السعودي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/saudi-flag-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم الصحة العالمي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-health-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للتعليم لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-education-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للغة العربية لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/arabic-language-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للتسامح لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/international-tolerance-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للطفل لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-children-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للأشخاص ذوي الإعاقة لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/international-disability-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للمعلم لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-teachers-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للأسرة لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-family-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للإسعافات الأولية لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-first-aid-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للسكري لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-diabetes-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للسرطان لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-cancer-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للإيدز لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-aids-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لمكافحة السمنة لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-obesity-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لمكافحة التدخين لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-no-tobacco-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لمكافحة المخدرات لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-anti-drug-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للتبرع بالدم لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-blood-donor-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير أسبوع صحة الأسنان لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/dental-health-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير أسبوع أمراض الدم الوراثية لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/genetic-blood-disorders-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لهشاشة العظام لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-osteoporosis-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للتوعية بشلل الأطفال لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-polio-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للبصر لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-sight-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للصحة النفسية لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-mental-health-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم الوطني للمشي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/national-walking-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم الغذاء العالمي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-food-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للغذاء العضوي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-organic-food-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير الأسبوع العالمي للفضاء لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-space-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للفيزياء لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-physics-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير الأسبوع العربي للكيمياء لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/arab-chemistry-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للفن لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-art-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للفن الإسلامي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-islamic-art-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للتراث لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-heritage-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للكتاب وحقوق المؤلف لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-book-copyright-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للملكية الفكرية لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-intellectual-property-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لمحو الأمية لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-literacy-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العربي لمحو الأمية لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/arab-literacy-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للسلام لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-peace-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للقانون لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-law-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للمتطوعين لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-volunteer-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم الدولي للعمل الخيري لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/international-charity-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم اليتيم العربي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/arab-orphan-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير الأسبوع العالمي لريادة الأعمال لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/global-entrepreneurship-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للشباب لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-youth-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للتوحد لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-autism-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لمتلازمة داون لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-down-syndrome-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لبرايل لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-braille-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للعصا البيضاء لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-white-cane-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم الدولي للغات الإشارة لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/international-sign-language-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير الأسبوع العربي للصم لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/arab-deaf-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم الخليجي لصعوبات التعلّم لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/gulf-learning-disabilities-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للتوعية بالتأتأة لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-stuttering-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للبيئة لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-environment-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العربي للبيئة لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/arab-environment-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم البيئة الخليجي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/gulf-environment-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير أسبوع البيئة السعودي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/saudi-environment-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للمياه لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-water-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لمكافحة التصحر لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-desertification-drought-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم الدولي للتوعية من الفقد والهدر في الغذاء ١٤٤٨هـ",
+          "slug": "/shawahed/events/food-loss-waste-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لحقوق الإنسان لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-human-rights-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لمكافحة الفساد لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-anti-corruption-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم السعودي للمسؤولية الاجتماعية لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/saudi-social-responsibility-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لمكافحة العنف والتنمر ١٤٤٨هـ",
+          "slug": "/shawahed/events/anti-violence-bullying-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للمرأة لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-womens-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لكبار السن لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-older-persons-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم الطفل العربي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/arab-child-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم الطفل الخليجي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/gulf-child-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير الأسبوع الوطني للموهبة والإبداع لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/national-giftedness-creativity-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم الخليجي للموهبة والإبداع لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/gulf-talent-creativity-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للإبداع والابتكار لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-creativity-innovation-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للدفاع المدني لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-civil-defense-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير أسبوع المرور الخليجي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/gulf-traffic-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم الدولي للحد من المخاطر والكوارث ١٤٤٨هـ",
+          "slug": "/shawahed/events/disaster-risk-reduction-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للمدير لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-boss-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي للإداريين لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-admin-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير اليوم العالمي لحقوق المستهلك لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/world-consumer-rights-day-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير أسبوع حماية المستهلك الخليجي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/gulf-consumer-protection-week-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استقبال شهر رمضان المبارك لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/ramadan-reception-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير معايدة عيد الفطر المبارك لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/eid-fitr-greeting-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير يوم المعلم العربي لعام ١٤٤٨هـ",
+          "slug": "/shawahed/events/arab-teachers-day-report",
+          "hasContent": true
+        }
+      ]
+    },
+    {
+      "id": "tech-programs",
+      "label": "برنامج / أداة تقنية",
+      "reportType": "program_activity",
+      "section": "technical",
+      "items": [
+        {
+          "title": "تقرير استخدام تطبيق مصحف مدرستي",
+          "slug": "/shawahed/technical/technical-mushaf-madrasati-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج كويزز (Quizizz)",
+          "slug": "/shawahed/technical/technical-quizizz-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج بلوكت (Blooket)",
+          "slug": "/shawahed/technical/technical-blooket-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج بامبوزل (Baamboozle)",
+          "slug": "/shawahed/technical/technical-baamboozle-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام منصة نيربود (Nearpod)",
+          "slug": "/shawahed/technical/technical-nearpod-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج مينتيميتر (Mentimeter)",
+          "slug": "/shawahed/technical/technical-mentimeter-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام منصة كويزليت (Quizlet)",
+          "slug": "/shawahed/technical/technical-quizlet-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج جيمكت (Gimkit)",
+          "slug": "/shawahed/technical/technical-gimkit-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تفعيل درس عن بُعد باستخدام مدرستي (Madrasati) وتيمز (Teams)",
+          "slug": "/shawahed/technical/madrasati-teams-remote-class-implementation-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج تقني بادليت Padlet",
+          "slug": "/shawahed/technical/technical-program-usage-padlet-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج تقني تليغرام Telegram",
+          "slug": "/shawahed/technical/technical-program-usage-telegram-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج تقني Liveworksheets",
+          "slug": "/shawahed/technical/technical-program-usage-liveworksheets-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام البروجيكتور (Projector) في شرح الدروس",
+          "slug": "/shawahed/technical/teaching-usage-projector-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج كينوت (Keynote)",
+          "slug": "/shawahed/technical/technical-keynote-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج الباوربوينت (PowerPoint) في شرح الدروس",
+          "slug": "/shawahed/technical/technical-program-usage-powerpoint-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج الوورد (Word) لدعم المعلم",
+          "slug": "/shawahed/technical/technical-program-usage-word-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام اليوتيوب (YouTube)",
+          "slug": "/shawahed/technical/technical-program-usage-youtube-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام شات جي بي تي (ChatGPT) لدعم المعلم في العملية التعليمية",
+          "slug": "/shawahed/technical/technical-chatgpt-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام منصة كانفا (Canva) لدعم المعلم",
+          "slug": "/shawahed/technical/technical-canva-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام منصة مدرستي (madrasati)",
+          "slug": "/shawahed/technical/technical-madrasati-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام منصة وورد وول (Wordwall)",
+          "slug": "/shawahed/technical/technical-wordwall-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام منصة ميكروسوفت تيمز (Microsoft Teams)",
+          "slug": "/shawahed/technical/technical-microsoft-teams-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج مايكروسوفت إكسل (Microsoft Excel)",
+          "slug": "/shawahed/technical/technical-microsoft-excel-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج مايكروسوفت فورمز (Microsoft Forms)",
+          "slug": "/shawahed/technical/technical-microsoft-forms-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج كاهوت (Kahoot!)",
+          "slug": "/shawahed/technical/technical-kahoot-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام برنامج بليكرز Plickers",
+          "slug": "/shawahed/technical/technical-plickers-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام تطبيق الواقع المعزز (ARLOOPA)",
+          "slug": "/shawahed/technical/technical-arloopa-usage-report",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير استخدام منصة عين التعليمية",
+          "slug": "/shawahed/technical/technical-ein-education-platform-report",
+          "hasContent": true
+        }
+      ]
+    },
+    {
+      "id": "classroom-management",
+      "label": "إدارة صفية",
+      "reportType": "teaching_strategy",
+      "section": "classroom_management",
+      "items": [
+        {
+          "title": "تقرير تنفيذ استراتيجية المقعد الساخن للإنجاز",
+          "slug": "/shawahed/classroom-management-strategies/strategy-achievement-hotseat",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية لوحة الشرف المتقدمة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-advanced-honor-roll",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشارات المتفق عليها",
+          "slug": "/shawahed/classroom-management-strategies/strategy-agreed-signals",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية مساحة العمل البديلة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-alternative-seating",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية ركن الاعتذار",
+          "slug": "/shawahed/classroom-management-strategies/strategy-apology-corner",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التحدي الموقوت",
+          "slug": "/shawahed/classroom-management-strategies/strategy-beat-the-timer",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية ميزان السلوك",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavior-balance",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشارة المرجعية للسلوك",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavior-bookmark",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية دفتر المراسلات السلوكي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavior-communication-log",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية يوميات السلوك",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavior-diary",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية مرآة السلوك",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavior-mirror",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية قبعات التفكير السلوكي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavior-thinking-hats",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية شجرة السلوكيات",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavior-tree",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التعاقد السلوكي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavioral-contract",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التعلم بالأقران السلوكي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavioral-peer-tutoring",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الأسئلة السلوكية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-behavioral-questions",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية البداية القوية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-bell-ringer",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية فترات التوقف والحركة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-brain-breaks",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الزاوية الهادئة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-calm-down-corner",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإطراء المتسلسل",
+          "slug": "/shawahed/classroom-management-strategies/strategy-chain-praise",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشارات الصوتية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-chimes-and-bell",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية لوحة الخيارات",
+          "slug": "/shawahed/classroom-management-strategies/strategy-choice-boards",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية وقت الدائرة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-circle-time",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية ميثاق الشرف الصفي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-class-constitution",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الروتين والإجراءات الثابتة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-class-routines",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية المهام والمسؤوليات الصفية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-classroom-jobs",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية صندوق الاقتراحات الصفية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-classroom-suggestion-box",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية تغيير السياق",
+          "slug": "/shawahed/classroom-management-strategies/strategy-context-shifting",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية مساحات التفكير الإبداعي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-creative-thinking-spaces",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية جدار الإبداع",
+          "slug": "/shawahed/classroom-management-strategies/strategy-creativity-wall",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية لوحة الإنجازات المتراكمة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-cumulative-achievement-board",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الأهداف اليومية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-daily-goal",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية خفض التوتر والتصعيد",
+          "slug": "/shawahed/classroom-management-strategies/strategy-de-escalation",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإطفاء والمكافأة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-differential-reinforcement",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الملاحظة المباشرة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-direct-observation",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التعلم الذاتي الموجه",
+          "slug": "/shawahed/classroom-management-strategies/strategy-directed-self-learning",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الجلوس الدائري المزدوج",
+          "slug": "/shawahed/classroom-management-strategies/strategy-double-circle-seating",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الحصالة التربوية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-educational-piggy-bank",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية المديح الفعال",
+          "slug": "/shawahed/classroom-management-strategies/strategy-effective-praise",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التقييم بالوجوه التعبيرية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-emoji-assessment",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية تفقّد المشاعر",
+          "slug": "/shawahed/classroom-management-strategies/strategy-emotional-check-in",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية محطة التفريغ الانفعالي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-emotional-outlet-station",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية بطاقات التميز",
+          "slug": "/shawahed/classroom-management-strategies/strategy-excellence-cards",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية بطاقات الخروج",
+          "slug": "/shawahed/classroom-management-strategies/strategy-exit-tickets",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية ساعة التركيز",
+          "slug": "/shawahed/classroom-management-strategies/strategy-focus-hour",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية ميثاق الصداقة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-friendship-pact",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الكوب الممتلئ",
+          "slug": "/shawahed/classroom-management-strategies/strategy-full-cup",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإدارة بالألعاب",
+          "slug": "/shawahed/classroom-management-strategies/strategy-gamification",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الصمت الذهبي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-golden-silence",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإطفاء التدريجي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-gradual-fading",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التحدي الجماعي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-group-challenge",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية جرة المكافآت الجماعية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-group-reward-jar",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الرسائل الخفية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-hidden-messages",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية رسائل الأمل",
+          "slug": "/shawahed/classroom-management-strategies/strategy-hope-notes",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية تغيير المكان الفوري",
+          "slug": "/shawahed/classroom-management-strategies/strategy-immediate-seat-change",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية السلوك المعاكس",
+          "slug": "/shawahed/classroom-management-strategies/strategy-incompatible-behavior",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية العواقب المنطقية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-logical-consequences",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الاعتذار والتعويض",
+          "slug": "/shawahed/classroom-management-strategies/strategy-make-it-right",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية لوحة القواعد المتحركة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-movable-rules-board",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية النجوم المتحركة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-moving-stars",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الهدوء الموسيقي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-music-management",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإرشاد المتبادل",
+          "slug": "/shawahed/classroom-management-strategies/strategy-mutual-counseling",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية المكافأة الغامضة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-mystery-motivator",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشارات غير اللفظية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-nonverbal-cues",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية المقابلة الفردية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-one-on-one-meeting",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية ساعة الحوار المفتوح",
+          "slug": "/shawahed/classroom-management-strategies/strategy-open-dialogue-hour",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية المراقبة الزميلة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-peer-monitoring",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشادة بالزميل",
+          "slug": "/shawahed/classroom-management-strategies/strategy-peer-praise",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشارات اللونية الشخصية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-personal-color-cards",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية لوحة الأهداف الشخصية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-personal-goals-board",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التجاهل المخطط",
+          "slug": "/shawahed/classroom-management-strategies/strategy-planned-ignoring",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التواصل الإيجابي مع الأسرة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-positive-family-contact",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية مكبر الصوت الإيجابي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-positive-megaphone",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية النمذجة الإيجابية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-positive-modeling",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التوجيه الإيجابي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-positive-phrasing",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الختام الإيجابي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-positive-wrap-up",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية تدوين الملاحظات الإيجابية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-praise-notes",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشارات التحذيرية المسبقة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-pre-correction",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية توجيه الشكر المسبق",
+          "slug": "/shawahed/classroom-management-strategies/strategy-pre-praise",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التوجيه بالقرين المفضل",
+          "slug": "/shawahed/classroom-management-strategies/strategy-preferred-peer-guidance",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الاستراحة الاستباقية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-proactive-break",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية صندوق المشاكل",
+          "slug": "/shawahed/classroom-management-strategies/strategy-problem-box",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية إعادة التوجيه الفوري",
+          "slug": "/shawahed/classroom-management-strategies/strategy-prompt-redirection",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشراف والتجول المستمر",
+          "slug": "/shawahed/classroom-management-strategies/strategy-proximity-control",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية بطاقات المهمات السريعة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-quick-task-cards",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التعزيز العشوائي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-random-reinforcement",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية تكلفة الاستجابة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-response-cost",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الملاحظة العكسية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-reverse-observation",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية القيادة المتناوبة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-rotating-leadership",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الموجه السري",
+          "slug": "/shawahed/classroom-management-strategies/strategy-secret-guide",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية بطاقات المساعدة الذاتية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-self-help-cards",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية المراجعة الذاتية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-self-monitoring",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية توظيف الحواس",
+          "slug": "/shawahed/classroom-management-strategies/strategy-sensory-engagement",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية لوحة المشاعر المشتركة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-shared-feelings-board",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الملاحظات الصامتة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-silent-notes",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية العمل في هدوء",
+          "slug": "/shawahed/classroom-management-strategies/strategy-silent-work",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية اللوحة الذكية للسلوك",
+          "slug": "/shawahed/classroom-management-strategies/strategy-smart-behavior-board",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية أنشطة الإسفنجة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-sponge-activities",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التوقف والتأمل",
+          "slug": "/shawahed/classroom-management-strategies/strategy-stop-and-reflect",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية بطاقات التوقف",
+          "slug": "/shawahed/classroom-management-strategies/strategy-stop-cards",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الطالب المعلم",
+          "slug": "/shawahed/classroom-management-strategies/strategy-student-teacher",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الاحتفال بالإنجاز",
+          "slug": "/shawahed/classroom-management-strategies/strategy-success-celebration",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الأدوار المتبادلة",
+          "slug": "/shawahed/classroom-management-strategies/strategy-swapping-roles",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشراف المشترك",
+          "slug": "/shawahed/classroom-management-strategies/strategy-tag-team-supervision",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية ألوان المهام",
+          "slug": "/shawahed/classroom-management-strategies/strategy-task-colors",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية النقاط الجماعية للفرق",
+          "slug": "/shawahed/classroom-management-strategies/strategy-team-points",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية قسائم الشكر",
+          "slug": "/shawahed/classroom-management-strategies/strategy-thank-you-vouchers",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الخطوات الثلاث",
+          "slug": "/shawahed/classroom-management-strategies/strategy-three-steps",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإيقاف المؤقت",
+          "slug": "/shawahed/classroom-management-strategies/strategy-time-out",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية مسار الحركة المنظم",
+          "slug": "/shawahed/classroom-management-strategies/strategy-traffic-flow",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإشارات الضوئية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-traffic-light",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التلميحات البصرية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-visual-prompts",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية جدول الأعمال المرئي",
+          "slug": "/shawahed/classroom-management-strategies/strategy-visual-schedule",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية تغيير نبرة الصوت",
+          "slug": "/shawahed/classroom-management-strategies/strategy-voice-modulation",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية وقت الانتظار",
+          "slug": "/shawahed/classroom-management-strategies/strategy-wait-time",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية عقود الشرف الأسبوعية",
+          "slug": "/shawahed/classroom-management-strategies/strategy-weekly-honor-contracts",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية التنويع في طرق التدريس",
+          "slug": "/shawahed/classroom-management-strategies/strategy-diversifying-teaching-methods",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإدارة الصفية (التنظيم المادي للفصل)",
+          "slug": "/shawahed/classroom-management-strategies/strategy-physical-classroom-arrangement",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإدارة الصفية (التعزيز الإيجابي)",
+          "slug": "/shawahed/classroom-management-strategies/strategy-positive-reinforcement",
+          "hasContent": true
+        },
+        {
+          "title": "تقرير تنفيذ استراتيجية الإدارة الصفية (مشاركة بناء القواعد الصفية)",
+          "slug": "/shawahed/classroom-management-strategies/strategy-co-creating-classroom-rules",
+          "hasContent": true
+        }
+      ]
+    },
+    {
+      "id": "teaching-aids",
+      "label": "وسيلة تعليمية",
+      "reportType": "program_activity",
+      "section": "aids",
+      "items": [
+        {
+          "title": "تقرير استخدام وسيلة تعليمية (السبورة الذكية)",
+          "slug": "/shawahed/aids/aid-usage-smartboard-report",
+          "hasContent": true
+        }
+      ]
+    },
+    {
+      "id": "teacher-eval",
+      "label": "شاهد تقييم أداء",
+      "reportType": "program_activity",
+      "section": "teacher_evaluation",
+      "items": [
+        {
+          "title": "أداء الواجبات الوظيفية",
+          "slug": "/teacher-evaluation/01-job-duties-performance",
+          "hasContent": false
+        },
+        {
+          "title": "التفاعل مع المجتمع المهني",
+          "slug": "/teacher-evaluation/02-professional-community-engagement",
+          "hasContent": false
+        },
+        {
+          "title": "التفاعل مع أولياء الأمور",
+          "slug": "/teacher-evaluation/03-parent-engagement-communication",
+          "hasContent": false
+        },
+        {
+          "title": "تحسين نتائج المتعلمين",
+          "slug": "/teacher-evaluation/05-students-outcomes-improvement",
+          "hasContent": false
+        },
+        {
+          "title": "الإدارة الصفية",
+          "slug": "/teacher-evaluation/09-classroom-management",
+          "hasContent": false
+        },
+        {
+          "title": "تحليل نتائج المتعلمين و تشخيص مستوياتهم",
+          "slug": "/teacher-evaluation/10-results-analysis-diagnosis",
+          "hasContent": false
+        },
+        {
+          "title": "تهيئة البيئة المدرسية للبرامج والانشطة الطلابية",
+          "slug": "/teacher-evaluation/13-school-environment-programs-setup",
+          "hasContent": false
+        }
+      ]
+    }
+  ]
+}

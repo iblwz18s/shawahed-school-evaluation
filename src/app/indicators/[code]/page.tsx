@@ -1,7 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/db';
-import { getCurrentUser } from '@/lib/auth';
+import { getCurrentUserFresh } from '@/lib/auth';
 import { IndicatorClientView } from './IndicatorClientView';
 
 export const dynamic = 'force-dynamic';
@@ -12,7 +12,7 @@ interface PageProps {
 
 export default async function IndicatorPage({ params }: PageProps) {
   const decodedCode = decodeURIComponent(params.code);
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUserFresh();
 
   const indicator = await prisma.indicator.findFirst({
     where: {

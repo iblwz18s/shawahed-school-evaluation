@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { EvidenceItem, ReportData, ReportType, UserSession } from '@/types';
 import { getCurrentHijriInfo, formatHijriOnly } from '@/lib/hijri-date';
-import { REPORT_CATALOG, getCategoryIdForReportType } from '@/lib/report-catalog';
+import { REPORT_CATALOG, getCategoryIdForReportType, findCatalogItem } from '@/lib/report-catalog';
 
 export interface ReportTypeOption {
   value: ReportType;
@@ -160,6 +160,8 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
     getCategoryIdForReportType('program_activity')
   );
   const [selectedTemplate, setSelectedTemplate] = useState('');
+  const [extraFields, setExtraFields] = useState<Array<{ label: string; value: string }>>([]);
+  const [loadingTemplate, setLoadingTemplate] = useState(false);
   const [title, setTitle] = useState('');
   const [type, setType] = useState<'برنامج' | 'نشاط'>('برنامج');
   const [executor, setExecutor] = useState('');
@@ -216,18 +218,57 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
     if (!cat) return;
     setCatalogCategoryId(cat.id);
     setSelectedTemplate('');
+    setExtraFields([]);
     setReportType(cat.reportType);
   };
 
-  // اختيار القالب (الخطوة الثانية) يعبّئ عنوان التقرير فقط حالياً
-  const handleSelectTemplate = (item: string) => {
-    setSelectedTemplate(item);
-    if (!item) return;
-    setTitle(item);
-    if (item.includes('نشاط') || item.includes('فعالية')) {
-      setType('نشاط');
-    } else if (item.includes('برنامج') || item.includes('استراتيجية') || item.includes('مبادرة')) {
-      setType('برنامج');
+  // اختيار القالب (الخطوة الثانية): يجلب محتواه المنقول ويعبّئ التقرير كاملاً
+  const handleSelectTemplate = async (slug: string) => {
+    setSelectedTemplate(slug);
+    if (!slug) {
+      setExtraFields([]);
+      return;
+    }
+
+    const templateTitle = findCatalogItem(slug)?.item.title || '';
+    if (templateTitle) {
+      setTitle(templateTitle);
+      if (templateTitle.includes('نشاط') || templateTitle.includes('فعالية')) {
+        setType('نشاط');
+      } else if (
+        templateTitle.includes('برنامج') ||
+        templateTitle.includes('استراتيجية') ||
+        templateTitle.includes('مبادرة')
+      ) {
+        setType('برنامج');
+      }
+    }
+
+    setLoadingTemplate(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/report-templates?slug=${encodeURIComponent(slug)}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'تعذّر جلب محتوى القالب الجاهز');
+
+      const prefill = data.prefill || {};
+      if (prefill.title) setTitle(prefill.title);
+      if (prefill.date) setDate(prefill.date);
+      if (prefill.audience) setAudience(prefill.audience);
+      setBeneficiariesCount(prefill.beneficiariesCount || '');
+      setSubject(prefill.subject || '');
+      setGradeLevel(prefill.gradeLevel || '');
+      setInitiativeIdea(prefill.initiativeIdea || '');
+      setOccasionSignificance(prefill.occasionSignificance || '');
+      setObjectives(prefill.objectives?.length ? prefill.objectives : ['']);
+      setSteps(prefill.steps?.length ? prefill.steps : ['']);
+      setOutcomes(prefill.outcomes?.length ? prefill.outcomes : ['']);
+      setNotes(prefill.notes || '');
+      setExtraFields(prefill.extraFields || []);
+    } catch (err: any) {
+      setError(err.message || 'تعذّر تحميل محتوى القالب الجاهز');
+    } finally {
+      setLoadingTemplate(false);
     }
   };
 
@@ -265,6 +306,8 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
         setNextMeetingDate(parsed.nextMeetingDate || '');
         setOccasionSignificance(parsed.occasionSignificance || '');
         setWeaknesses(parsed.weaknesses && parsed.weaknesses.length > 0 ? parsed.weaknesses : ['صعوبة في مهارات التفكير الناقد وحل المشكلات']);
+        setExtraFields(parsed.extraFields || []);
+        setSelectedTemplate(parsed.templateSlug || '');
         setObjectives(parsed.objectives && parsed.objectives.length > 0 ? parsed.objectives : ['']);
         setSteps(parsed.steps && parsed.steps.length > 0 ? parsed.steps : ['']);
         setOutcomes(parsed.outcomes && parsed.outcomes.length > 0 ? parsed.outcomes : ['']);
@@ -297,6 +340,8 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
       setOutcomes(['تحقيق أثر إيجابي ودافعية مرتفعة نحو التعلم']);
       setImages([]);
       setNotes('');
+      setExtraFields([]);
+      setSelectedTemplate('');
       setGeneratedPdfUrl(null);
     }
     setActiveTab('form');
@@ -357,6 +402,8 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
           outcomes,
           images: safeImages,
           notes,
+          extraFields,
+          templateSlug: selectedTemplate,
         };
 
         if (title.trim() || objectives.some(o => o.trim()) || notes.trim()) {
@@ -443,6 +490,8 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
       if (availableDraft.outcomes?.length) setOutcomes(availableDraft.outcomes);
       if (availableDraft.images?.length) setImages(availableDraft.images);
       if (availableDraft.notes) setNotes(availableDraft.notes);
+      if (availableDraft.extraFields?.length) setExtraFields(availableDraft.extraFields);
+      if (availableDraft.templateSlug) setSelectedTemplate(availableDraft.templateSlug);
       setAvailableDraft(null);
     } catch (e) {
       console.error('Error restoring draft:', e);
@@ -714,6 +763,8 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
       outcomes: outcomes.map((o) => o.trim()).filter(Boolean),
       images,
       notes: notes.trim() || undefined,
+      extraFields: extraFields.filter((f) => f.label && f.value),
+      templateSlug: selectedTemplate || undefined,
     };
   };
 
@@ -1003,12 +1054,36 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                     >
                       <option value="">— اختر القالب —</option>
                       {activeCategory.items.map((item) => (
-                        <option key={item} value={item}>
-                          {item}
+                        <option key={item.slug} value={item.slug}>
+                          {item.title}
                         </option>
                       ))}
                     </select>
                     <ChevronDown className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
+                  </div>
+                )}
+
+                {loadingTemplate && (
+                  <p className="text-[11.5px] text-moe-900 bg-white border border-moe-200/60 px-3 py-1.5 rounded-xl flex items-center gap-2">
+                    <Loader2 className="w-3.5 h-3.5 shrink-0 text-moe-700 animate-spin" />
+                    <span>جارٍ تحميل محتوى القالب الجاهز...</span>
+                  </p>
+                )}
+
+                {!loadingTemplate && extraFields.length > 0 && (
+                  <div className="bg-white/90 border border-moe-200/70 rounded-xl p-3 space-y-2">
+                    <p className="text-[11.5px] font-bold text-moe-900 flex items-center gap-1.5">
+                      <Info className="w-3.5 h-3.5 text-moe-700" />
+                      <span>معلومات إضافية منقولة مع القالب ({extraFields.length})</span>
+                    </p>
+                    <div className="max-h-44 overflow-y-auto space-y-1.5 pr-1">
+                      {extraFields.map((f, idx) => (
+                        <div key={idx} className="text-[11px] leading-relaxed text-slate-600">
+                          <span className="font-bold text-slate-700">{f.label}: </span>
+                          <span className="whitespace-pre-line">{f.value}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 
