@@ -62,32 +62,10 @@ export const Navbar: React.FC = () => {
   };
 
   const schoolName = schoolSetting?.schoolName || 'ابتدائية سعد بن أبي وقاص';
-  const educationDept =
-    schoolSetting?.educationDepartment || 'إدارة التعليم بمنطقة الحدود الشمالية';
   const ministryLogo = schoolSetting?.ministryLogoUrl || '/images/moe-logo.png';
 
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
-      {/* الشريط العلوي الرسمي لهوية وزارة التعليم - متجاوب تماماً مع الجوال */}
-      <div className="bg-moe-950 text-white text-[11px] sm:text-xs py-1.5 px-3 sm:px-8 border-b border-moe-800">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1 sm:gap-4 text-center sm:text-right">
-          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-center sm:justify-start">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
-            <span className="text-slate-300">المملكة العربية السعودية</span>
-            <span className="text-slate-500">•</span>
-            <span className="text-slate-200 font-medium truncate max-w-[240px] sm:max-w-none">{educationDept}</span>
-          </div>
-          <div className="flex items-center gap-2 sm:gap-3">
-            <span className="hidden md:inline-block text-slate-300">
-              العام الدراسي: {schoolSetting?.academicYear || '١٤٤٧-١٤٤٨هـ'}
-            </span>
-            <span className="text-emerald-300 text-[10px] sm:text-[11px] bg-moe-900/90 px-2 py-0.5 rounded border border-moe-800 font-medium">
-              معايير الإصدار الثاني 2026م
-            </span>
-          </div>
-        </div>
-      </div>
-
       {/* الهيدر الرئيسي - حماية كاملة من تداخل العناصر على الشاشات الصغيرة */}
       <div className="max-w-7xl mx-auto px-3 sm:px-8 min-h-[4.5rem] sm:h-20 py-2 flex items-center justify-between gap-2 sm:gap-4">
         {/* هوية المدرسة مع الشعار الرسمي لوزارة التعليم */}
