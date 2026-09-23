@@ -3,14 +3,13 @@ import Link from 'next/link';
 import { prisma } from '@/lib/db';
 import { getCurrentUserFresh } from '@/lib/auth';
 import { SearchBar } from '@/components/search/SearchBar';
-import { ProgressBar } from '@/components/common/ProgressBar';
+import { ReadinessCard } from '@/components/common/ReadinessCard';
+import { DomainsExplorer } from '@/components/domains/DomainsExplorer';
 import {
   Building2,
   GraduationCap,
   Award,
   ShieldCheck,
-  CheckCircle2,
-  FileCheck2,
   ArrowLeft,
   BookOpen,
   HelpCircle,
@@ -75,17 +74,42 @@ export default async function HomePage() {
         ? Math.round((domainCompletedIndicators / domainTotalIndicators) * 100)
         : 0;
 
+    // تجهيز المعايير مع مؤشراتها الفرعية لعرضها داخل أكورديون البطاقة
+    const standardsData = domain.standards.map((std) => {
+      const indicatorsData = std.indicators.map((ind) => ({
+        id: ind.id,
+        code: ind.code,
+        text: ind.text,
+        approvedEvidencesCount: ind.evidences.length,
+      }));
+
+      const indicatorsCount = indicatorsData.length;
+      const completedCount = indicatorsData.filter(
+        (ind) => ind.approvedEvidencesCount > 0
+      ).length;
+
+      return {
+        id: std.id,
+        code: std.code,
+        name: std.name,
+        indicatorsCount,
+        completedCount,
+        completionRate:
+          indicatorsCount > 0 ? Math.round((completedCount / indicatorsCount) * 100) : 0,
+        indicators: indicatorsData,
+      };
+    });
+
     return {
       id: domain.id,
       code: domain.code,
       name: domain.name,
       description: domain.description,
-      iconName: domain.iconName,
       totalStandards: domain.standards.length,
       totalIndicators: domainTotalIndicators,
       completedIndicators: domainCompletedIndicators,
       completionRate,
-      standards: domain.standards,
+      standards: standardsData,
     };
   });
 
@@ -164,11 +188,6 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-2 bg-moe-50 text-moe-900 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold border-2 border-moe-200 shadow-xs max-w-full">
-            <span className="w-2.5 h-2.5 rounded-full bg-moe-600 animate-pulse shrink-0" />
-            <span className="truncate">وثيقة معايير التقويم والتصنيف والاعتماد المدرسي — الإصدار الثاني 2026م</span>
-          </div>
-
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-snug sm:leading-tight">
             شواهد التقويم الذاتي المدرسي
           </h1>
@@ -180,33 +199,6 @@ export default async function HomePage() {
           {/* شريط البحث المباشر */}
           <div className="pt-2 w-full max-w-xl mx-auto">
             <SearchBar />
-          </div>
-
-          {/* بطاقة مؤشرات الإنجاز الإحصائية - متجاوبة 100% مع الجوال */}
-          <div className="pt-4 max-w-2xl mx-auto bg-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl border-2 border-slate-200 shadow-md text-right">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-4 mb-3">
-              <div className="space-y-0.5">
-                <span className="text-[11px] sm:text-xs text-slate-500 font-bold block">مستوى جاهزية الشواهد المعتمدة بالمدرسة</span>
-                <span className="text-sm sm:text-base font-black text-slate-900">
-                  اكتمال الشواهد للمؤشرات ({indicatorsWithApproved} من {totalIndicators})
-                </span>
-              </div>
-              <div className="self-end sm:self-center">
-                <span className="text-2xl sm:text-3xl font-black text-moe-800 dir-ltr inline-block">
-                  {overallCompletionRate}%
-                </span>
-              </div>
-            </div>
-            <ProgressBar
-              value={overallCompletionRate}
-              showPercentage={false}
-              size="md"
-              colorClass="bg-moe-700"
-            />
-            <div className="mt-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[11px] sm:text-xs text-slate-600 pt-3 border-t border-slate-200">
-              <span>* الإحصائية تخص الشواهد المعتمدة رسميًا فقط</span>
-              <span>إجمالي الشواهد المعتمدة المتاحة: <strong className="text-slate-900 font-bold">{totalApprovedEvidences}</strong></span>
-            </div>
           </div>
         </div>
       </section>
@@ -229,121 +221,21 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        {/* شبكة المجالات الأربعة */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          {domainStats.map((domain) => (
-            <div
-              key={domain.id}
-              className="bg-white rounded-2xl sm:rounded-3xl border-2 border-slate-200 shadow-md hover:shadow-xl hover:border-moe-400 transition-all p-5 sm:p-6 flex flex-col justify-between group"
-            >
-              <div>
-                {/* رأس البطاقة */}
-                <div className="flex items-start justify-between gap-3 mb-3.5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-moe-50 border-2 border-moe-200 flex items-center justify-center shrink-0 group-hover:bg-moe-100 transition-colors shadow-2xs">
-                      {getDomainIcon(domain.code)}
-                    </div>
-                    <div>
-                      <span className="text-[10px] sm:text-[11px] font-extrabold text-moe-700 uppercase tracking-wider block">
-                        المجال {domain.code}
-                      </span>
-                      <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-moe-900 transition-colors">
-                        {domain.name}
-                      </h3>
-                    </div>
-                  </div>
+        {/* أزرار المجالات الأربعة — الضغط على أي زر يفتح بطاقة المجال كاملة بأنيميشن ناعم */}
+        <DomainsExplorer
+          items={domainStats.map((domain) => ({
+            domain,
+            icon: getDomainIcon(domain.code),
+          }))}
+        />
 
-                  <span className="text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-300 shrink-0 shadow-2xs">
-                    {domain.totalStandards} معايير
-                  </span>
-                </div>
-
-                <p className="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-2">
-                  {domain.description}
-                </p>
-
-                {/* نسبة اكتمال الشواهد للمجال */}
-                <div className="bg-slate-50 p-3.5 rounded-xl sm:rounded-2xl border border-slate-200 space-y-2 mb-4 shadow-2xs">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-600 font-medium">اكتمال الشواهد:</span>
-                    <span className="font-bold text-slate-900 text-[11px] sm:text-xs">
-                      {domain.completedIndicators} من {domain.totalIndicators} مؤشر مكتمل
-                    </span>
-                  </div>
-                  <ProgressBar
-                    value={domain.completionRate}
-                    showPercentage={true}
-                    size="sm"
-                    colorClass="bg-moe-700"
-                  />
-                </div>
-
-                {/* قائمة مختصرة بالمعايير */}
-                <div className="space-y-1.5 mb-5">
-                  <span className="text-[11px] font-bold text-slate-500 block mb-1">
-                    المعايير المندرجة:
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {domain.standards.map((s) => (
-                      <Link
-                        key={s.id}
-                        href={`/standards/${s.id}`}
-                        className="text-[11px] bg-white hover:bg-moe-50 text-slate-800 hover:text-moe-900 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-moe-300 transition-all flex items-center gap-1.5 shadow-2xs font-semibold"
-                      >
-                        <span className="font-mono text-moe-700 font-bold">{s.code}</span>
-                        <span className="truncate max-w-[140px] sm:max-w-none">{s.name}</span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* زر الانتقال لصفحة المجال الواضح والبارز */}
-              <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <span className="text-xs text-slate-600 font-medium">
-                  إجمالي المؤشرات: <strong className="text-slate-900 font-bold">{domain.totalIndicators}</strong>
-                </span>
-                <Link
-                  href={`/domains/${domain.id}`}
-                  className="inline-flex items-center justify-center gap-2 text-xs font-bold bg-moe-800 hover:bg-moe-900 text-white py-2.5 px-4 rounded-xl shadow-xs hover:shadow-md transition-all group/btn"
-                >
-                  <span>استعراض المعايير والمؤشرات</span>
-                  <ArrowLeft className="w-4 h-4 group-hover/btn:-translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* تنويه الشواهد للزائر وفريق التقويم الخارجي */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-8">
-        <div className="bg-emerald-950 text-white rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden border border-emerald-900">
-          <div className="relative z-10 max-w-3xl space-y-3.5">
-            <div className="inline-flex items-center gap-2 bg-emerald-900/90 text-emerald-200 text-xs px-3 py-1 rounded-full border border-emerald-800">
-              <FileCheck2 className="w-4 h-4 text-emerald-300" />
-              <span>إرشادات فريق التقويم الخارجي والزوار</span>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-black">بوابة عرض موحدة وسريعة الوصول</h3>
-            <p className="text-emerald-100/90 text-xs sm:text-sm leading-relaxed">
-              جميع الشواهد المعروضة في هذه البوابة معتمدة رسميًا من إدارة المدرسة وتم ربطها مباشرة برموز المؤشرات. يمكنك الضغط على أي مؤشر لفتح روابط الملفات والمجلدات الموثقة مباشرة في تبويب جديد دون الحاجة لتسجيل الدخول.
-            </p>
-            <div className="pt-2 flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-4 text-xs">
-              <div className="flex items-center gap-1.5 text-emerald-200">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>روابط HTTPS موثوقة ومحمية</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-emerald-200">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>تحديث فوري عند اعتماد أي شاهد</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-emerald-200">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>حماية الخصوصية ومنع عرض المسودات</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* ملخّص مستوى الجاهزية — أسفل أزرار المجالات */}
+        <ReadinessCard
+          rate={overallCompletionRate}
+          completed={indicatorsWithApproved}
+          total={totalIndicators}
+          approvedEvidencesCount={totalApprovedEvidences}
+        />
       </section>
     </div>
   );

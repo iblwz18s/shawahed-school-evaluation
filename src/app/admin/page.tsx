@@ -21,8 +21,10 @@ import {
   BarChart2,
   Filter,
   FileText,
+  Target,
 } from 'lucide-react';
 import { ProgressBar } from '@/components/common/ProgressBar';
+import { KpiCard, KpiGrid } from '@/components/common/KpiCards';
 import { StatusBadge } from '@/components/common/Badge';
 import { ReviewModal } from '@/components/evidence/ReviewModal';
 import { EvidenceItem } from '@/types';
@@ -153,77 +155,59 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* بطاقات المؤشرات والشواهد المحددة في الوثيقة (قسم 22) */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {/* إجمالي المؤشرات المطبقة */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-1">
-          <span className="text-xs font-medium text-slate-500">المؤشرات المطبقة</span>
-          <div className="text-2xl sm:text-3xl font-black text-slate-900">
-            {stats?.totalIndicators || 49}
-          </div>
-          <span className="text-[11px] text-slate-400 block">
-            {stats?.schoolSetting?.schoolType === 'government' ? 'مدرسة حكومية (49 مؤشر)' : '52 مؤشر'}
-          </span>
-        </div>
+      <KpiGrid>
+        <KpiCard
+          label="المؤشرات المطبقة"
+          value={stats?.totalIndicators || 49}
+          hint={
+            stats?.schoolSetting?.schoolType === 'government'
+              ? 'مدرسة حكومية (49 مؤشر)'
+              : '52 مؤشر'
+          }
+          icon={Target}
+          tone="moe"
+        />
 
-        {/* مؤشرات لديها شاهد معتمد */}
-        <div className="bg-white rounded-2xl p-5 border border-emerald-200 bg-emerald-50/20 shadow-sm space-y-1">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-emerald-800">مؤشرات بشاهد معتمد</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-black text-emerald-700">
-            {stats?.indicatorsWithApproved || 0}
-          </div>
-          <span className="text-[11px] text-emerald-600 block">
-            نسبة الاكتمال: {stats?.completionRate || 0}%
-          </span>
-        </div>
+        <KpiCard
+          label="مؤشرات بشاهد معتمد"
+          value={stats?.indicatorsWithApproved || 0}
+          hint={`من إجمالي ${stats?.totalIndicators || 49} مؤشرًا`}
+          badge={{ text: `${stats?.completionRate || 0}%`, direction: 'up', tone: 'emerald' }}
+          icon={CheckCircle2}
+          tone="emerald"
+        />
 
-        {/* مؤشرات بدون شاهد معتمد */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-1">
-          <span className="text-xs font-medium text-slate-500">مؤشرات بدون شاهد</span>
-          <div className="text-2xl sm:text-3xl font-black text-slate-700">
-            {stats?.indicatorsWithoutEvidence || 0}
-          </div>
-          <span className="text-[11px] text-slate-400 block">تحتاج إلى شواهد</span>
-        </div>
+        <KpiCard
+          label="مؤشرات بدون شاهد"
+          value={stats?.indicatorsWithoutEvidence || 0}
+          hint="تحتاج إلى شواهد"
+          icon={AlertCircle}
+        />
 
-        {/* الشواهد المعتمدة */}
-        <div className="bg-white rounded-2xl p-5 border border-emerald-200 bg-emerald-50/20 shadow-sm space-y-1">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-emerald-800">شواهد معتمدة</span>
-            <FileCheck2 className="w-4 h-4 text-emerald-600" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-black text-emerald-700">
-            {stats?.totalApprovedEvidences || 0}
-          </div>
-          <span className="text-[11px] text-emerald-600 block">معتمدة من مدير المدرسة</span>
-        </div>
+        <KpiCard
+          label="شواهد معتمدة"
+          value={stats?.totalApprovedEvidences || 0}
+          hint="معتمدة من مدير المدرسة"
+          icon={FileCheck2}
+          tone="emerald"
+        />
 
-        {/* شواهد قيد المراجعة */}
-        <div className="bg-white rounded-2xl p-5 border border-amber-200 bg-amber-50/20 shadow-sm space-y-1">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-amber-800">قيد المراجعة</span>
-            <Clock className="w-4 h-4 text-amber-600" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-black text-amber-700">
-            {stats?.pendingEvidencesCount || 0}
-          </div>
-          <span className="text-[11px] text-amber-600 block">تنتظر قرار المدير</span>
-        </div>
+        <KpiCard
+          label="قيد المراجعة"
+          value={stats?.pendingEvidencesCount || 0}
+          hint="تنتظر قرار المدير"
+          icon={Clock}
+          tone="amber"
+        />
 
-        {/* شواهد مرفوضة */}
-        <div className="bg-white rounded-2xl p-5 border border-rose-200 bg-rose-50/20 shadow-sm space-y-1">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-rose-800">شواهد مرفوضة</span>
-            <AlertCircle className="w-4 h-4 text-rose-600" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-black text-rose-700">
-            {stats?.rejectedEvidencesCount || 0}
-          </div>
-          <span className="text-[11px] text-rose-600 block">معادة للمعلم بملاحظة</span>
-        </div>
-      </div>
+        <KpiCard
+          label="شواهد مرفوضة"
+          value={stats?.rejectedEvidencesCount || 0}
+          hint="معادة للمعلم بملاحظة"
+          icon={Ban}
+          tone="rose"
+        />
+      </KpiGrid>
 
       {/* جدول اكتمال الشواهد حسب المجالات الأربعة كما نصت الوثيقة */}
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-4">
@@ -261,7 +245,7 @@ export default function AdminDashboardPage() {
                 return (
                   <tr key={d.domainId} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-4 px-4 font-bold text-slate-900">
-                      <span className="font-mono text-moe-700 ml-1.5 font-black">
+                      <span className="font-mono text-moe-700 me-1.5 font-black">
                         {d.domainCode}.
                       </span>
                       {d.domainName}
