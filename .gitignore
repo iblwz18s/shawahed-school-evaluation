@@ -44,3 +44,9 @@ public/uploads/*
 supabase/.temp/
 
 .vercel
+
+# Media generator artifacts
+brag-output/
+.freebuff/
+.agents/
+skills-lock.json

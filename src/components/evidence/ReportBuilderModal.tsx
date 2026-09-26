@@ -23,6 +23,7 @@ import {
   ChevronDown,
   Info,
   Printer,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { EvidenceItem, ReportData, ReportType, UserSession } from '@/types';
 import { getCurrentHijriInfo, formatHijriOnly } from '@/lib/hijri-date';
@@ -270,6 +271,26 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
     } finally {
       setLoadingTemplate(false);
     }
+  };
+
+  const handleUpdateExtraFieldLabel = (index: number, newLabel: string) => {
+    setExtraFields((prev) =>
+      prev.map((item, idx) => (idx === index ? { ...item, label: newLabel } : item))
+    );
+  };
+
+  const handleUpdateExtraFieldValue = (index: number, newValue: string) => {
+    setExtraFields((prev) =>
+      prev.map((item, idx) => (idx === index ? { ...item, value: newValue } : item))
+    );
+  };
+
+  const handleRemoveExtraField = (index: number) => {
+    setExtraFields((prev) => prev.filter((_, idx) => idx !== index));
+  };
+
+  const handleAddExtraField = (label = '', value = '') => {
+    setExtraFields((prev) => [...prev, { label, value }]);
   };
 
   // مزامنة النوع المختار عند تغيّر نوع التقرير (تحميل شاهد أو استعادة مسودة)
@@ -1071,19 +1092,16 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                 )}
 
                 {!loadingTemplate && extraFields.length > 0 && (
-                  <div className="bg-white/90 border border-moe-200/70 rounded-xl p-3 space-y-2">
-                    <p className="text-[11.5px] font-bold text-moe-900 flex items-center gap-1.5">
-                      <Info className="w-3.5 h-3.5 text-moe-700" />
-                      <span>معلومات إضافية منقولة مع القالب ({extraFields.length})</span>
-                    </p>
-                    <div className="max-h-44 overflow-y-auto space-y-1.5 pr-1">
-                      {extraFields.map((f, idx) => (
-                        <div key={idx} className="text-[11px] leading-relaxed text-slate-600">
-                          <span className="font-bold text-slate-700">{f.label}: </span>
-                          <span className="whitespace-pre-line">{f.value}</span>
-                        </div>
-                      ))}
+                  <div className="bg-emerald-50/90 border border-emerald-200/80 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-2xs">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <p className="text-xs text-emerald-950">
+                        تم سحب <strong>{extraFields.length} بيانات</strong> من القالب (المكان، الشراكات، الأعداد...). يمكنك تعديلها أو حذفها في قسم البيانات الإضافية بالأسفل.
+                      </p>
                     </div>
+                    <span className="text-[11px] font-bold text-emerald-700 bg-white px-2.5 py-1 rounded-lg border border-emerald-200 self-start sm:self-center shrink-0">
+                      قابلة للتعديل بالكامل
+                    </span>
                   </div>
                 )}
 
@@ -1218,7 +1236,7 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
 
               {reportType === 'school_initiative' && (
                 <div className="space-y-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">صاحب / فريق المبادرة</label>
                       <input
@@ -1251,6 +1269,16 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                         />
                         <Calendar className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
                       </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">عدد المستفيدين / المشاركين</label>
+                      <input
+                        type="text"
+                        value={beneficiariesCount}
+                        onChange={(e) => setBeneficiariesCount(e.target.value)}
+                        placeholder="مثال: 150 طالب"
+                        className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:outline-none focus:border-moe-600"
+                      />
                     </div>
                   </div>
                   <div>
@@ -1364,7 +1392,7 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
 
               {reportType === 'occasion' && (
                 <div className="space-y-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">المشرف على الفعالية</label>
                       <input
@@ -1397,6 +1425,16 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                         />
                         <Calendar className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
                       </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">عدد المشاركين / الحضور</label>
+                      <input
+                        type="text"
+                        value={beneficiariesCount}
+                        onChange={(e) => setBeneficiariesCount(e.target.value)}
+                        placeholder="مثال: جميع طلاب المدرسة (350)"
+                        className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:outline-none focus:border-moe-600"
+                      />
                     </div>
                   </div>
                   <div>
@@ -1558,6 +1596,105 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
                   </div>
                 </div>
               )}
+
+              {/* قسم البيانات والمعلومات الإضافية (المكان، الشراكات، الأعداد، وغيرها) - قابل للتعديل بالكامل */}
+              <div className="p-4 bg-slate-50/90 border border-slate-200/90 rounded-2xl space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <SlidersHorizontal className="w-4 h-4 text-moe-700" />
+                    <div>
+                      <h3 className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                        <span>بيانات ومعلومات إضافية (المكان، الشراكات، الأعداد...)</span>
+                        {extraFields.length > 0 && (
+                          <span className="text-[10px] font-bold text-moe-700 bg-moe-50 px-2 py-0.5 rounded-full border border-moe-200">
+                            {extraFields.length}
+                          </span>
+                        )}
+                      </h3>
+                      <p className="text-[11px] text-slate-500">
+                        تُعرض هذه البيانات في التقرير جنباً إلى جنب بشكل سلس. يمكنك تعديل المسميات والقيم المسحوبة أو حذف ما لا يناسب مدرستك.
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleAddExtraField()}
+                    className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-slate-100 text-moe-700 text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-300 transition-all shadow-2xs shrink-0"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>إضافة بيان إضافي</span>
+                  </button>
+                </div>
+
+                {/* خيارات الإضافة السريعة بنقرة واحدة */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="text-[10.5px] font-bold text-slate-500">إضافة سريعة:</span>
+                  {[
+                    { label: 'المكان', defaultVal: 'المسرح المدرسي' },
+                    { label: 'عدد الشراكات', defaultVal: '1' },
+                    { label: 'أسماء الشراكات', defaultVal: '' },
+                    { label: 'عدد أولياء الأمور', defaultVal: '' },
+                    { label: 'مقر التنفيذ', defaultVal: '' },
+                    { label: 'الجهة الداعمة', defaultVal: '' },
+                    { label: 'الفترة الزمنية', defaultVal: '' },
+                  ].map((chip, cIdx) => (
+                    <button
+                      key={cIdx}
+                      type="button"
+                      onClick={() => handleAddExtraField(chip.label, chip.defaultVal)}
+                      className="text-[10.5px] bg-white hover:bg-moe-50 hover:text-moe-800 hover:border-moe-300 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200 transition-colors font-medium flex items-center gap-1"
+                    >
+                      <Plus className="w-2.5 h-2.5" />
+                      <span>{chip.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* قائمة الحقول الإضافية القابلة للتعديل بالكامل */}
+                {extraFields.length === 0 ? (
+                  <div className="bg-white/60 border border-dashed border-slate-300 rounded-xl p-3 text-center text-xs text-slate-400">
+                    لا توجد بيانات إضافية حالياً. عند اختيار قالب جاهز ستُسحب بياناته تلقائياً هنا لتعديلها، أو يمكنك إضافتها يدوياً بالأزرار أعلاه.
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {extraFields.map((field, idx) => (
+                      <div
+                        key={idx}
+                        className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-300 transition-colors"
+                      >
+                        <div className="sm:w-1/3">
+                          <label className="block text-[10px] font-bold text-slate-500 mb-0.5 sm:hidden">اسم البيان</label>
+                          <input
+                            type="text"
+                            value={field.label}
+                            onChange={(e) => handleUpdateExtraFieldLabel(idx, e.target.value)}
+                            placeholder="اسم البيان (مثال: المكان)"
+                            className="w-full px-2.5 py-1.5 text-xs font-bold bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-moe-600 focus:bg-white text-slate-800"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <label className="block text-[10px] font-bold text-slate-500 mb-0.5 sm:hidden">القيمة / التفاصيل</label>
+                          <input
+                            type="text"
+                            value={field.value}
+                            onChange={(e) => handleUpdateExtraFieldValue(idx, e.target.value)}
+                            placeholder="القيمة أو التفاصيل (مثال: مسرح المدرسة)"
+                            className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-moe-600 text-slate-700"
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveExtraField(idx)}
+                          title="حذف هذا البيان"
+                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors self-end sm:self-center"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* زر الذكاء الاصطناعي لإعداد التقرير */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-gradient-to-r from-moe-50 via-emerald-50 to-teal-50 border border-moe-200/90 rounded-2xl">
@@ -1895,48 +2032,57 @@ export const ReportBuilderModal: React.FC<ReportBuilderModalProps> = ({
               </div>
 
               {/* حاوية العرض المتكيفة لـ A4 */}
-              <div
-                ref={previewContainerRef}
-                className="border border-slate-300 rounded-2xl bg-slate-200/80 shadow-inner p-2 sm:p-4 flex justify-center items-start overflow-x-auto min-h-[480px]"
-              >
-                {previewZoomMode === 'fit' ? (
-                  /* وضع ملائمة الشاشة: تصغير هندسي متناسب لورقة A4 كاملة بعرض الشاشة دون أي تداخل نصوص أو صور */
+              {(() => {
+                const previewPageCount = Math.max(1, (previewHtml?.match(/class="report-page/g) || []).length);
+                const previewTotalHeight = 1140 * previewPageCount;
+
+                return (
                   <div
-                    style={{
-                      width: '794px',
-                      height: `${1150 * previewScale}px`,
-                      overflow: 'hidden',
-                    }}
-                    className="flex justify-center shrink-0"
+                    ref={previewContainerRef}
+                    className="border border-slate-300 rounded-2xl bg-slate-200/80 shadow-inner p-2 sm:p-4 flex justify-center items-start overflow-x-auto min-h-[480px]"
                   >
-                    <div
-                      style={{
-                        transform: `scale(${previewScale})`,
-                        transformOrigin: 'top center',
-                        width: '794px',
-                        height: '1150px',
-                      }}
-                    >
-                      <iframe
-                        ref={previewIframeRef}
-                        srcDoc={previewHtml}
-                        title="Live Preview"
-                        className="w-[794px] h-[1150px] bg-white rounded-xl shadow-2xl border border-slate-300 block"
-                      />
-                    </div>
+                    {previewZoomMode === 'fit' ? (
+                      /* وضع ملائمة الشاشة: تصغير هندسي متناسب لورقة A4 كاملة بعرض الشاشة دون أي تداخل نصوص أو صور */
+                      <div
+                        style={{
+                          width: '794px',
+                          height: `${previewTotalHeight * previewScale}px`,
+                          overflow: 'hidden',
+                        }}
+                        className="flex justify-center shrink-0"
+                      >
+                        <div
+                          style={{
+                            transform: `scale(${previewScale})`,
+                            transformOrigin: 'top center',
+                            width: '794px',
+                            height: `${previewTotalHeight}px`,
+                          }}
+                        >
+                          <iframe
+                            ref={previewIframeRef}
+                            srcDoc={previewHtml}
+                            title="Live Preview"
+                            style={{ height: `${previewTotalHeight}px` }}
+                            className="w-[794px] bg-white rounded-xl shadow-2xl border border-slate-300 block"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      /* وضع الحجم الطبيعي 100%: ورقة A4 كاملة مع إمكانية التمرير الحر أفقياً وعمودياً */
+                      <div className="overflow-auto max-w-full w-full flex justify-center p-2">
+                        <iframe
+                          ref={previewIframeRef}
+                          srcDoc={previewHtml}
+                          title="Live Preview"
+                          style={{ height: `${previewTotalHeight}px` }}
+                          className="w-[794px] min-w-[794px] bg-white rounded-xl shadow-2xl border border-slate-300 block shrink-0"
+                        />
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  /* وضع الحجم الطبيعي 100%: ورقة A4 كاملة مع إمكانية التمرير الحر أفقياً وعمودياً */
-                  <div className="overflow-auto max-w-full w-full flex justify-center p-2">
-                    <iframe
-                      ref={previewIframeRef}
-                      srcDoc={previewHtml}
-                      title="Live Preview"
-                      className="w-[794px] min-w-[794px] h-[1150px] bg-white rounded-xl shadow-2xl border border-slate-300 block shrink-0"
-                    />
-                  </div>
-                )}
-              </div>
+                );
+              })()}
             </div>
           )}
 

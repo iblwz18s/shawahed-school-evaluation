@@ -164,35 +164,155 @@ export function generateReportHtml({
     return baseUrl ? `${baseUrl}${url}` : url;
   };
 
-  // تقييم المحتوى النصي لتحديد نمط العرض واستغلال المساحة المتاحة في الصفحة الأولى
+  // تقييم المحتوى النصي والبيانات الإضافية لتحديد نمط العرض واستغلال المساحة المتاحة في صفحة A4 بدقة
   const objCount = reportData.objectives?.filter(Boolean).length || 0;
   const stepsCount = reportData.steps?.filter(Boolean).length || 0;
   const outcomesCount = reportData.outcomes?.filter(Boolean).length || 0;
   const hasNotes = !!(reportData.notes && reportData.notes.trim());
+  const extraFieldsList = (reportData.extraFields || []).filter(f => f.label && f.value);
+  const extraFieldsCount = extraFieldsList.length;
 
-  const totalItemsCount = objCount + stepsCount + outcomesCount;
+  const totalItemsCount = objCount + stepsCount + outcomesCount + (hasNotes ? 1 : 0);
   const totalTextLength =
     (reportData.objectives?.join('') || '').length +
     (reportData.steps?.join('') || '').length +
     (reportData.outcomes?.join('') || '').length +
-    (reportData.notes || '').length;
+    (reportData.notes || '').length +
+    extraFieldsList.reduce((acc, f) => acc + (f.label?.length || 0) + (f.value?.length || 0), 0);
 
-  // إذا كان النص طويلاً نسبياً
-  const isTextLong = objCount > 4 || stepsCount > 4 || totalTextLength > 360;
-  const textGridClass = isTextLong ? 'grid-cols-1' : 'grid-cols-2';
+  // حساب عدد صفوف البيانات الإضافية المزدوجة (كل حقلين يشغلان صفاً واحداً متناسقاً جنباً إلى جنب)
+  const extraRowsCount = Math.ceil(extraFieldsCount / 2);
+  const totalContentRows = totalItemsCount + extraRowsCount * 2;
 
-  // هل تتسع الصفحة الأولى لعرض الصورتين كبيرتين بحجم بارز ومناسب دون ترك فراغات؟
-  const canFitTwoImagesLargeOnPage1 = totalItemsCount <= 7 && totalTextLength <= 380 && objCount <= 3 && stepsCount <= 3;
+  // هل تتسع الصفحة الأولى لعرض صورتين دون أي ضغط أو تداخل في المعاينة أو الطباعة؟
+  const canFitTwoImagesOnPage1 = totalContentRows <= 7 && totalTextLength <= 440 && objCount <= 3 && stepsCount <= 3 && extraRowsCount <= 2;
+  const canFitOneImageOnPage1 = totalContentRows <= 10 && totalTextLength <= 700 && extraRowsCount <= 3;
 
   // إدارة الصفحات والشواهد:
   let isMultiPage = false;
   if (imgCount > 2) {
     isMultiPage = true;
-  } else if (imgCount === 2 && !canFitTwoImagesLargeOnPage1) {
-    isMultiPage = true;
-  } else if (imgCount === 1 && isTextLong) {
-    isMultiPage = true;
+  } else if (imgCount === 2) {
+    isMultiPage = !canFitTwoImagesOnPage1;
+  } else if (imgCount === 1) {
+    isMultiPage = !canFitOneImageOnPage1;
   }
+
+  // ارتفاع الصور المضمنة في الصفحة الأولى لمنع أي تداخل مع الفوتر أو الجداول
+  let inlineImgHeight = 220;
+  if (totalContentRows > 6 || totalTextLength > 360) {
+    inlineImgHeight = 150;
+  } else if (totalContentRows > 4) {
+    inlineImgHeight = 180;
+  }
+
+  // دالة لتوليد صفوف البيانات الإضافية مرتبة جنباً إلى جنب في 4 أعمدة متناسقة بنسبة 16% / 34% / 16% / 34%
+  const renderExtraFieldsRows = (fields: Array<{ label: string; value: string }>) => {
+    if (!fields || fields.length === 0) return '';
+    const rows: string[] = [];
+    let i = 0;
+    while (i < fields.length) {
+      const cur = fields[i];
+      const isCurLong = (cur.value || '').length > 40 || (cur.value || '').includes('\n');
+      if (isCurLong) {
+        rows.push(`
+          <tr>
+            <th style="width: 16%;">${cur.label}</th>
+            <td colspan="3" style="width: 84%; white-space: pre-line; line-height: 1.6;">${cur.value}</td>
+          </tr>
+        `);
+        i++;
+      } else {
+        const next = i + 1 < fields.length ? fields[i + 1] : null;
+        const isNextLong = next ? ((next.value || '').length > 40 || (next.value || '').includes('\n')) : false;
+        if (next && !isNextLong) {
+          rows.push(`
+            <tr>
+              <th style="width: 16%;">${cur.label}</th>
+              <td style="width: 34%; font-weight: 500;">${cur.value}</td>
+              <th style="width: 16%;">${next.label}</th>
+              <td style="width: 34%; font-weight: 500;">${next.value}</td>
+            </tr>
+          `);
+          i += 2;
+        } else {
+          rows.push(`
+            <tr>
+              <th style="width: 16%;">${cur.label}</th>
+              <td colspan="3" style="width: 84%; font-weight: 500;">${cur.value}</td>
+            </tr>
+          `);
+          i++;
+        }
+      }
+    }
+    return rows.join('');
+  };
+
+  // تجميع الأقسام النصية النشطة وتوزيعها جنباً إلى جنب بسلاسة في شبكة ثنائية
+  interface ActiveSection {
+    title: string;
+    type: 'ul' | 'ol' | 'p';
+    items?: string[];
+    text?: string;
+  }
+  const activeSections: ActiveSection[] = [];
+  if (reportData.objectives && reportData.objectives.length > 0) {
+    activeSections.push({ title: secATitle, type: 'ul', items: reportData.objectives });
+  }
+  if (reportData.steps && reportData.steps.length > 0) {
+    activeSections.push({ title: secBTitle, type: 'ol', items: reportData.steps });
+  }
+  if (reportData.outcomes && reportData.outcomes.length > 0) {
+    activeSections.push({ title: secCTitle, type: 'ul', items: reportData.outcomes });
+  }
+  if (reportData.notes && reportData.notes.trim()) {
+    activeSections.push({ title: secDTitle, type: 'p', text: reportData.notes.trim() });
+  }
+
+  const renderSectionBox = (sec: ActiveSection) => `
+    <div class="col-box">
+      <div class="section-title">${sec.title}</div>
+      <div class="content-box">
+        ${sec.type === 'ul' ? `
+          <ul class="list-items">
+            ${(sec.items || []).map(item => `<li>${item}</li>`).join('')}
+          </ul>
+        ` : sec.type === 'ol' ? `
+          <ol class="list-items" style="list-style-type: decimal;">
+            ${(sec.items || []).map(item => `<li>${item}</li>`).join('')}
+          </ol>
+        ` : `
+          <p style="white-space: pre-line;">${sec.text || ''}</p>
+        `}
+      </div>
+    </div>
+  `;
+
+  const renderSectionsGrid = () => {
+    if (activeSections.length === 0) return '';
+    const grids: string[] = [];
+    let i = 0;
+    while (i < activeSections.length) {
+      if (i + 1 < activeSections.length) {
+        grids.push(`
+          <div class="two-col-grid grid-cols-2">
+            ${renderSectionBox(activeSections[i])}
+            ${renderSectionBox(activeSections[i + 1])}
+          </div>
+        `);
+        i += 2;
+      } else {
+        grids.push(`
+          <div class="two-col-grid grid-cols-1">
+            ${renderSectionBox(activeSections[i])}
+          </div>
+        `);
+        i++;
+      }
+    }
+    return grids.join('');
+  };
 
   const imagesPerPage = 6;
   const galleryPages = isMultiPage ? Math.ceil(imgCount / imagesPerPage) : 0;
@@ -266,7 +386,7 @@ export function generateReportHtml({
       color: #0f172a;
       background-color: #f1f5f9;
       line-height: 1.5;
-      font-size: 12px;
+      font-size: 11.5px;
       -webkit-font-smoothing: antialiased;
     }
     .report-document {
@@ -282,9 +402,10 @@ export function generateReportHtml({
       max-width: 210mm;
       height: 297mm;
       min-height: 297mm;
+      max-height: 297mm;
       box-sizing: border-box;
-      margin: 0 auto 24px auto;
-      padding: 10mm 14mm 12mm 14mm;
+      margin: 0 auto 20px auto;
+      padding: 8mm 12mm 10mm 12mm;
       background: #ffffff;
       display: flex;
       flex-direction: column;
@@ -293,6 +414,7 @@ export function generateReportHtml({
       page-break-after: always;
       break-after: page;
       position: relative;
+      overflow: hidden;
     }
     @media print {
       body {
@@ -307,10 +429,23 @@ export function generateReportHtml({
       .report-page {
         box-shadow: none !important;
         margin: 0 !important;
+        padding: 8mm 12mm 10mm 12mm !important;
         width: 210mm !important;
         height: 297mm !important;
+        min-height: 297mm !important;
+        max-height: 297mm !important;
+        overflow: hidden !important;
         page-break-after: always !important;
         break-after: page !important;
+      }
+      .report-page:last-child {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        margin-bottom: 0 !important;
+      }
+      .table-meta, .extra-fields-table, .two-col-grid, .content-box, .signatures-row, .page-footer, tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
     }
     .report-page:last-child {
@@ -322,27 +457,38 @@ export function generateReportHtml({
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
     .page-footer {
       flex-shrink: 0;
       margin-top: auto;
-      padding-top: 8px;
+      padding-top: 6px;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
     .header-border {
       border-bottom: 2px solid #0f766e;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
     .table-meta {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 12px;
-      font-size: 11.5px;
+      margin-bottom: 8px;
+      font-size: 11px;
+      table-layout: fixed;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
     .table-meta th, .table-meta td {
       border: 1px solid #cbd5e1;
-      padding: 5px 8px;
+      padding: 4px 7px;
       text-align: right;
+      vertical-align: middle;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
     .table-meta th {
       background-color: #f8fafc;
@@ -353,79 +499,90 @@ export function generateReportHtml({
     .table-meta td {
       background-color: #ffffff;
       color: #1e293b;
+      width: 34%;
     }
     .extra-fields-table {
-      margin-top: 6px;
+      margin-top: 0;
+      margin-bottom: 8px;
       table-layout: fixed;
-      word-break: break-word;
     }
     .two-col-grid {
       display: grid;
-      gap: 10px;
-      margin-bottom: 10px;
+      gap: 8px;
+      margin-bottom: 8px;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
     .grid-cols-1 { grid-template-columns: 1fr; }
     .grid-cols-2 { grid-template-columns: 1fr 1fr; }
     .col-box {
       display: flex;
       flex-direction: column;
+      min-height: 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
     .section-title {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       color: #0f766e;
       background-color: #f0fdf9;
       border-right: 3px solid #0f766e;
-      padding: 4px 8px;
-      margin-bottom: 6px;
+      padding: 3px 8px;
+      margin-bottom: 4px;
       border-radius: 0 4px 4px 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
     .content-box {
       background-color: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 6px;
-      padding: 7px 10px;
-      font-size: 11.5px;
-      line-height: 1.55;
+      padding: 6px 9px;
+      font-size: 11px;
+      line-height: 1.5;
       flex: 1 1 auto;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
     .list-items {
-      padding-right: 16px;
+      padding-right: 14px;
       margin: 0;
     }
     .list-items li {
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
-    /* قسم الصور المضمنة بالصفحة الأولى (كبيرة وتملأ المساحة المتاحة) */
+    /* قسم الصور المضمنة بالصفحة الأولى */
     .inline-images-section {
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      margin-top: 6px;
+      margin-top: 4px;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
     .inline-images-grid {
       display: grid;
-      gap: 12px;
+      gap: 8px;
       flex: 1 1 auto;
     }
     .inline-img-card {
       border: 1px solid #cbd5e1;
       border-radius: 6px;
-      padding: 8px;
+      padding: 6px;
       background: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 250px;
+      box-sizing: border-box;
       flex: 1 1 auto;
     }
     .inline-img-large {
       max-width: 100%;
       width: 100%;
-      height: 245px;
       object-fit: contain;
       border-radius: 4px;
       background: #f8fafc;
@@ -529,8 +686,8 @@ export function generateReportHtml({
         print-color-adjust: exact !important;
       }
       .report-document {
-        max-width: none;
-        width: 100%;
+        max-width: 210mm !important;
+        width: 210mm !important;
       }
       .report-page {
         margin: 0 !important;
@@ -538,7 +695,21 @@ export function generateReportHtml({
         border-radius: 0 !important;
         width: 210mm !important;
         height: 297mm !important;
-        padding: 10mm 14mm 12mm 14mm !important;
+        min-height: 297mm !important;
+        max-height: 297mm !important;
+        padding: 8mm 12mm 10mm 12mm !important;
+        overflow: hidden !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+      .report-page:last-child {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        margin-bottom: 0 !important;
+      }
+      .table-meta, .extra-fields-table, .two-col-grid, .content-box, .signatures-row, .page-footer, tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
     }
   </style>
@@ -641,9 +812,19 @@ export function generateReportHtml({
                 <tr>
                   <th>تاريخ الإطلاق / المدة</th>
                   <td style="font-weight: 600; color: #0f766e;">${formattedDate}</td>
+                  ${reportData.beneficiariesCount ? `
+                  <th>عدد المستفيدين</th>
+                  <td>${reportData.beneficiariesCount}</td>
+                  ` : `
                   <th>العام الدراسي</th>
                   <td style="font-weight: 600; color: #0f766e;">${formattedAcademicYear}</td>
+                  `}
                 </tr>
+                ${reportData.beneficiariesCount ? `
+                <tr>
+                  <th>العام الدراسي</th>
+                  <td colspan="3" style="font-weight: 600; color: #0f766e;">${formattedAcademicYear}</td>
+                </tr>` : ''}
                 ${reportData.initiativeIdea ? `
                 <tr>
                   <th>فكرة المبادرة</th>
@@ -732,9 +913,19 @@ export function generateReportHtml({
                 <tr>
                   <th>تاريخ المناسبة</th>
                   <td style="font-weight: 600; color: #0f766e;">${formattedDate}</td>
+                  ${reportData.beneficiariesCount ? `
+                  <th>عدد المشاركين</th>
+                  <td>${reportData.beneficiariesCount}</td>
+                  ` : `
                   <th>العام الدراسي</th>
                   <td style="font-weight: 600; color: #0f766e;">${formattedAcademicYear}</td>
+                  `}
                 </tr>
+                ${reportData.beneficiariesCount ? `
+                <tr>
+                  <th>العام الدراسي</th>
+                  <td colspan="3" style="font-weight: 600; color: #0f766e;">${formattedAcademicYear}</td>
+                </tr>` : ''}
                 ${reportData.occasionSignificance ? `
                 <tr>
                   <th>أهمية المناسبة</th>
@@ -842,70 +1033,28 @@ export function generateReportHtml({
           }
         })()}
 
-        <!-- صف الأقسام النصية الأول: القسم أ + القسم ب بجانب بعض في شبكة أفقية -->
-        <div class="two-col-grid ${textGridClass}">
-          ${reportData.objectives && reportData.objectives.length > 0 ? `
-          <div class="col-box">
-            <div class="section-title">${secATitle}</div>
-            <div class="content-box">
-              <ul class="list-items">
-                ${reportData.objectives.map(obj => `<li>${obj}</li>`).join('')}
-              </ul>
-            </div>
-          </div>` : ''}
-
-          ${reportData.steps && reportData.steps.length > 0 ? `
-          <div class="col-box">
-            <div class="section-title">${secBTitle}</div>
-            <div class="content-box">
-              <ol class="list-items" style="list-style-type: decimal;">
-                ${reportData.steps.map(step => `<li>${step}</li>`).join('')}
-              </ol>
-            </div>
-          </div>` : ''}
-        </div>
-
-        <!-- صف الأقسام النصية الثاني: القسم ج + القسم د -->
-        ${(reportData.outcomes && reportData.outcomes.length > 0) || reportData.notes ? `
-        <div class="two-col-grid ${(reportData.outcomes && reportData.outcomes.length > 0 && reportData.notes) ? 'grid-cols-2' : 'grid-cols-1'}">
-          ${reportData.outcomes && reportData.outcomes.length > 0 ? `
-          <div class="col-box">
-            <div class="section-title">${secCTitle}</div>
-            <div class="content-box">
-              <ul class="list-items">
-                ${reportData.outcomes.map(out => `<li>${out}</li>`).join('')}
-              </ul>
-            </div>
-          </div>` : ''}
-
-          ${reportData.notes ? `
-          <div class="col-box">
-            <div class="section-title">${secDTitle}</div>
-            <div class="content-box">
-              <p>${reportData.notes}</p>
-            </div>
-          </div>` : ''}
-        </div>` : ''}
-
-        <!-- جدول المعلومات الإضافية المنقولة مع القوالب الجاهزة -->
-        ${(reportData.extraFields && reportData.extraFields.length > 0) ? `
-        <div class="section-title">معلومات وبيانات إضافية</div>
+        <!-- جدول البيانات والمعلومات الإضافية (المكان، الشراكات، الأعداد...) مرتبة جنباً إلى جنب بسلاسة -->
+        ${(extraFieldsList.length > 0) ? `
         <table class="table-meta extra-fields-table">
-          ${reportData.extraFields.map((f) => `
           <tr>
-            <th style="width: 170px;">${f.label}</th>
-            <td style="white-space: pre-line; line-height: 1.7;">${f.value}</td>
-          </tr>`).join('')}
+            <th colspan="4" style="background-color: #f0fdf9; color: #0f766e; text-align: right; font-size: 11px; padding: 3px 8px; border-bottom: 2px solid #0f766e;">
+              بيانات إضافية وشراكات التنفيذ
+            </th>
+          </tr>
+          ${renderExtraFieldsRows(extraFieldsList)}
         </table>` : ''}
 
-        <!-- إذا كانت الصور قليلة (1-2 صورة) وتتسع الصفحة الأولى لعرضهما كبيرتين -->
+        <!-- شبكة الأقسام النصية المتناسقة جنباً إلى جنب بسلاسة -->
+        ${renderSectionsGrid()}
+
+        <!-- إذا كانت الصور قليلة (1-2 صورة) وتتسع الصفحة الأولى لعرضهما -->
         ${!isMultiPage && imgCount > 0 ? `
         <div class="inline-images-section">
           <div class="section-title">شواهد التوثيق المصور (${toArabicDigits(imgCount)} صور)</div>
           <div class="inline-images-grid" style="grid-template-columns: repeat(${imgCount === 1 ? '1' : '2'}, 1fr);">
             ${images.map((img, idx) => `
               <div class="inline-img-card">
-                <img src="${formatImageUrl(img.url)}" alt="شاهد ${toArabicDigits(idx + 1)}" class="inline-img-large" />
+                <img src="${formatImageUrl(img.url)}" alt="شاهد ${toArabicDigits(idx + 1)}" class="inline-img-large" style="height: ${inlineImgHeight}px; max-height: ${inlineImgHeight}px;" />
                 ${img.caption ? `<div class="image-caption">${img.caption}</div>` : ''}
               </div>
             `).join('')}
@@ -914,11 +1063,11 @@ export function generateReportHtml({
 
         <!-- إشعار عند وجود ملحق صور في الصفحة التالية -->
         ${isMultiPage ? `
-        <div style="margin-top: 8px; background-color: #f0fdf9; border: 1px dashed #0f766e; border-radius: 6px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="margin-top: auto; margin-bottom: 4px; background-color: #f0fdf9; border: 1px dashed #0f766e; border-radius: 6px; padding: 6px 12px; display: flex; justify-content: space-between; align-items: center; page-break-inside: avoid; break-inside: avoid;">
           <div style="font-size: 11px; font-weight: 600; color: #0f766e;">
             📷 يتضمن التقرير ملحقاً لشواهد التوثيق المصور (${toArabicDigits(imgCount)} صور) مُرفق بالصفحة التالية بحجم واضح وموسع.
           </div>
-          <div style="font-size: 10.5px; color: #64748b;">
+          <div style="font-size: 10px; font-weight: 700; color: #042f2c; background: #ccfbf1; padding: 2px 8px; border-radius: 4px;">
             تابع الصفحة ٢ ⬅
           </div>
         </div>` : ''}
